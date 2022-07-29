@@ -1,0 +1,32 @@
+<isdecorate template="application/MenuFrame">
+<isscript>
+var getFwConfigSetting = dw.system.Site.getCurrent().getPreferences().getCustom();
+var fireworkIframeURL = getFwConfigSetting["fireworkIframeURL"];
+var provider = getFwConfigSetting["provider"];
+</isscript>
+<iscontent type="text/html" charset="UTF-8" />
+       <iframe id="fw-iframe" src="${fireworkIframeURL}/integration" style="width: 100%; border: none; height: 800px;"></iframe>
+        <script>
+                function postTokenToIFrame() {
+                var iframeWin = document.getElementById("fw-iframe").contentWindow;
+                const message = {
+                token: "${pdict.token}",
+                oauthApp: "${provider}",
+                locale: "",
+                businessStoreId: "${pdict.storeId}",
+                businessId: "${pdict.businessId}"
+                }
+                iframeWin.postMessage(message, "${fireworkIframeURL}/integration");
+                }
+                const handleMessage = (e) => {
+                if (e.data === "fwIntegrationReady") {
+                postTokenToIFrame();
+                }
+                }
+                // Create an event listener which can listen for the "fwIntegrationReady"
+                // event from the business portal /integration endpoint. This indicates
+                // that the business portal is listening for the access token event.
+                window.addEventListener('message', handleMessage, false);
+        </script>
+</isdecorate>
+

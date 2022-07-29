@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+  <type-extension type-id="SitePreferences">
+  <custom-attribute-definitions>
+			<attribute-definition attribute-id="fireworkApiEndPoint">
+                <display-name xml:lang="x-default">Firework API EndPoint URL</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="fireworkIframeURL">
+                <display-name xml:lang="x-default">Firework Iframe URL</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="getUniqueBMUID">
+                <display-name xml:lang="x-default">Business Unique Id</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="graphQLEndpoint">
+                <display-name xml:lang="x-default">Graphql End Point URL</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+			<attribute-definition attribute-id="clientName">
+                <display-name xml:lang="x-default">Client Name</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="contactsEmail">
+                <display-name xml:lang="x-default">Contact Email</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+			<attribute-definition attribute-id="provider">
+                <display-name xml:lang="x-default">Provider</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+			<attribute-definition attribute-id="siteTitle">
+                <display-name xml:lang="x-default">Site Title</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+			 <attribute-definition attribute-id="siteCurrency">
+                <display-name xml:lang="x-default">Curreny</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+   </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="fireworkDashboardConfig">
+                <display-name xml:lang="x-default">Firework Dashboard Configuration</display-name>
+                <attribute attribute-id="fireworkApiEndPoint"/>
+                <attribute attribute-id="fireworkIframeURL"/>
+                <attribute attribute-id="siteCurrency"/>
+                <attribute attribute-id="siteTitle"/>
+                <attribute attribute-id="provider"/>
+                <attribute attribute-id="graphQLEndpoint"/>
+                <attribute attribute-id="getUniqueBMUID"/>
+                <attribute attribute-id="clientName"/>
+                <attribute attribute-id="contactsEmail"/>
+             </attribute-group>
+        </group-definitions>
+    </type-extension>
+	
+	   <custom-type type-id="FireworkCO">
+        <display-name xml:lang="x-default">FireworkCO</display-name>
+        <description xml:lang="x-default">Used to store data about oauth creditional</description>
+        <staging-mode>source-to-target</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="ID">
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="businessOauthData">
+                <display-name xml:lang="x-default">Business Oauth Data</display-name>
+                <type>text</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="businessStoreId">
+                <display-name xml:lang="x-default">Business Store Id</display-name>
+                <type>text</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="oauthData">
+                <display-name xml:lang="x-default">Oauth Register Data</display-name>
+                <type>text</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="tokenData">
+                <display-name xml:lang="x-default">Token details</display-name>
+                <type>text</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="FireworkCOAttributes">
+                <display-name xml:lang="x-default">Firework</display-name>
+                <attribute attribute-id="ID"/>
+                <attribute attribute-id="oauthData"/>
+                <attribute attribute-id="tokenData"/>
+                <attribute attribute-id="businessOauthData"/>
+                <attribute attribute-id="businessStoreId"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+
+    <custom-type type-id="OauthCO">
+        <display-name xml:lang="x-default">OauthCO</display-name>
+        <description xml:lang="x-default">Used to store data about oauth creditional</description>
+        <staging-mode>source-to-target</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="ID">
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="accessTokenObject">
+                <display-name xml:lang="x-default">accessTokenObject</display-name>
+                <type>text</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="cli_token">
+                <display-name xml:lang="x-default">CLI Token</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="client_id">
+                <display-name xml:lang="x-default">client Id</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="client_secret">
+                <display-name xml:lang="x-default">client Secret</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="code">
+                <display-name xml:lang="x-default">code</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="code_challenge">
+                <display-name xml:lang="x-default">Code Challenge</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="code_verifier">
+                <display-name xml:lang="x-default">Code Verifier</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="org_id">
+                <display-name xml:lang="x-default">org ID</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="short_code">
+                <display-name xml:lang="x-default">Short Code</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="tenant_id">
+                <display-name xml:lang="x-default">Tenent Id</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="usid">
+                <display-name xml:lang="x-default">usid</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="OauthCOAttributes">
+                <display-name xml:lang="x-default">OauthCO</display-name>
+                <attribute attribute-id="ID"/>
+                <attribute attribute-id="client_id"/>
+                <attribute attribute-id="client_secret"/>
+                <attribute attribute-id="tenant_id"/>
+                <attribute attribute-id="short_code"/>
+                <attribute attribute-id="org_id"/>
+                <attribute attribute-id="cli_token"/>
+                <attribute attribute-id="usid"/>
+                <attribute attribute-id="code"/>
+                <attribute attribute-id="code_verifier"/>
+                <attribute attribute-id="accessTokenObject"/>
+                <attribute attribute-id="code_challenge"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>

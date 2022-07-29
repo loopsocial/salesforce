@@ -1,0 +1,14 @@
+
+{
+  "name": "Carousel Widget Config ",
+  "description": "Carousel Widget Config",
+  "resources": {
+    "scripts": [
+      "/experience/editors/firework/iframeResizer.min.js",
+      "/experience/editors/firework/fwwidgetform.js"
+    ],
+    "styles": [
+      "/experience/editors/firework/form.css"
+    ]
+  }
+}

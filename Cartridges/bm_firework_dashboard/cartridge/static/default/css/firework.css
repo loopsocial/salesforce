@@ -1,0 +1,82 @@
+.reset-dashboard{
+	padding-top: 30px;
+	padding-bottom: 30px;
+	display: flex;
+	justify-content: center;
+}
+.reset-dashboard .reset-btn-wrapper{
+	display: flex;
+	justify-content: center;
+	column-gap: 20px;
+}
+.reset-dashboard .btn-common{
+	font-size: 16px;
+	padding: 10px 20px;
+	border: 0 none;
+	border-radius: 5px;
+      text-decoration: none;
+      background: #c7c5c5;
+      color: #000000;
+}
+.reset-dashboard .btn-common.reset-btn{
+	background: #f84d5f;
+	color: #FFFFFF;
+}
+#firework-widget-settings{
+	display: flex;
+	padding: 15px;
+	flex-direction: column;
+}
+.firework-widget-settings-videos-top{
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+#firework-widget-settings .firework-widget-settings-main{
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+    row-gap: 10px;
+}
+#firework-widget-settings .firework-widget-settings-videos{
+	margin-top: 10px;
+}
+#firework-widget-settings .firework-widget-settings-main select, #firework-widget-settings .firework-widget-settings-videos select{
+	border: 1px solid #000000;
+	padding: 8px 10px;
+	width: 100%;
+	border-radius: 5px;
+}
+#firework-widget-settings label{
+	margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+}
+#firework-widget-settings .radio-column label{
+	font-weight: normal;
+	margin: 0 0 5px 0;
+}
+#firework-widget-settings .input-fw-input-radio{
+	margin-left: 0;
+}
+#firework-widget-settings .firework-widget-settings-input .firework-widget-settings-column{
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+}
+#firework-widget-settings .firework-widget-settings-input .input-fw-input{
+	width: 100%;
+	padding: 8px 10px;
+	border: 1px solid #000000;
+	border-radius: 5px;
+}
+#firework-widget-settings .fw-widget-position{
+	display: flex;
+    justify-content: flex-start;
+    column-gap: 20px;
+}
+#firework-widget-settings .fw-widget-position .radio-column{
+	display: flex;
+	vertical-align: middle;
+	column-gap: 2px;
+}

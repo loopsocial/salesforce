@@ -1,0 +1,6 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<figure class="component-figure">
+<script async type='text/javascript' src='//asset.fwcdn3.com/js/storyblock.js'></script>
+<fw-storyblock channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" video="${pdict.viewmodel.selectedVideo}"  mode="pinned" autoplay="true">
+</fw-storyblock>
+</figure>

@@ -1,0 +1,11 @@
+<isdecorate template="application/MenuFrame">
+<isif condition="${pdict.updateGraphQLForTokenDataResponse.data}">
+    API Configuration Stored Successfully.
+    <iselse/>
+    Somthing went wrong...!!! 
+    Error : <isscript>
+		var errorMessageDetail =JSON.stringify(pdict.updateGraphQLForTokenDataResponse);
+	        </isscript>
+        ${errorMessageDetail}
+</isif>
+</isdecorate>

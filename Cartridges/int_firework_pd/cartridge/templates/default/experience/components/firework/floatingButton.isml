@@ -1,0 +1,7 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<figure class="component-figure">
+<script async src="//asset.fwcdn3.com/js/channel-button.js"></script>
+<fw-channel-button channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" video="${pdict.viewmodel.selectedVideo}" open_in="${pdict.viewmodel.openinwindow}" placement="${pdict.viewmodel.minimizedVideoPlayerLocation}" vertical="${pdict.viewmodel.vertical_offset}" horizontal="${pdict.viewmodel.horizontal_offset}">
+<a href="https://fw.tv/firework">firework's Stories</a>
+</fw-channel-button>
+</figure>

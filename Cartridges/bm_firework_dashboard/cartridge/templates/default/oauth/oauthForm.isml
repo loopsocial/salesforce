@@ -1,0 +1,40 @@
+<isdecorate template="application/MenuFrame">
+<link rel="stylesheet" href="${URLUtils.staticURL('/css/oauthfrm.css')}" />
+ <div id="fw-config-form">
+	<h2>Firework API Congfiguration:</h2>
+	<form action="${pdict.successURL}" method="POST" class="oauthfrm" id='oauthfrm' />
+		<div class="form-field">
+			<label for="fw-shortcode">Shortcode <em>*</em></label>
+			<input type="text" id="shortcode" name="shortcode" class="fw-input-field"  value="${pdict.OauthData.shortCode}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-organization-id">Organization ID <em>*</em></label>
+			<input type="text" id="fworganizationid" name="fworganizationid" class="fw-input-field" value="${pdict.OauthData.fworganizationid}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-client-id">Client ID <em>*</em></label>
+			<input type="text" id="fwclientid" name="fwclientid" class="fw-input-field" value="${pdict.OauthData.clientId}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-client-secret">Client Secret <em>*</em></label>
+			<input type="text" id="fwclientsecret" name="fwclientsecret" class="fw-input-field" value="${pdict.OauthData.clientSecret}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-client-secret">Tenant ID <em>*</em></label>
+			<input type="text" id="tenantId" name="tenantId" class="fw-input-field" value="${pdict.OauthData.tenant_id}" required />
+			<div class="form-field">
+			<label for="fw-client-secret">Tenant Id should be underscore format, for E.g ( If Tenant Id is zxd-001 then It should be zxd_001 )</label>
+		</div>
+		</div>
+		<div class="form-field">
+			<label for="fw-client-secret">Redirect Url : ${pdict.redirectCallbackUrl}</label>
+			(Please set this url after create client application)
+		</div>
+		<div class="form-field form-with-inline">
+			<input type="submit" name="fw-form-save" class="btn fw-form-save" value="Save" />
+		</div>
+		
+	</form>
+</div>
+
+</isdecorate>
