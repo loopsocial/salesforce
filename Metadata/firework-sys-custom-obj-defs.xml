@@ -8,6 +8,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
+				<default-value>https://fireworktv.com</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="fireworkIframeURL">
                 <display-name xml:lang="x-default">Firework Iframe URL</display-name>
@@ -15,6 +16,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
+				<default-value>https://business.firework.com</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="getUniqueBMUID">
                 <display-name xml:lang="x-default">Business Unique Id</display-name>
@@ -29,6 +31,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
+				<default-value>https://fireworktv.com/graphiql</default-value>
             </attribute-definition>
 			<attribute-definition attribute-id="clientName">
                 <display-name xml:lang="x-default">Client Name</display-name>
@@ -36,6 +39,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
+				<default-value>Salesforce Commerce Cloud</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="contactsEmail">
                 <display-name xml:lang="x-default">Contact Email</display-name>
@@ -50,6 +54,7 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
+				<default-value>SALESFORCE</default-value>
             </attribute-definition>
 			<attribute-definition attribute-id="siteTitle">
                 <display-name xml:lang="x-default">Site Title</display-name>
