@@ -17,6 +17,9 @@ exports.dashboard = function () {
     try {
         var preferencesModel = new PreferencesModel();
         var getFwConfigSetting=preferencesModel.getPreferences();
+        
+        if(getFwConfigSetting.fireworkApiEndPoint)
+        {
         var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
         if(oauthCOObj == null)
         {
@@ -108,7 +111,16 @@ exports.dashboard = function () {
                     response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+oauthRegisterData.redirect_uris[0]+'&client_id='+oauthRegisterData.client_id+'&state=STATE&business_onboard=true');
                 }
             }
-    //
+        }
+        else
+        {
+            var errorMsg= {
+                status: 'failed',
+                message:"Please Check Firework Custom Preferences Settings."
+            };
+        ISML.renderTemplate('dashboard/errorMsg',{errorMsg:errorMsg});
+        return;
+        }
     }catch (e) {
         var errorMsg= {
             status: 'failed',
