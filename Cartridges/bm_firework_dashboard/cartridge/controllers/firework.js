@@ -17,110 +17,110 @@ exports.dashboard = function () {
     try {
         var preferencesModel = new PreferencesModel();
         var getFwConfigSetting=preferencesModel.getPreferences();
-        
         if(getFwConfigSetting.fireworkApiEndPoint)
         {
-        var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
-        if(oauthCOObj == null)
-        {
-            var redirectCallbackUrl =request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('oauth-callback'); 
-            var getTokenJSONObj = {};
-            getTokenJSONObj.clientSecret='';
-            getTokenJSONObj.clientId='';
-            getTokenJSONObj.shortCode='';
-            getTokenJSONObj.fworganizationid='';
-            getTokenJSONObj.tenant_id='';
-            var successURL = dw.web.URLUtils.url('oauth-success');
-            ISML.renderTemplate('oauth/oauthForm',{successURL: successURL,OauthData:getTokenJSONObj,redirectCallbackUrl:redirectCallbackUrl});
-            return;   
-        }
-        var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
-        if(FireworkCOObj == null)
-        {
-            var oauthRegisterObj =require('~/cartridge/scripts/firework/oauthRegisterAPI');
-            var oauthRegisterResponse = oauthRegisterObj.oauthRegister();
-            var oauthRegisterJsonObj = JSON.parse(oauthRegisterResponse);
-            var clientId=oauthRegisterJsonObj.client_id;
-            var redirectUri=oauthRegisterJsonObj.redirect_uris[0];
-            Transaction.begin();
-            FireworkCOObj = CustomObjectMgr.createCustomObject('FireworkCO',dw.system.Site.current.ID);
-            FireworkCOObj.custom.oauthData =oauthRegisterResponse;
-            Transaction.commit();
-            response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+redirectUri+'&client_id='+clientId+'&state=STATE&business_onboard=true');
-        }
-        else
-        {
-            var oauthRegisterData=JSON.parse(FireworkCOObj.custom.oauthData);
-            var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
-            var businessOauthData=JSON.parse(FireworkCOObj.custom.businessOauthData);
-            var businessId=businessOauthData.businessId;
-            var storeId=FireworkCOObj.custom.businessStoreId;
-            var callBackJSONObj = {};
-            //-----------get refresh token and create new accesstoken-------------//
-            callBackJSONObj.client_id=oauthRegisterData.client_id;
-            callBackJSONObj.client_secret=oauthRegisterData.client_secret;
-            callBackJSONObj.redirect_Url=oauthRegisterData.redirect_uris[0];
-            callBackJSONObj.refresh_token=oauthtokenData.refresh_token;
-            var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
-            try {
-                    var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
-                    var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
-                    Transaction.begin();
-                    FireworkCOObj.custom.tokenData=getcallBackResponse;
-                    Transaction.commit();
-                    var getGraphQLJSONObj = {};
-                    //----------------update graphQL-------------//
-                    getGraphQLJSONObj.businessId=businessId;
-                    getGraphQLJSONObj.currency=getFwConfigSetting.siteCurrency;
-                    getGraphQLJSONObj.siteTitle=getFwConfigSetting.siteTitle;
-                    getGraphQLJSONObj.provider=getFwConfigSetting.provider;
-                    getGraphQLJSONObj.siteUrl=getFwConfigSetting.getUniqueBMUID;
-                    getGraphQLJSONObj.uid=getFwConfigSetting.getUniqueBMUID;
-                    getGraphQLJSONObj.accessKey=getFwConfigSetting.accessKey;
-                    getGraphQLJSONObj.storeId=storeId;
-                    getGraphQLJSONObj.accessToken=getRefreshTokenResponse.access_token;
-                    getGraphQLJSONObj.refreshToken=getRefreshTokenResponse.refresh_token;
-                    //----------------------refresh token call function--------//
-                    var getTokenJSONObj = {};
-                    var authTokenObjectData=JSON.parse(oauthCOObj.custom.accessTokenObject);
-                    var refreshToken=authTokenObjectData.refresh_token;
-                    getTokenJSONObj.clientSecret=oauthCOObj.custom.client_secret;
-                    getTokenJSONObj.clientId=oauthCOObj.custom.client_id;
-                    getTokenJSONObj.shortCode=oauthCOObj.custom.short_code;
-                    getTokenJSONObj.fworganizationid=oauthCOObj.custom.org_id;
-                    getTokenJSONObj.refresh_token=refreshToken;
-					var getrefreshTokenJobObj =require('~/cartridge/scripts/oauth/getRefreshTokenAPI');
-                    var getrefreshTokenJobResponse = getrefreshTokenJobObj.refreshTokenfun(getTokenJSONObj);
-                    var getrefreshTokenJobJsonObj = JSON.parse(getrefreshTokenJobResponse);
-                    Transaction.begin();
-                        oauthCOObj.custom.accessTokenObject=getrefreshTokenJobJsonObj;
-                    Transaction.commit();
-                    //-----------------oauth data------------------------//
-                    var getBusinessStoreObj =require('~/cartridge/scripts/firework/updateGraphQLAPI');
-                    var getBusinessStorResponse = getBusinessStoreObj.updateGraphFun(getGraphQLJSONObj);
-                    var getBusinessStoreJsonObj = JSON.parse(getBusinessStorResponse);   
-                //---------------------end--------------------------------------------//
-                ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.businessStoreId,businessId:businessId});
-                return;
-                }
-                catch (e)
+                var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+                if(oauthCOObj == null)
                 {
-                    Transaction.begin();
-                    FireworkCOObj.custom.tokenData='';
-                    Transaction.commit();
-                    response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+oauthRegisterData.redirect_uris[0]+'&client_id='+oauthRegisterData.client_id+'&state=STATE&business_onboard=true');
+                    var redirectCallbackUrl =request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('oauth-callback'); 
+                    var getTokenJSONObj = {};
+                    getTokenJSONObj.clientSecret='';
+                    getTokenJSONObj.clientId='';
+                    getTokenJSONObj.shortCode='';
+                    getTokenJSONObj.fworganizationid='';
+                    getTokenJSONObj.tenant_id='';
+                    var successURL = dw.web.URLUtils.url('oauth-success');
+                    ISML.renderTemplate('oauth/oauthForm',{successURL: successURL,OauthData:getTokenJSONObj,redirectCallbackUrl:redirectCallbackUrl});
+                    return;   
                 }
-            }
+                var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
+                if(FireworkCOObj == null)
+                {
+                    var oauthRegisterObj =require('~/cartridge/scripts/firework/oauthRegisterAPI');
+                    var oauthRegisterResponse = oauthRegisterObj.oauthRegister();
+                    var oauthRegisterJsonObj = JSON.parse(oauthRegisterResponse);
+                    var clientId=oauthRegisterJsonObj.client_id;
+                    var redirectUri=oauthRegisterJsonObj.redirect_uris[0];
+                    Transaction.begin();
+                    FireworkCOObj = CustomObjectMgr.createCustomObject('FireworkCO',dw.system.Site.current.ID);
+                    FireworkCOObj.custom.oauthData =oauthRegisterResponse;
+                    Transaction.commit();
+                    response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+redirectUri+'&client_id='+clientId+'&state=STATE&business_onboard=true');
+                }
+                else
+                {
+                    var oauthRegisterData=JSON.parse(FireworkCOObj.custom.oauthData);
+                    var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
+                    var businessOauthData=JSON.parse(FireworkCOObj.custom.businessOauthData);
+                    var businessId=businessOauthData.businessId;
+                    var storeId=FireworkCOObj.custom.businessStoreId;
+                    var callBackJSONObj = {};
+                    //-----------get refresh token and create new accesstoken-------------//
+                    callBackJSONObj.client_id=oauthRegisterData.client_id;
+                    callBackJSONObj.client_secret=oauthRegisterData.client_secret;
+                    callBackJSONObj.redirect_Url=oauthRegisterData.redirect_uris[0];
+                    callBackJSONObj.refresh_token=oauthtokenData.refresh_token;
+                    var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
+                    try {
+                            var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
+                            var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
+                            Transaction.begin();
+                            FireworkCOObj.custom.tokenData=getcallBackResponse;
+                            Transaction.commit();
+                            var getGraphQLJSONObj = {};
+                            //----------------update graphQL-------------//
+                            getGraphQLJSONObj.businessId=businessId;
+                            getGraphQLJSONObj.currency=getFwConfigSetting.siteCurrency;
+                            getGraphQLJSONObj.siteTitle=getFwConfigSetting.siteTitle;
+                            getGraphQLJSONObj.provider=getFwConfigSetting.provider;
+                            getGraphQLJSONObj.siteUrl=getFwConfigSetting.getUniqueBMUID;
+                            getGraphQLJSONObj.uid=getFwConfigSetting.getUniqueBMUID;
+                            getGraphQLJSONObj.accessKey=getFwConfigSetting.accessKey;
+                            getGraphQLJSONObj.storeId=storeId;
+                            getGraphQLJSONObj.accessToken=getRefreshTokenResponse.access_token;
+                            getGraphQLJSONObj.refreshToken=getRefreshTokenResponse.refresh_token;
+                            //----------------------refresh token call function--------//
+                            var getTokenJSONObj = {};
+                            var authTokenObjectData=JSON.parse(oauthCOObj.custom.accessTokenObject);
+                            var refreshToken=authTokenObjectData.refresh_token;
+                            getTokenJSONObj.clientSecret=oauthCOObj.custom.client_secret;
+                            getTokenJSONObj.clientId=oauthCOObj.custom.client_id;
+                            getTokenJSONObj.shortCode=oauthCOObj.custom.short_code;
+                            getTokenJSONObj.fworganizationid=oauthCOObj.custom.org_id;
+                            getTokenJSONObj.refresh_token=refreshToken;
+                            var getrefreshTokenJobObj =require('~/cartridge/scripts/oauth/getRefreshTokenAPI');
+                            var getrefreshTokenJobResponse = getrefreshTokenJobObj.refreshTokenfun(getTokenJSONObj);
+                            var getrefreshTokenJobJsonObj = JSON.parse(getrefreshTokenJobResponse);
+                            Transaction.begin();
+                                oauthCOObj.custom.accessTokenObject=getrefreshTokenJobJsonObj;
+                            Transaction.commit();
+                            //-----------------oauth data------------------------//
+                            var getBusinessStoreObj =require('~/cartridge/scripts/firework/updateGraphQLAPI');
+                            var getBusinessStorResponse = getBusinessStoreObj.updateGraphFun(getGraphQLJSONObj);
+                            var getBusinessStoreJsonObj = JSON.parse(getBusinessStorResponse);   
+                        //---------------------end--------------------------------------------//
+                        ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.businessStoreId,businessId:businessId});
+                        return;
+                        }
+                        catch (e)
+                        {
+                            Transaction.begin();
+                            FireworkCOObj.custom.tokenData='';
+                            Transaction.commit();
+                            response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+oauthRegisterData.redirect_uris[0]+'&client_id='+oauthRegisterData.client_id+'&state=STATE&business_onboard=true');
+                        }
+                    }
         }
         else
         {
             var errorMsg= {
                 status: 'failed',
-                message:"Please Check Firework Custom Preferences Settings."
+                message:"Please configure firework setting."
             };
         ISML.renderTemplate('dashboard/errorMsg',{errorMsg:errorMsg});
         return;
         }
+    //
     }catch (e) {
         var errorMsg= {
             status: 'failed',

@@ -1,4 +1,15 @@
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
+ <isscript>
+    var oauthCOObj = dw.object.CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+    var getClientID =oauthCOObj.custom.client_id;
+	var getCartURL=dw.web.URLUtils.https('Cart-Show');
+   </isscript>
+   <script type="text/javascript">
+   if (window.localStorage) {
+			 window.localStorage.setItem('fw_sfcc_url',"${getCartURL}");
+          window.localStorage.setItem('fw_sfcc_id',"${getClientID}");
+		}
+   </script>
 <figure class="component-figure">
 <script async type='text/javascript' src='//asset.fwcdn3.com/js/storyblock.js'></script>
 <fw-storyblock channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" video="${pdict.viewmodel.selectedVideo}"  mode="pinned" autoplay="true">
