@@ -4,6 +4,8 @@
 
 ### <br/>
 ### Cartridge Installation Doc -> <a herf="https://docs.google.com/document/d/1tR2FpJzIxKf1Nr3GZuusHOcHalIi8h6kj0qa8JWI4oY/edit?usp=sharing"> Here </a>
+https://docs.google.com/document/d/1tR2FpJzIxKf1Nr3GZuusHOcHalIi8h6kj0qa8JWI4oY/edit?usp=sharing
 
 
 ### Cartridge Installation Video -> <a herf="https://drive.google.com/file/d/1lskwF3HeKxwiawOGE4zEwFa29T2eCwoQ/view?usp=sharing"> Here </a>
+https://drive.google.com/file/d/1lskwF3HeKxwiawOGE4zEwFa29T2eCwoQ/view?usp=sharing
