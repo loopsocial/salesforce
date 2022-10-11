@@ -17,7 +17,7 @@ exports.dashboard = function () {
     try {
         var preferencesModel = new PreferencesModel();
         var getFwConfigSetting=preferencesModel.getPreferences();
-        if(getFwConfigSetting.fireworkApiEndPoint)
+        if(getFwConfigSetting.fireworkApiEndPoint && getFwConfigSetting.getUniqueBMUID)
         {
                 var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
                 if(oauthCOObj == null)
@@ -75,7 +75,6 @@ exports.dashboard = function () {
                             getGraphQLJSONObj.provider=getFwConfigSetting.provider;
                             getGraphQLJSONObj.siteUrl=getFwConfigSetting.getUniqueBMUID;
                             getGraphQLJSONObj.uid=getFwConfigSetting.getUniqueBMUID;
-                            getGraphQLJSONObj.accessKey=getFwConfigSetting.accessKey;
                             getGraphQLJSONObj.storeId=storeId;
                             getGraphQLJSONObj.accessToken=getRefreshTokenResponse.access_token;
                             getGraphQLJSONObj.refreshToken=getRefreshTokenResponse.refresh_token;
@@ -250,7 +249,6 @@ exports.callback = function () {
                         getGraphQLJSONObj.provider=getFwConfigSetting.provider;
                         getGraphQLJSONObj.siteUrl=getFwConfigSetting.getUniqueBMUID;
                         getGraphQLJSONObj.uid=getUniqueBMUID;
-                        getGraphQLJSONObj.accessKey=getFwConfigSetting.accessKey;
                         getGraphQLJSONObj.endPointUrl=getFwConfigSetting.graphQLEndpoint;
                         getGraphQLJSONObj.storeId=businessStoreId;
                         getGraphQLJSONObj.accessToken=accessToken;
@@ -274,7 +272,6 @@ exports.callback = function () {
                         getGraphQLJSONObj.siteTitle=getFwConfigSetting.siteTitle;
                         getGraphQLJSONObj.provider=getFwConfigSetting.provider;
                         getGraphQLJSONObj.siteUrl=getFwConfigSetting.getUniqueBMUID;
-                        getGraphQLJSONObj.accessKey=getFwConfigSetting.accessKey;
                         getGraphQLJSONObj.uid=getUniqueBMUID;
                         getGraphQLJSONObj.endPointUrl=getFwConfigSetting.graphQLEndpoint;
                         getGraphQLJSONObj.accessToken=accessToken;
@@ -299,7 +296,6 @@ exports.callback = function () {
                     getGraphQLJSONObj.siteTitle=getFwConfigSetting.siteTitle;
                     getGraphQLJSONObj.provider=getFwConfigSetting.provider;
                     getGraphQLJSONObj.siteUrl=getFwConfigSetting.getUniqueBMUID;
-                    getGraphQLJSONObj.accessKey=getFwConfigSetting.accessKey;
                     getGraphQLJSONObj.uid=getUniqueBMUID;
                     getGraphQLJSONObj.endPointUrl=getFwConfigSetting.graphQLEndpoint;
                     getGraphQLJSONObj.storeId=FireworkCOObj.custom.businessStoreId;
@@ -326,15 +322,21 @@ exports.callback = function () {
     /* Local API Includes */
     try {
         var OauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
-        var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
+		var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
         if(FireworkCOObj != null || OauthCOObj!=null)
         {
             var frRest =!empty(request.httpParameterMap.frRest.value) ? request.httpParameterMap.frRest.value: ""; 
             if(frRest=='true')
             {
                 Transaction.begin();
+                if(FireworkCOObj != null)
+                {
                 dw.object.CustomObjectMgr.remove(FireworkCOObj);
+                }
+                if(OauthCOObj != null)
+                {
                 dw.object.CustomObjectMgr.remove(OauthCOObj);
+                }
                 Transaction.commit();
                 ISML.renderTemplate('dashboard/resetsuccess',{resetflag:true});
                 return;

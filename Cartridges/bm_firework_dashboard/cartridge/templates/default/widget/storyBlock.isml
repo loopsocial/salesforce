@@ -13,9 +13,9 @@
           <span id="ajaxgetvideolist" data-action="${URLUtils.url('firework-getvideolist')}"></span>
           <span id="selectedPlayListId" data-id="${pdict.getSelectedValue.selectedPlayList}"></span>
           <span id="selectedVideoId" data-id="${pdict.getSelectedValue.selectedVideo}"></span>
-         <label>Channel List </label>
+         <label>${Resource.msg('widget.setting.channelList','widget',null)}</label>
          <select name="selectedChannel" id="selectedChannel">
-                  <option value="">---Select Channel--</option>
+                  <option value="">${Resource.msg('widget.setting.selectChannel','widget',null)}</option>
                   <isif condition="${!empty(pdict.getChannelListJsonObj.channels)}">
                   <isloop items="${pdict.getChannelListJsonObj.channels}" var="channels">
                        <isif condition="${pdict.getSelectedValue.selectedChannelData==channels.id+'~~~'+channels.username}">

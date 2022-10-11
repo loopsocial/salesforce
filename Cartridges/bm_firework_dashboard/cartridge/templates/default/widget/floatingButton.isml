@@ -12,9 +12,9 @@
          <div id="firework-widget-settings">
          <div class="firework-widget-settings-main">
          <div class="firework-widget-settings-column">
-         <label>Channel List </label>
+         <label>${Resource.msg('widget.setting.channelList','widget',null)}</label>
          <select name="selectedChannel" id="selectedChannel">
-                  <option value="">---Select Channel--</option>
+                  <option value="">${Resource.msg('widget.setting.selectChannel','widget',null)}</option>
                   <isif condition="${!empty(pdict.getChannelListJsonObj.channels)}">
                   <isloop items="${pdict.getChannelListJsonObj.channels}" var="channels">
                        <isif condition="${pdict.getSelectedValue.selectedChannelData==channels.id+'~~~'+channels.username}">
@@ -31,7 +31,7 @@
          <div class="firework-widget-settings-input">
          <div class="firework-widget-settings-column">
                <div class="firework-widget-settings-column">
-                  <label>Placement</label>
+                  <label>${Resource.msg('widget.setting.placement','widget',null)}</label>
                   <div class="fw-widget-position">
                      <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_bottom_right" value="bottom-right"  <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='bottom-right'}"> checked </isif>  /><label for="location_bottom_right">Bottom Right</label></div>
                      <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_bottom_left" value="bottom-left" <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='bottom-left'}"> checked </isif> /><label for="location_bottom_left">Bottom Left</label></div>
@@ -40,7 +40,7 @@
                   </div>
                </div>
                <div class="firework-widget-settings-column">
-               <label>Open In</label>
+               <label>${Resource.msg('widget.setting.openIn','widget',null)}</label>
                <div class="fw-widget-position">
                   <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="openinwindow" id="location_new_tab" value="new_tab" <isif condition="${pdict.getSelectedValue.openinwindow=='new_tab'}"> checked </isif> /><label for="location_new_tab">New Tab</label></div>
                   <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="openinwindow" id="location_current_tab" value="current_tab" <isif condition="${pdict.getSelectedValue.openinwindow=='current_tab'}"> checked </isif> /><label for="location_current_tab">Current Tab</label></div>
@@ -48,11 +48,11 @@
                </div>
                </div>
                <div class="firework-widget-settings-column">
-               <label>Vertical Offset</label>
+               <label>${Resource.msg('widget.setting.verticalOffset','widget',null)}</label>
                <input type="text" class="input-fw-input" id="vertical_offset" name="vertical_offset" <isif condition="${pdict.getSelectedValue.vertical_offset!=null}"> value="${pdict.getSelectedValue.vertical_offset}" </isif> />
                </div>
                <div class="firework-widget-settings-column">
-               <label>Horizontal Offset</label>
+               <label>${Resource.msg('widget.setting.horizontalOffset','widget',null)}</label>
                <input type="text" class="input-fw-input" id="horizontal_offset" name="horizontal_offset" <isif condition="${pdict.getSelectedValue.horizontal_offset!=null}"> value="${pdict.getSelectedValue.horizontal_offset}" </isif> />
                </div>
          </div>

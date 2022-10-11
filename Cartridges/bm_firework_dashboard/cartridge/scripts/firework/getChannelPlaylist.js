@@ -1,6 +1,7 @@
 'use strict';
 var Mac = require('dw/crypto/Mac');
 var Encoding = require('dw/crypto/Encoding');
+const ISML = require('dw/template/ISML');
 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 importPackage(dw.system);
 importPackage(dw.util);
@@ -33,8 +34,8 @@ function getChannelPlayListFun(ChannelId)
 		return htmlSuccess;
 	} else {
 		var resultMessage = JSON.parse(result.errorMessage);
-	//	return resultMessage.errorMessage;
-		return resultMessage;
+		ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
+		return;
 	}
 }
 module.exports = {

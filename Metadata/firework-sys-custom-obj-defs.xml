@@ -2,62 +2,15 @@
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
   <type-extension type-id="SitePreferences">
   <custom-attribute-definitions>
-			<attribute-definition attribute-id="fireworkApiEndPoint">
-                <display-name xml:lang="x-default">Firework API EndPoint URL</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-				<default-value>https://fireworktv.com</default-value>
-            </attribute-definition>
-            <attribute-definition attribute-id="fireworkIframeURL">
-                <display-name xml:lang="x-default">Firework Iframe URL</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-				<default-value>https://business.firework.com</default-value>
-            </attribute-definition>
             <attribute-definition attribute-id="getUniqueBMUID">
-                <display-name xml:lang="x-default">Business Unique Id</display-name>
+                <display-name xml:lang="x-default">Storefront URL</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="graphQLEndpoint">
-                <display-name xml:lang="x-default">Graphql End Point URL</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-				<default-value>https://fireworktv.com/graphiql</default-value>
-            </attribute-definition>
-			<attribute-definition attribute-id="clientName">
-                <display-name xml:lang="x-default">Client Name</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-				<default-value>Salesforce Commerce Cloud</default-value>
             </attribute-definition>
             <attribute-definition attribute-id="contactsEmail">
                 <display-name xml:lang="x-default">Contact Email</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-            </attribute-definition>
-			<attribute-definition attribute-id="provider">
-                <display-name xml:lang="x-default">Provider</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-				<default-value>SALESFORCE</default-value>
-            </attribute-definition>
-			<attribute-definition attribute-id="siteTitle">
-                <display-name xml:lang="x-default">Site Title</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -70,27 +23,13 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-			<attribute-definition attribute-id="accessKey">
-                <display-name xml:lang="x-default">Access Key</display-name>
-                <type>string</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <min-length>0</min-length>
-            </attribute-definition>
    </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="fireworkDashboardConfig">
                 <display-name xml:lang="x-default">Firework Dashboard Configuration</display-name>
-                <attribute attribute-id="fireworkApiEndPoint"/>
-                <attribute attribute-id="fireworkIframeURL"/>
                 <attribute attribute-id="siteCurrency"/>
-                <attribute attribute-id="siteTitle"/>
-                <attribute attribute-id="provider"/>
-                <attribute attribute-id="graphQLEndpoint"/>
                 <attribute attribute-id="getUniqueBMUID"/>
-                <attribute attribute-id="clientName"/>
                 <attribute attribute-id="contactsEmail"/>
-				<attribute attribute-id="accessKey"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

@@ -70,12 +70,11 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
                var tenantId =request.httpParameterMap.tenantId; 
                var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
                var callbackUrl=request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('oauth-callback');
-                
-                    oauthConfig.shortCode=shortCode;
-                    oauthConfig.fworganizationid=fworganizationid;
-                    oauthConfig.fwclientid=fwclientid;
-                    oauthConfig.fwclientsecret=fwclientsecret;
-                    oauthConfig.tenant_id=tenantId
+                oauthConfig.shortCode=shortCode;
+                oauthConfig.fworganizationid=fworganizationid;
+                oauthConfig.fwclientid=fwclientid;
+                oauthConfig.fwclientsecret=fwclientsecret;
+                oauthConfig.tenant_id=tenantId
                     //------------get CLI access token---------------//
                     var getTokenObj =require('~/cartridge/scripts/oauth/tokenAPI');
                     var getTokenResponse = getTokenObj.getToken(oauthConfig);
@@ -107,21 +106,19 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
                                 var authorizeGuestObj =require('~/cartridge/scripts/oauth/authorizeGuestAPI');
                                 var redirectURL = authorizeGuestObj.authorizeGuestFun(fworganizationid,callbackUrl,fwclientid,shortCode);
                                 response.redirect(redirectURL);
-                                return;
+                                return; 
                             }
                         }
                     }
-               return;
+                    return; 
         }
         catch (e){
             var errorMsg= {
                 status: 'failed',
                 message:"error has occurred "+e
             };
-            ISML.renderTemplate('oauth/errorMsg',{errorMsg:errorMsg});
-            return;
         }
-    return;
+        return; 
 }
 /**
  * This controller implements the business manager extension action for Oauth Token Process.

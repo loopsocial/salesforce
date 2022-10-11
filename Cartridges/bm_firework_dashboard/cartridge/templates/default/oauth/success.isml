@@ -1,9 +1,9 @@
 <isdecorate template="application/MenuFrame">
 <isif condition="${pdict.updateGraphQLForTokenDataResponse.data}">
-    API Configuration Stored Successfully.
+    ${Resource.msg('oauth.success.storeConfig','oauth',null)}
     <iselse/>
-    Somthing went wrong...!!! 
-    Error : <isscript>
+    ${Resource.msg('oauth.success.wrong','oauth',null)}
+    ${Resource.msg('oauth.success.error','oauth',null)} : <isscript>
 		var errorMessageDetail =JSON.stringify(pdict.updateGraphQLForTokenDataResponse);
 	        </isscript>
         ${errorMessageDetail}

@@ -1,6 +1,7 @@
 'use strict';
 var Mac = require('dw/crypto/Mac');
 var Encoding = require('dw/crypto/Encoding');
+const ISML = require('dw/template/ISML');
 importPackage(dw.system);
 importPackage(dw.util);
 var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
@@ -15,7 +16,7 @@ function oauthRegister(){
     var getFwConfigSetting=preferencesModel.getPreferences();
 	var store_domain =request.getHttpProtocol()+'://'+request.getHttpHost();
 	var oauthRegisterJSONObj = {};
-		oauthRegisterJSONObj.client_name=getFwConfigSetting.clientName;
+		oauthRegisterJSONObj.client_name=dw.system.Site.current.ID+" Oauth App";
 		oauthRegisterJSONObj.redirect_uris=[store_domain+URLUtils.url('firework-callback').toString()];
 		oauthRegisterJSONObj.contacts=[getFwConfigSetting.contactsEmail];
 		oauthRegisterJSONObj.scope="openid";
@@ -33,8 +34,8 @@ function oauthRegister(){
 		return htmlSuccess;
 	} else {
 		var resultMessage = JSON.parse(result.errorMessage);
-	//	return resultMessage.errorMessage;
-		return resultMessage;
+		ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
+		return;
 	}
 }
 

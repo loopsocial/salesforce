@@ -2,6 +2,7 @@
 var System = require('dw/system/System');
 var Mac = require('dw/crypto/Mac');
 var Encoding = require('dw/crypto/Encoding');
+const ISML = require('dw/template/ISML');
 importPackage(dw.system);
 importPackage(dw.util);
 /**
@@ -38,8 +39,8 @@ function privateClientidRegistrationfun(token,tenantId,fwClientId,fwSecret,redir
 		return htmlSuccess;
 	} else {
 		var resultMessage = JSON.parse(result.errorMessage);
-	//	return resultMessage.errorMessage;
-		return resultMessage;
+		ISML.renderTemplate('oauth/errorMsg',{errorMsg:resultMessage});
+        return;
 	}
 }
 

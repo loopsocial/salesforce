@@ -1,8 +1,8 @@
 <isdecorate template="application/MenuFrame">
 <isscript>
 var getFwConfigSetting = dw.system.Site.getCurrent().getPreferences().getCustom();
-var fireworkIframeURL = getFwConfigSetting["fireworkIframeURL"];
-var provider = getFwConfigSetting["provider"];
+var fireworkIframeURL = 'https://business.firework.com';
+var provider = 'SALESFORCE';
 </isscript>
 <iscontent type="text/html" charset="UTF-8" />
        <iframe id="fw-iframe" src="${fireworkIframeURL}/integration" style="width: 100%; border: none; height: 800px;"></iframe>

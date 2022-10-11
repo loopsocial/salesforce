@@ -11,9 +11,9 @@
          <div id="firework-widget-settings">
          <div class="firework-widget-settings-main">
          <div class="firework-widget-settings-column">
-         <label>Channel List </label>
+         <label>${Resource.msg('widget.setting.channelList','widget',null)}</label>
          <select name="selectedChannel" id="selectedChannel">
-                  <option value="">---Select Channel--</option>
+                  <option value="">${Resource.msg('widget.setting.selectChannel','widget',null)}</option>
                   <isif condition="${!empty(pdict.getChannelListJsonObj.channels)}">
                   <isloop items="${pdict.getChannelListJsonObj.channels}" var="channels">
                        <isif condition="${pdict.getSelectedValue.selectedChannelData==channels.id+'~~~'+channels.username}">
@@ -28,18 +28,18 @@
          <div class="firework-widget-settings-column" id='selectedPlayListdata'></div>
          <div class="firework-widget-settings-input">
          <div class="firework-widget-settings-column">
-            <label>Video Show In Grid</label>
+            <label>${Resource.msg('widget.setting.gridView','widget',null)}</label>
             <div class="fw-widget-position">
                <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="videoshowingrid" id="videoshowingrid" value="Infinite" <isif condition="${pdict.getSelectedValue.videoshowingrid=='Infinite'}"> checked </isif>   /><label for="Infinite">Infinite</label></div>
                <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="videoshowingrid" id="videoshowingrid" value="Load" <isif condition="${pdict.getSelectedValue.videoshowingrid=='Load'}"> checked </isif> /><label for="Load">Load</label></div>
             </div>
             </div>
             <div class="firework-widget-settings-column">
-            <label>Video at a Time</label>
+            <label>${Resource.msg('widget.setting.videoTime','widget',null)}</label>
             <input type="text" class="input-fw-input" id="videoattime" name="videoattime"  <isif condition="${pdict.getSelectedValue.videoattime!=null}"> value="${pdict.getSelectedValue.videoattime}" </isif> />
             </div>
                <div class="firework-widget-settings-column">
-               <label>Minimized Video Player Location</label>
+               <label>${Resource.msg('widget.setting.playerLocation','widget',null)}</label>
                <div class="fw-widget-position">
                   <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_bottom_right" value="bottom-right"  <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='bottom-right'}"> checked </isif>  /><label for="location_bottom_right">Bottom Right</label></div>
                   <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_bottom_left" value="bottom-left" <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='bottom-left'}"> checked </isif> /><label for="location_bottom_left">Bottom Left</label></div>

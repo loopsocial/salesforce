@@ -12,9 +12,9 @@
          <div id="firework-widget-settings">
          <div class="firework-widget-settings-main">
          <div class="firework-widget-settings-column">
-         <label>Channel List </label>
+         <label>${Resource.msg('widget.setting.channelList','widget',null)}</label>
          <select name="selectedChannel" id="selectedChannel">
-                  <option value="">---Select Channel--</option>
+                  <option value="">${Resource.msg('widget.setting.selectChannel','widget',null)}</option>
                   <isif condition="${!empty(pdict.getChannelListJsonObj.channels)}">
                   <isloop items="${pdict.getChannelListJsonObj.channels}" var="channels">
                        <isif condition="${pdict.getSelectedValue.selectedChannelData==channels.id+'~~~'+channels.username}">

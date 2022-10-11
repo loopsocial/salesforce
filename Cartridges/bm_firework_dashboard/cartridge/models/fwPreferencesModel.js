@@ -1,5 +1,4 @@
 var Site = require('dw/system/Site');
-
 /**
  * @description Contructor function for the model
  * @constructor Preferences
@@ -19,15 +18,13 @@ Preferences.prototype.getPreferences = function (preferencesArgs) {
     }
     var preferenceObject = {
         siteCurrency: preference.custom.siteCurrency,
-        siteTitle: preference.custom.siteTitle,
-        provider: preference.custom.provider,
-        graphQLEndpoint: preference.custom.graphQLEndpoint,
+        siteTitle: dw.system.Site.current.ID,
         getUniqueBMUID: preference.custom.getUniqueBMUID,
-        clientName: preference.custom.clientName,
         contactsEmail: preference.custom.contactsEmail,
-        fireworkApiEndPoint: preference.custom.fireworkApiEndPoint,
-        fireworkIframeURL: preference.custom.fireworkIframeURL,
-        accessKey: preference.custom.accessKey
+        provider: 'SALESFORCE',
+        graphQLEndpoint: 'https://fireworktv.com/graphiql',
+        fireworkApiEndPoint: 'https://fireworktv.com/',
+        fireworkIframeURL: 'https://business.firework.com'
     };
     return preferenceObject;
 };

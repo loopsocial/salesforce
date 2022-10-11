@@ -2,6 +2,7 @@
 var System = require('dw/system/System');
 var Encoding = require('dw/crypto/Encoding');
 var Bytes = require('dw/util/Bytes');
+const ISML = require('dw/template/ISML');
 /**
  * Get the user details and assign them points.
  */
@@ -25,11 +26,10 @@ function getToken(oauthConfig)
 		return htmlSuccess;
 	} else {
 		var resultMessage = JSON.parse(result.errorMessage);
-	//	return resultMessage.errorMessage;
-		return resultMessage;
+		ISML.renderTemplate('oauth/errorMsg',{errorMsg:resultMessage});
+        return;
 	}
 }
-
 module.exports = {
     getToken: getToken
 };
