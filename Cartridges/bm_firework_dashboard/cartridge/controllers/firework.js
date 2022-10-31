@@ -45,8 +45,7 @@ exports.dashboard = function () {
                     FireworkCOObj = CustomObjectMgr.createCustomObject('FireworkCO',dw.system.Site.current.ID);
                     FireworkCOObj.custom.oauthData =oauthRegisterResponse;
                     Transaction.commit();
-                    var getRedirectURL=getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+redirectUri+'&client_id='+clientId+'&state=STATE&business_onboard=true';
-                    response.redirect(getRedirectURL);
+                    response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+redirectUri+'&client_id='+clientId+'&state=STATE&business_onboard=true');
                 }
                 else
                 {
