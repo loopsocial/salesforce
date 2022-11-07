@@ -23,7 +23,7 @@ Preferences.prototype.getPreferences = function (preferencesArgs) {
         contactsEmail: preference.custom.contactsEmail,
         provider: 'SALESFORCE',
         graphQLEndpoint: 'https://fireworktv.com/graphiql',
-        fireworkApiEndPoint: 'https://fireworktv.com/',
+        fireworkApiEndPoint: 'https://fireworktv.com',
         fireworkIframeURL: 'https://business.firework.com'
     };
     return preferenceObject;
