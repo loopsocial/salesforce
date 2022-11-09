@@ -2,7 +2,7 @@
     "step-types": {
         "script-module-step": [
             {
-                "@type-id": "custom.Firewok.RefreshToken",
+                "@type-id": "custom.RefreshToken",
                 "description": "Used this cron from firework Product",
                 "module": "bm_firework_dashboard/cartridge/scripts/jobsteps/refreshToken.js",
                 "function": "Run",
