@@ -47,28 +47,28 @@
             <attribute-definition attribute-id="businessOauthData">
                 <display-name xml:lang="x-default">Business Oauth Data</display-name>
                 <type>text</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="businessStoreId">
                 <display-name xml:lang="x-default">Business Store Id</display-name>
                 <type>text</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="oauthData">
                 <display-name xml:lang="x-default">Oauth Register Data</display-name>
                 <type>text</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="tokenData">
                 <display-name xml:lang="x-default">Token details</display-name>
                 <type>text</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
@@ -98,14 +98,14 @@
             <attribute-definition attribute-id="accessTokenObject">
                 <display-name xml:lang="x-default">accessTokenObject</display-name>
                 <type>text</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
             <attribute-definition attribute-id="cli_token">
                 <display-name xml:lang="x-default">CLI Token</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -113,7 +113,7 @@
             <attribute-definition attribute-id="client_id">
                 <display-name xml:lang="x-default">client Id</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -121,7 +121,7 @@
             <attribute-definition attribute-id="client_secret">
                 <display-name xml:lang="x-default">client Secret</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -129,7 +129,7 @@
             <attribute-definition attribute-id="code">
                 <display-name xml:lang="x-default">code</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -137,7 +137,7 @@
             <attribute-definition attribute-id="code_challenge">
                 <display-name xml:lang="x-default">Code Challenge</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -145,7 +145,7 @@
             <attribute-definition attribute-id="code_verifier">
                 <display-name xml:lang="x-default">Code Verifier</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -153,7 +153,7 @@
             <attribute-definition attribute-id="org_id">
                 <display-name xml:lang="x-default">org ID</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -161,7 +161,7 @@
             <attribute-definition attribute-id="short_code">
                 <display-name xml:lang="x-default">Short Code</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -169,7 +169,7 @@
             <attribute-definition attribute-id="tenant_id">
                 <display-name xml:lang="x-default">Tenent Id</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
@@ -177,7 +177,7 @@
             <attribute-definition attribute-id="usid">
                 <display-name xml:lang="x-default">usid</display-name>
                 <type>string</type>
-                <localizable-flag>true</localizable-flag>
+                <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
