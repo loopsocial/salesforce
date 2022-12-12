@@ -18,7 +18,7 @@ Preferences.prototype.getPreferences = function (preferencesArgs) {
     }
     var preferenceObject = {
         siteCurrency: preference.custom.siteCurrency,
-        siteTitle: dw.system.Site.current.ID,
+        siteTitle: preference.custom.siteTitle,
         getUniqueBMUID: preference.custom.getUniqueBMUID,
         contactsEmail: preference.custom.contactsEmail,
         provider: 'SALESFORCE',
