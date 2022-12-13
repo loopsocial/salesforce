@@ -9,8 +9,8 @@
          <div id="firework-widget-settings">
          <div class="firework-widget-settings-main">
          <div class="firework-widget-settings-column">
-         <span id="ajaxgetplayList" data-action="${URLUtils.url('firework-getplaylist')}"></span>
-          <span id="ajaxgetvideolist" data-action="${URLUtils.url('firework-getvideolist')}"></span>
+         <span id="ajaxgetplayList" data-action="${URLUtils.url('Firework-getplaylist')}"></span>
+          <span id="ajaxgetvideolist" data-action="${URLUtils.url('Firework-getvideolist')}"></span>
           <span id="selectedPlayListId" data-id="${pdict.getSelectedValue.selectedPlayList}"></span>
           <span id="selectedVideoId" data-id="${pdict.getSelectedValue.selectedVideo}"></span>
          <label>${Resource.msg('widget.setting.channelList','widget',null)}</label>

@@ -2,28 +2,28 @@
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
   <type-extension type-id="SitePreferences">
   <custom-attribute-definitions>
-            <attribute-definition attribute-id="getUniqueBMUID">
+            <attribute-definition attribute-id="fireworkUniqueBMUID">
                 <display-name xml:lang="x-default">Storefront URL</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="contactsEmail">
+            <attribute-definition attribute-id="fireworkContactsEmail">
                 <display-name xml:lang="x-default">Contact Email</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-			 <attribute-definition attribute-id="siteCurrency">
+			 <attribute-definition attribute-id="fireworkSiteCurrency">
                 <display-name xml:lang="x-default">Curreny</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-			<attribute-definition attribute-id="siteTitle">
+			<attribute-definition attribute-id="fireworkSiteTitle">
                 <display-name xml:lang="x-default">Site Title</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
@@ -34,10 +34,10 @@
         <group-definitions>
             <attribute-group group-id="fireworkDashboardConfig">
                 <display-name xml:lang="x-default">Firework Dashboard Configuration</display-name>
-                <attribute attribute-id="siteCurrency"/>
-                <attribute attribute-id="getUniqueBMUID"/>
-                <attribute attribute-id="contactsEmail"/>
-				<attribute attribute-id="siteTitle"/>
+                <attribute attribute-id="fireworkSiteCurrency"/>
+                <attribute attribute-id="fireworkUniqueBMUID"/>
+                <attribute attribute-id="fireworkContactsEmail"/>
+				<attribute attribute-id="fireworkSiteTitle"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
@@ -52,28 +52,28 @@
             <min-length>0</min-length>
         </key-definition>
         <attribute-definitions>
-            <attribute-definition attribute-id="businessOauthData">
+            <attribute-definition attribute-id="fireworkBusinessOauthData">
                 <display-name xml:lang="x-default">Business Oauth Data</display-name>
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
-            <attribute-definition attribute-id="businessStoreId">
+            <attribute-definition attribute-id="fireworkBusinessStoreId">
                 <display-name xml:lang="x-default">Business Store Id</display-name>
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
-            <attribute-definition attribute-id="oauthData">
+            <attribute-definition attribute-id="fireworkOauthData">
                 <display-name xml:lang="x-default">Oauth Register Data</display-name>
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
-            <attribute-definition attribute-id="tokenData">
+            <attribute-definition attribute-id="fireworkTokenData">
                 <display-name xml:lang="x-default">Token details</display-name>
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
@@ -85,16 +85,16 @@
             <attribute-group group-id="FireworkCOAttributes">
                 <display-name xml:lang="x-default">Firework</display-name>
                 <attribute attribute-id="ID"/>
-                <attribute attribute-id="oauthData"/>
-                <attribute attribute-id="tokenData"/>
-                <attribute attribute-id="businessOauthData"/>
-                <attribute attribute-id="businessStoreId"/>
+                <attribute attribute-id="fireworkOauthData"/>
+                <attribute attribute-id="fireworkTokenData"/>
+                <attribute attribute-id="fireworkBusinessOauthData"/>
+                <attribute attribute-id="fireworkBusinessStoreId"/>
             </attribute-group>
         </group-definitions>
     </custom-type>
 
-    <custom-type type-id="OauthCO">
-        <display-name xml:lang="x-default">OauthCO</display-name>
+    <custom-type type-id="FireworkOauthCO">
+        <display-name xml:lang="x-default">FireworkOauthCO</display-name>
         <description xml:lang="x-default">Used to store data about oauth creditional</description>
         <staging-mode>source-to-target</staging-mode>
         <storage-scope>site</storage-scope>
@@ -103,14 +103,14 @@
             <min-length>0</min-length>
         </key-definition>
         <attribute-definitions>
-            <attribute-definition attribute-id="accessTokenObject">
+            <attribute-definition attribute-id="fireworkAccessTokenObject">
                 <display-name xml:lang="x-default">accessTokenObject</display-name>
                 <type>text</type>
                 <localizable-flag>false</localizable-flag>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
-            <attribute-definition attribute-id="cli_token">
+            <attribute-definition attribute-id="fireworkCliToken">
                 <display-name xml:lang="x-default">CLI Token</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -118,7 +118,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="client_id">
+            <attribute-definition attribute-id="fireworkClientId">
                 <display-name xml:lang="x-default">client Id</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -126,7 +126,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="client_secret">
+            <attribute-definition attribute-id="fireworkClientSecret">
                 <display-name xml:lang="x-default">client Secret</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -134,7 +134,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="code">
+            <attribute-definition attribute-id="fireworkCode">
                 <display-name xml:lang="x-default">code</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -142,7 +142,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="code_challenge">
+            <attribute-definition attribute-id="fireworkCodeChallenge">
                 <display-name xml:lang="x-default">Code Challenge</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -150,7 +150,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="code_verifier">
+            <attribute-definition attribute-id="fireworkCodeVerifier">
                 <display-name xml:lang="x-default">Code Verifier</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -158,7 +158,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="org_id">
+            <attribute-definition attribute-id="fireworkOrgId">
                 <display-name xml:lang="x-default">org ID</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -166,7 +166,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="short_code">
+            <attribute-definition attribute-id="fireworkShortCode">
                 <display-name xml:lang="x-default">Short Code</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -174,7 +174,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="tenant_id">
+            <attribute-definition attribute-id="fireworkTenantId">
                 <display-name xml:lang="x-default">Tenent Id</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -182,7 +182,7 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="usid">
+            <attribute-definition attribute-id="fireworkUsId">
                 <display-name xml:lang="x-default">usid</display-name>
                 <type>string</type>
                 <localizable-flag>false</localizable-flag>
@@ -192,20 +192,20 @@
             </attribute-definition>
         </attribute-definitions>
         <group-definitions>
-            <attribute-group group-id="OauthCOAttributes">
+            <attribute-group group-id="fireworkOauthCOAttributes">
                 <display-name xml:lang="x-default">OauthCO</display-name>
                 <attribute attribute-id="ID"/>
-                <attribute attribute-id="client_id"/>
-                <attribute attribute-id="client_secret"/>
-                <attribute attribute-id="tenant_id"/>
-                <attribute attribute-id="short_code"/>
-                <attribute attribute-id="org_id"/>
-                <attribute attribute-id="cli_token"/>
-                <attribute attribute-id="usid"/>
-                <attribute attribute-id="code"/>
-                <attribute attribute-id="code_verifier"/>
-                <attribute attribute-id="accessTokenObject"/>
-                <attribute attribute-id="code_challenge"/>
+                <attribute attribute-id="fireworkClientId"/>
+                <attribute attribute-id="fireworkClientSecret"/>
+                <attribute attribute-id="fireworkTenantId"/>
+                <attribute attribute-id="fireworkShortCode"/>
+                <attribute attribute-id="fireworkOrgId"/>
+                <attribute attribute-id="fireworkCliToken"/>
+                <attribute attribute-id="fireworkUsId"/>
+                <attribute attribute-id="fireworkCode"/>
+                <attribute attribute-id="fireworkCodeVerifier"/>
+                <attribute attribute-id="fireworkAccessTokenObject"/>
+                <attribute attribute-id="fireworkCodeChallenge"/>
             </attribute-group>
         </group-definitions>
     </custom-type>

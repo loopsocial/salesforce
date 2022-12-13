@@ -9,7 +9,7 @@ var ProductMgr = require('dw/catalog/ProductMgr');
  *
  * @module controllers/show
  */
- exports.Show = function () {
+ exports.show = function () {
     /* Local API Includes */
                         var productID = request.httpParameterMap.productSKU.value;
                         if (empty(productID)) {

@@ -5,11 +5,13 @@ document.addEventListener("click", function () {
     var getChannelUsername=getChannelSplitArr[1];
     var selectedPlayList = document.querySelector("#selectedPlayList").value;
     var minimizedVideoPlayerLocation;
-    if(document.querySelector('input[name=minimized_video_player_location]:checked').value && document.querySelector('input[name=minimized_video_player_location]:checked').value!=null )
+    if(document.querySelector('input[name=minimized_video_player_location]:checked')!== null)
     {
-     minimizedVideoPlayerLocation =document.querySelector('input[name=minimized_video_player_location]:checked').value;
+      if(document.querySelector('input[name=minimized_video_player_location]:checked').value)
+      {
+      minimizedVideoPlayerLocation =document.querySelector('input[name=minimized_video_player_location]:checked').value;
+      }
     }
-    
     var message={};
     message.selectedChannel=getChannelUsername;
     message.selectedChannelData=selectedChannel;

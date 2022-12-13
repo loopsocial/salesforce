@@ -17,7 +17,7 @@ function oauthRegister(){
 	var store_domain =request.getHttpProtocol()+'://'+request.getHttpHost();
 	var oauthRegisterJSONObj = {};
 		oauthRegisterJSONObj.client_name=dw.system.Site.current.ID+" Oauth App";
-		oauthRegisterJSONObj.redirect_uris=[store_domain+URLUtils.url('firework-callback').toString()];
+		oauthRegisterJSONObj.redirect_uris=[store_domain+URLUtils.url('Firework-callback').toString()];
 		oauthRegisterJSONObj.contacts=[getFwConfigSetting.contactsEmail];
 		oauthRegisterJSONObj.scope="openid";
 	var restService = require('~/cartridge/scripts/init/FireWorkInit');

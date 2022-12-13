@@ -21,19 +21,19 @@ function authorizeGuestFun(org_id,redirectURL,client_id,shortCode)
 	var htmlError = '<div id="saErroroauthRegister">Something went wrong.</div>';
 	var codeChallenge=generateCodeChallenge();
 	var service:Service =restService.getauthorizeGuestService;
-	service.URL=service.URL.replace('{short_code}',shortCode);
+	service.URL=service.URL.replace('{fireworkShortCode}',shortCode);
 	service.URL += '/shopper/auth/v1/organizations/'+org_id+'/oauth2/authorize?redirect_uri='+redirectURL+'&hint=guest&response_type=code&channel_id='+dw.system.Site.current.ID+'&code_challenge='+codeChallenge+'&client_id='+client_id+'&state=client-state';
 	return service.URL;
 }
 function generateCodeChallenge() {
 		var verifier =generateCodeVerifier();
 		var challenge = generateCodeChallengeScript(verifier);
-		var OauthCO = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+		var OauthCO = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
         if(OauthCO != null)
         {
 			Transaction.begin();
-			OauthCO.custom.code_verifier=verifier;
-			OauthCO.custom.code_challenge=challenge;
+			OauthCO.custom.fireworkCodeVerifier=verifier;
+			OauthCO.custom.fireworkCodeChallenge=challenge;
 			Transaction.commit();
 		}
 		return challenge;
@@ -47,8 +47,8 @@ function generateCodeVerifier() {
 }
 function generateCodeChallengeScript(code_verifier) {
 	var md : MessageDigest = new MessageDigest(MessageDigest.DIGEST_SHA_256);
-    var codeChallengeBytes : Bytes = new Bytes(code_verifier);
-    var codeChallenge  = md.digest(MessageDigest.DIGEST_SHA_256, codeChallengeBytes);
+    var codeChallengeBytes : Bytes = new Bytes(code_verifier,'UTF-8');
+    var codeChallenge  = md.digestBytes(codeChallengeBytes);
 	return Encoding.toBase64(codeChallenge).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
 module.exports = {

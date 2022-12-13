@@ -1,6 +1,5 @@
 <isdecorate template="application/MenuFrame">
 <isscript>
-var getFwConfigSetting = dw.system.Site.getCurrent().getPreferences().getCustom();
 var fireworkIframeURL = 'https://business.firework.com';
 var provider = 'SALESFORCE';
 </isscript>
@@ -29,4 +28,3 @@ var provider = 'SALESFORCE';
                 window.addEventListener('message', handleMessage, false);
         </script>
 </isdecorate>
-

@@ -20,7 +20,7 @@ function tenantRegistrationfun(token,shortCode,tenantId)
 		tenantRegisterJSONObj.emailAddress="ruturaj@fireworkhq.com";
 		var payLoadDetails=new Bytes(JSON.stringify(tenantRegisterJSONObj));
 		var service:Service =restService.tenantRegistrationService;
-		service.URL=service.URL.replace('{short_code}',shortCode);
+		service.URL=service.URL.replace('{fireworkShortCode}',shortCode);
 		service.URL += '/shopper/auth-admin/v1/tenants/'+tenantId;
 		var result:Result = service.call({
 			'Method':"PUT",

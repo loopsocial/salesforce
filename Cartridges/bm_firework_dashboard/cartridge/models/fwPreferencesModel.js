@@ -17,10 +17,10 @@ Preferences.prototype.getPreferences = function (preferencesArgs) {
         preference = Site.current.preferences;
     }
     var preferenceObject = {
-        siteCurrency: preference.custom.siteCurrency,
-        siteTitle: preference.custom.siteTitle,
-        getUniqueBMUID: preference.custom.getUniqueBMUID,
-        contactsEmail: preference.custom.contactsEmail,
+        siteCurrency: preference.custom.fireworkSiteCurrency,
+        siteTitle: preference.custom.fireworkSiteTitle,
+        getUniqueBMUID: preference.custom.fireworkUniqueBMUID,
+        contactsEmail: preference.custom.fireworkContactsEmail,
         provider: 'SALESFORCE',
         graphQLEndpoint: 'https://fireworktv.com/graphiql',
         fireworkApiEndPoint: 'https://fireworktv.com',

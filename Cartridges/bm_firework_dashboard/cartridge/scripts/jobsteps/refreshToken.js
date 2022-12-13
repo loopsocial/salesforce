@@ -17,14 +17,14 @@ var PreferencesModel = require('bm_firework_dashboard/cartridge/models/fwPrefere
 var run = function run() {
 		var preferencesModel = new PreferencesModel();
 		var getFwConfigSetting=preferencesModel.getPreferences();
-        var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+        var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
         var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
 		 if(oauthCOObj != null && FireworkCOObj!=null)
 		 {
 			 		try {
 						 //------------update refresh token for update graphQL data-------------//
-						 var oauthRegisterData=JSON.parse(FireworkCOObj.custom.oauthData);
-						 var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
+						 var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
+						 var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
 						 var callBackJSONObj = {};
 						 //-----------get refresh token and create new accesstoken-------------//
 						 callBackJSONObj.client_id=oauthRegisterData.client_id;
@@ -37,16 +37,16 @@ var run = function run() {
 								 var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
 								 var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
 								 Transaction.begin();
-								 FireworkCOObj.custom.tokenData=getcallBackResponse;
+								 FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
 								 Transaction.commit(); 
 								//---------------------------end--------------------------------------//
 								var getTokenJSONObj = {};
-								var authTokenObjectData=JSON.parse(oauthCOObj.custom.accessTokenObject);
+								var authTokenObjectData=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
 								var refreshToken=authTokenObjectData.refresh_token;
-								getTokenJSONObj.clientSecret=oauthCOObj.custom.client_secret;
-								getTokenJSONObj.clientId=oauthCOObj.custom.client_id;
-								getTokenJSONObj.shortCode=oauthCOObj.custom.short_code;
-								getTokenJSONObj.fworganizationid=oauthCOObj.custom.org_id;
+								getTokenJSONObj.clientSecret=oauthCOObj.custom.fireworkClientSecret;
+								getTokenJSONObj.clientId=oauthCOObj.custom.fireworkClientId;
+								getTokenJSONObj.shortCode=oauthCOObj.custom.fireworkShortCode;
+								getTokenJSONObj.fworganizationid=oauthCOObj.custom.fireworkOrgId;
 								getTokenJSONObj.refresh_token=refreshToken;
 							//----------------------refresh token call function--------//
 							var getrefreshTokenJobObj =require('~/cartridge/scripts/oauth/getRefreshTokenAPI');
@@ -54,7 +54,7 @@ var run = function run() {
 							//return new Status(Status.ERROR, 'ERROR', JSON.stringify(getrefreshTokenJobResponse));
 							var getrefreshTokenJobJsonObj = JSON.parse(getrefreshTokenJobResponse);
 								Transaction.begin();
-									oauthCOObj.custom.accessTokenObject=getrefreshTokenJobJsonObj;
+									oauthCOObj.custom.fireworkAccessTokenObject=getrefreshTokenJobJsonObj;
 								Transaction.commit();
 								//-----------------oauth data------------------------//
 								var updateGraphQLForTokenDataObj =require('~/cartridge/scripts/oauth/updateGraphQLForTokenDataAPI');

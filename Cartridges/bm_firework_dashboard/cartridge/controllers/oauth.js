@@ -16,17 +16,17 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
  {
     /* Local API Includes */
     try {
-            var redirectCallbackUrl =request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('oauth-callback');
-              var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+            var redirectCallbackUrl =request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('Oauth-callback');
+              var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
               if(oauthCOObj != null)
               {
                     var getTokenJSONObj = {};
-                    getTokenJSONObj.clientSecret=oauthCOObj.custom.client_secret;
-                    getTokenJSONObj.clientId=oauthCOObj.custom.client_id;
-                    getTokenJSONObj.shortCode=oauthCOObj.custom.short_code;
-                    getTokenJSONObj.fworganizationid=oauthCOObj.custom.org_id;
-                    getTokenJSONObj.tenant_id=oauthCOObj.custom.tenant_id;
-                    var successURL = dw.web.URLUtils.url('oauth-success');
+                    getTokenJSONObj.clientSecret=oauthCOObj.custom.fireworkClientSecret;
+                    getTokenJSONObj.clientId=oauthCOObj.custom.fireworkClientId;
+                    getTokenJSONObj.shortCode=oauthCOObj.custom.fireworkShortCode;
+                    getTokenJSONObj.fworganizationid=oauthCOObj.custom.fireworkOrgId;
+                    getTokenJSONObj.tenant_id=oauthCOObj.custom.fireworkTenantId;
+                    var successURL = dw.web.URLUtils.url('Oauth-success');
                     ISML.renderTemplate('oauth/oauthForm',{successURL: successURL,OauthData:getTokenJSONObj,redirectCallbackUrl:redirectCallbackUrl});
                     return; 
                 }
@@ -38,7 +38,7 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
                     getTokenJSONObj.shortCode='';
                     getTokenJSONObj.fworganizationid='';
                     getTokenJSONObj.tenant_id='';
-                    var successURL = dw.web.URLUtils.url('oauth-success');
+                    var successURL = dw.web.URLUtils.url('Oauth-success');
                     ISML.renderTemplate('oauth/oauthForm',{successURL: successURL,OauthData:getTokenJSONObj,redirectCallbackUrl:redirectCallbackUrl});
                     return;
                 }
@@ -68,8 +68,8 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
                var fwclientid =request.httpParameterMap.fwclientid;
                var fwclientsecret =request.httpParameterMap.fwclientsecret;
                var tenantId =request.httpParameterMap.tenantId; 
-               var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
-               var callbackUrl=request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('oauth-callback');
+               var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
+               var callbackUrl=request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('Oauth-callback');
                 oauthConfig.shortCode=shortCode;
                 oauthConfig.fworganizationid=fworganizationid;
                 oauthConfig.fwclientid=fwclientid;
@@ -94,14 +94,14 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
                                     Transaction.begin();
                                     if(oauthCOObj == null)
                                     {
-                                        oauthCOObj = CustomObjectMgr.createCustomObject('OauthCO',dw.system.Site.current.ID);
+                                        oauthCOObj = CustomObjectMgr.createCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
                                     }
-                                    oauthCOObj.custom.client_id =fwclientid;
-                                    oauthCOObj.custom.client_secret =fwclientsecret;
-                                    oauthCOObj.custom.org_id =fworganizationid;
-                                    oauthCOObj.custom.short_code =shortCode;
-                                    oauthCOObj.custom.tenant_id =tenantId;
-                                    oauthCOObj.custom.cli_token =getTokenResponseJsonObj.access_token;
+                                    oauthCOObj.custom.fireworkClientId =fwclientid;
+                                    oauthCOObj.custom.fireworkClientSecret =fwclientsecret;
+                                    oauthCOObj.custom.fireworkOrgId =fworganizationid;
+                                    oauthCOObj.custom.fireworkShortCode =shortCode;
+                                    oauthCOObj.custom.fireworkTenantId =tenantId;
+                                    oauthCOObj.custom.fireworkCliToken =getTokenResponseJsonObj.access_token;
                                     Transaction.commit();
                                 var authorizeGuestObj =require('~/cartridge/scripts/oauth/authorizeGuestAPI');
                                 var redirectURL = authorizeGuestObj.authorizeGuestFun(fworganizationid,callbackUrl,fwclientid,shortCode);
@@ -131,18 +131,18 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
     try {
              var usid = request.httpParameterMap.usid.value;
              var code = request.httpParameterMap.code.value;
-             var redirectURL=request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('oauth-callback');
-            var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+             var redirectURL=request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('Oauth-callback');
+            var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
             if(oauthCOObj != null)
             {
                 var getTokenJSONObj = {};
                     getTokenJSONObj.code=code;
                     getTokenJSONObj.usid=usid;
-                    getTokenJSONObj.clientSecret=oauthCOObj.custom.client_secret;
-                    getTokenJSONObj.clientId=oauthCOObj.custom.client_id;
-                    getTokenJSONObj.shortCode=oauthCOObj.custom.short_code;
-                    getTokenJSONObj.fworganizationid=oauthCOObj.custom.org_id;
-                    getTokenJSONObj.code_verifier=oauthCOObj.custom.code_verifier;
+                    getTokenJSONObj.clientSecret=oauthCOObj.custom.fireworkClientSecret;
+                    getTokenJSONObj.clientId=oauthCOObj.custom.fireworkClientId;
+                    getTokenJSONObj.shortCode=oauthCOObj.custom.fireworkShortCode;
+                    getTokenJSONObj.fworganizationid=oauthCOObj.custom.fireworkOrgId;
+                    getTokenJSONObj.code_verifier=oauthCOObj.custom.fireworkCodeVerifier;
                     getTokenJSONObj.redirectUrl=redirectURL;
                     //----------get access token API call ------------------------//
                     var accessTokenObj =require('~/cartridge/scripts/oauth/getAccessTokenAPI');
@@ -153,9 +153,9 @@ var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
                     if(accessTokenResponseObj)
                     {
                         Transaction.begin();
-                        oauthCOObj.custom.usid =usid;
-                        oauthCOObj.custom.code =code;
-                        oauthCOObj.custom.accessTokenObject=accessTokenResponseObj;
+                        oauthCOObj.custom.fireworkUsId =usid;
+                        oauthCOObj.custom.fireworkCode =code;
+                        oauthCOObj.custom.fireworkAccessTokenObject=accessTokenResponseObj;
                         Transaction.commit();
                         var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
                         if(FireworkCOObj != null)

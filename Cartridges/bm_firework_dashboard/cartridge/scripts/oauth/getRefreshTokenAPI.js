@@ -24,7 +24,7 @@ function refreshTokenfun(getAccessTokenObj)
 	var key =fwclientid + ":" + fwclientsecret;
 	let token =Encoding.toBase64(Bytes(key));
 	var service:Service =restService.getAccessTokenService;
-	service.URL=service.URL.replace('{short_code}',shortCode);
+	service.URL=service.URL.replace('{fireworkShortCode}',shortCode);
 	service.URL += '/shopper/auth/v1/organizations/'+fworganizationid+'/oauth2/token';
     var result:Result = service.call({
 		  'Method':"POST",

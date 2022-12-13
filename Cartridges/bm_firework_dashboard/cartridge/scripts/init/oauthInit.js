@@ -104,7 +104,7 @@ var getAccessTokenService = LocalServiceRegistry.createService("fwsalesforce.ser
 			svc.setRequestMethod(args.Method);
 			svc.addHeader('Content-Type', 'application/x-www-form-urlencoded');
 			svc.addHeader('Authorization', 'Basic '+args.token);
-			
+
 		    var postBodyArgs  = [];
 	        var postBody = "";
 		     // Combine the hardcoded and custom preference values
@@ -118,27 +118,6 @@ var getAccessTokenService = LocalServiceRegistry.createService("fwsalesforce.ser
 			  }
 			  request = postBodyArgs.join("&");
 			  return request
-		} else {
-			return null;
-		}
-	},
-	parseResponse: function(svc:HTTPService, client:HTTPClient) {
-		return client.text;
-	},
-	filterLogMessage: function(msg) {
-        return msg;
-    }
-});
-var getCodeChallengeService = LocalServiceRegistry.createService("graphQLCredService", {
-	createRequest: function(svc:HTTPService, args){
-		svc.setRequestMethod(args.Method);
-		svc.addHeader('Content-Type', 'application/json');
-		if(args) {
-		    let request = '';
-		    if (args.requestJSON) {
-		      request =args.requestJSON;
-		      return request;
-		    }
 		} else {
 			return null;
 		}
@@ -178,6 +157,5 @@ module.exports = {
 	getauthorizeGuestService:getauthorizeGuestService,
 	privateClientidRegistrationService:privateClientidRegistrationService,
 	getAccessTokenService:getAccessTokenService,
-	getCodeChallengeService:getCodeChallengeService,
 	graphQLCredService:graphQLCredService
 };

@@ -17,8 +17,8 @@ function getChannelPlayListFun(ChannelId)
 	var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
         if(FireworkCOObj != null)
         {
-            var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
-            var businessOauthData=JSON.parse(FireworkCOObj.custom.businessOauthData);
+            var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+            var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
             var businessId=businessOauthData.businessId;
             var getAccessToken=oauthtokenData.access_token;
 		}

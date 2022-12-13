@@ -14,29 +14,29 @@ var PreferencesModel = require('bm_firework_dashboard/cartridge/models/fwPrefere
  {
 	   var preferencesModel = new PreferencesModel();
         var getFwConfigSetting=preferencesModel.getPreferences();
-		 var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+		 var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
 		 var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
 		 if(oauthCOObj != null)
 		 {
 					   //-----------------oauth data------------------------//
-						 var authTokenObjectData=JSON.parse(oauthCOObj.custom.accessTokenObject);
+						 var authTokenObjectData=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
 						 var refreshToken=authTokenObjectData.refresh_token;
 						 var accessToken=authTokenObjectData.access_token;
-						 var code_verifier=oauthCOObj.custom.code_verifier;
-						 var code_challenge=oauthCOObj.custom.code_challenge;
-						 var usid=oauthCOObj.custom.usid;
-						 var code=oauthCOObj.custom.code;
-						 var org_id=oauthCOObj.custom.org_id;
-						 var short_code=oauthCOObj.custom.short_code;
-						 var tenant_id=oauthCOObj.custom.tenant_id;
+						 var code_verifier=oauthCOObj.custom.fireworkCodeVerifier;
+						 var code_challenge=oauthCOObj.custom.fireworkCodeChallenge;
+						 var usid=oauthCOObj.custom.fireworkUsId;
+						 var code=oauthCOObj.custom.fireworkCode;
+						 var org_id=oauthCOObj.custom.fireworkOrgId;
+						 var short_code=oauthCOObj.custom.fireworkShortCode;
+						 var tenant_id=oauthCOObj.custom.fireworkTenantId;
 						 var site_id=dw.system.Site.current.ID;
-						 var clientPwd=oauthCOObj.custom.client_secret;
-						 var client_id=oauthCOObj.custom.client_id;
+						 var clientPwd=oauthCOObj.custom.fireworkClientSecret;
+						 var client_id=oauthCOObj.custom.fireworkClientId;
 						 //-----------------firwork object data------------------------//
-						 var businessOauthData=JSON.parse(FireworkCOObj.custom.businessOauthData);
+						 var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
 						 var businessId=businessOauthData.businessId;
-						 var businessStoreId=FireworkCOObj.custom.businessStoreId;
-						 var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
+						 var businessStoreId=FireworkCOObj.custom.fireworkBusinessStoreId;
+						 var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
 						 var getDashobardToken=oauthtokenData.access_token;
 						 //--------------------end---------------------------------//
 						var  getUniqueBMUID=getFwConfigSetting.getUniqueBMUID;

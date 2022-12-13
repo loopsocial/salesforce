@@ -8,7 +8,7 @@ var CustomObjectModel = require('*/cartridge/models/fwCustomObjectModel.js');
 var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
 
 /**
- * This controller implements the business manager extension action for dashboard.
+ * This controller implements the business manager extension action for firework dashboard.
  *
  * @module controllers/dashboard
  */
@@ -19,17 +19,17 @@ exports.dashboard = function () {
         var getFwConfigSetting=preferencesModel.getPreferences();
         if(getFwConfigSetting.fireworkApiEndPoint && getFwConfigSetting.getUniqueBMUID)
         {
-                var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+                var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
                 if(oauthCOObj == null)
                 {
-                    var redirectCallbackUrl =request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('oauth-callback'); 
+                    var redirectCallbackUrl =request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('Oauth-callback'); 
                     var getTokenJSONObj = {};
                     getTokenJSONObj.clientSecret='';
                     getTokenJSONObj.clientId='';
                     getTokenJSONObj.shortCode='';
                     getTokenJSONObj.fworganizationid='';
                     getTokenJSONObj.tenant_id='';
-                    var successURL = dw.web.URLUtils.url('oauth-success');
+                    var successURL = dw.web.URLUtils.url('Oauth-success');
                     ISML.renderTemplate('oauth/oauthForm',{successURL: successURL,OauthData:getTokenJSONObj,redirectCallbackUrl:redirectCallbackUrl});
                     return;   
                 }
@@ -43,17 +43,18 @@ exports.dashboard = function () {
                     var redirectUri=oauthRegisterJsonObj.redirect_uris[0];
                     Transaction.begin();
                     FireworkCOObj = CustomObjectMgr.createCustomObject('FireworkCO',dw.system.Site.current.ID);
-                    FireworkCOObj.custom.oauthData =oauthRegisterResponse;
+                    FireworkCOObj.custom.fireworkOauthData =oauthRegisterResponse;
                     Transaction.commit();
-                    response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+redirectUri+'&client_id='+clientId+'&state=STATE&business_onboard=true');
+                    var getRedirectURL=getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+redirectUri+'&client_id='+clientId+'&state=STATE&business_onboard=true';
+                    response.redirect(getRedirectURL);
                 }
                 else
                 {
-                    var oauthRegisterData=JSON.parse(FireworkCOObj.custom.oauthData);
-                    var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
-                    var businessOauthData=JSON.parse(FireworkCOObj.custom.businessOauthData);
+                    var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
+                    var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+                    var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
                     var businessId=businessOauthData.businessId;
-                    var storeId=FireworkCOObj.custom.businessStoreId;
+                    var storeId=FireworkCOObj.custom.fireworkBusinessStoreId;
                     var callBackJSONObj = {};
                     //-----------get refresh token and create new accesstoken-------------//
                     callBackJSONObj.client_id=oauthRegisterData.client_id;
@@ -65,7 +66,7 @@ exports.dashboard = function () {
                             var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
                             var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
                             Transaction.begin();
-                            FireworkCOObj.custom.tokenData=getcallBackResponse;
+                            FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
                             Transaction.commit();
                             var getGraphQLJSONObj = {};
                             //----------------update graphQL-------------//
@@ -80,31 +81,31 @@ exports.dashboard = function () {
                             getGraphQLJSONObj.refreshToken=getRefreshTokenResponse.refresh_token;
                             //----------------------refresh token call function--------//
                             var getTokenJSONObj = {};
-                            var authTokenObjectData=JSON.parse(oauthCOObj.custom.accessTokenObject);
+                            var authTokenObjectData=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
                             var refreshToken=authTokenObjectData.refresh_token;
-                            getTokenJSONObj.clientSecret=oauthCOObj.custom.client_secret;
-                            getTokenJSONObj.clientId=oauthCOObj.custom.client_id;
-                            getTokenJSONObj.shortCode=oauthCOObj.custom.short_code;
-                            getTokenJSONObj.fworganizationid=oauthCOObj.custom.org_id;
+                            getTokenJSONObj.clientSecret=oauthCOObj.custom.fireworkClientSecret;
+                            getTokenJSONObj.clientId=oauthCOObj.custom.fireworkClientId;
+                            getTokenJSONObj.shortCode=oauthCOObj.custom.fireworkShortCode;
+                            getTokenJSONObj.fworganizationid=oauthCOObj.custom.fireworkOrgId;
                             getTokenJSONObj.refresh_token=refreshToken;
                             var getrefreshTokenJobObj =require('~/cartridge/scripts/oauth/getRefreshTokenAPI');
                             var getrefreshTokenJobResponse = getrefreshTokenJobObj.refreshTokenfun(getTokenJSONObj);
                             var getrefreshTokenJobJsonObj = JSON.parse(getrefreshTokenJobResponse);
                             Transaction.begin();
-                                oauthCOObj.custom.accessTokenObject=getrefreshTokenJobJsonObj;
+                                oauthCOObj.custom.fireworkAccessTokenObject=getrefreshTokenJobJsonObj;
                             Transaction.commit();
                             //-----------------oauth data------------------------//
                             var getBusinessStoreObj =require('~/cartridge/scripts/firework/updateGraphQLAPI');
                             var getBusinessStorResponse = getBusinessStoreObj.updateGraphFun(getGraphQLJSONObj);
                             var getBusinessStoreJsonObj = JSON.parse(getBusinessStorResponse);   
                         //---------------------end--------------------------------------------//
-                        ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.businessStoreId,businessId:businessId});
+                        ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.fireworkBusinessStoreId,businessId:businessId});
                         return;
                         }
                         catch (e)
                         {
                             Transaction.begin();
-                            FireworkCOObj.custom.tokenData='';
+                            FireworkCOObj.custom.fireworkTokenData='';
                             Transaction.commit();
                             response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+oauthRegisterData.redirect_uris[0]+'&client_id='+oauthRegisterData.client_id+'&state=STATE&business_onboard=true');
                         }
@@ -143,11 +144,11 @@ exports.dashboard = function () {
         var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
         if(FireworkCOObj != null)
         {
-            var oauthRegisterData=JSON.parse(FireworkCOObj.custom.oauthData);
-            var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
-            var businessOauthData=JSON.parse(FireworkCOObj.custom.businessOauthData);
+            var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
+            var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+            var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
             var businessId=businessOauthData.businessId;
-            var storeId=FireworkCOObj.custom.businessStoreId;
+            var storeId=FireworkCOObj.custom.fireworkBusinessStoreId;
             var callBackJSONObj = {};
             //-----------get refresh token and create new accesstoken-------------//
             callBackJSONObj.client_id=oauthRegisterData.client_id;
@@ -159,16 +160,16 @@ exports.dashboard = function () {
                     var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
                     var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
                     Transaction.begin();
-                    FireworkCOObj.custom.tokenData=getcallBackResponse;
+                    FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
                     Transaction.commit(); 
                 //---------------------end--------------------------------------------//
-                ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.businessStoreId,businessId:businessId});
+                ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.fireworkBusinessStoreId,businessId:businessId});
                 return;
                 }
                 catch (e)
                 {
                     Transaction.begin();
-                    FireworkCOObj.custom.tokenData='';
+                    FireworkCOObj.custom.fireworkTokenData='';
                     Transaction.commit();
                     response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+oauthRegisterData.redirect_uris[0]+'&client_id='+oauthRegisterData.client_id+'&state=STATE&business_onboard=true');
                 }
@@ -207,9 +208,9 @@ exports.callback = function () {
         if(FireworkCOObj!=null)
         {
                 Transaction.begin();
-                FireworkCOObj.custom.businessOauthData=JSON.stringify(callBackJSONObj);
+                FireworkCOObj.custom.fireworkBusinessOauthData=JSON.stringify(callBackJSONObj);
                 Transaction.commit(); 
-                var oauthRegisterData=JSON.parse(FireworkCOObj.custom.oauthData);
+                var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
                 callBackJSONObj.client_id=oauthRegisterData.client_id;
                 callBackJSONObj.client_secret=oauthRegisterData.client_secret;
                 callBackJSONObj.redirect_Url=oauthRegisterData.redirect_uris[0];
@@ -217,9 +218,9 @@ exports.callback = function () {
                 var getcallBackResquest = callBackObj.oauthToken(callBackJSONObj);
                 var getcallBackResponse =getcallBackResquest;
                 Transaction.begin();
-                FireworkCOObj.custom.tokenData=getcallBackResponse;
+                FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
                 Transaction.commit();
-                var oauthTokenData=JSON.parse(FireworkCOObj.custom.tokenData);
+                var oauthTokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
                 //------------Validate business exist or not--------------//
                 var getBusinessStoreObj =require('~/cartridge/scripts/firework/getBusinessStoreAPI');
                 var getBusinessStorResponse = getBusinessStoreObj.businessStoreFun(oauthTokenData.access_token,businessId);
@@ -257,9 +258,9 @@ exports.callback = function () {
                         var getBusinessStorResponse = getBusinessStoreObj.updateGraphFun(getGraphQLJSONObj);
                         var getBusinessStoreJsonObj = JSON.parse(getBusinessStorResponse);
                         Transaction.begin();
-                        FireworkCOObj.custom.businessStoreId=businessStoreId;
+                        FireworkCOObj.custom.fireworkBusinessStoreId=businessStoreId;
                         Transaction.commit();
-                        response.redirect(URLUtils.https('firework-dashboard'));
+                        response.redirect(URLUtils.https('Firework-dashboard'));
                         return;
                     }
                     else
@@ -280,9 +281,9 @@ exports.callback = function () {
                         var getBusinessStorResponse = getBusinessStoreObj.createGraphFun(getGraphQLJSONObj);
                         var getBusinessStoreJsonObj = JSON.parse(getBusinessStorResponse);
                         Transaction.begin();
-                        FireworkCOObj.custom.businessStoreId=getBusinessStoreJsonObj.data.createBusinessStore.id;
+                        FireworkCOObj.custom.fireworkBusinessStoreId=getBusinessStoreJsonObj.data.createBusinessStore.id;
                         Transaction.commit();
-                        response.redirect(URLUtils.https('firework-dashboard'));
+                        response.redirect(URLUtils.https('Firework-dashboard'));
                         return;
                     }
                 }
@@ -298,16 +299,16 @@ exports.callback = function () {
                     getGraphQLJSONObj.siteUrl=getFwConfigSetting.getUniqueBMUID;
                     getGraphQLJSONObj.uid=getUniqueBMUID;
                     getGraphQLJSONObj.endPointUrl=getFwConfigSetting.graphQLEndpoint;
-                    getGraphQLJSONObj.storeId=FireworkCOObj.custom.businessStoreId;
+                    getGraphQLJSONObj.storeId=FireworkCOObj.custom.fireworkBusinessStoreId;
                     getGraphQLJSONObj.accessToken=accessToken;
                     getGraphQLJSONObj.refreshToken=refreshToken;
                     var getBusinessStoreObj =require('~/cartridge/scripts/firework/createGraphQLAPI');
                     var getBusinessStorResponse = getBusinessStoreObj.createGraphFun(getGraphQLJSONObj);
                     var getBusinessStoreJsonObj = JSON.parse(getBusinessStorResponse);
                     Transaction.begin();
-                    FireworkCOObj.custom.businessStoreId=getBusinessStoreJsonObj.data.createBusinessStore.id;
+                    FireworkCOObj.custom.fireworkBusinessStoreId=getBusinessStoreJsonObj.data.createBusinessStore.id;
                     Transaction.commit();
-                    response.redirect(URLUtils.https('firework-dashboard'));
+                    response.redirect(URLUtils.https('Firework-dashboard'));
                     return;
                     }
         }
@@ -321,7 +322,7 @@ exports.callback = function () {
  exports.reset = function () {
     /* Local API Includes */
     try {
-        var OauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+        var OauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
 		var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
         if(FireworkCOObj != null || OauthCOObj!=null)
         {
@@ -380,11 +381,11 @@ exports.callback = function () {
                 var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
                 if(FireworkCOObj != null)
                 {
-                    var oauthRegisterData=JSON.parse(FireworkCOObj.custom.oauthData);
-                    var oauthtokenData=JSON.parse(FireworkCOObj.custom.tokenData);
-                    var businessOauthData=JSON.parse(FireworkCOObj.custom.businessOauthData);
+                    var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
+                    var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+                    var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
                     var businessId=businessOauthData.businessId;
-                    var storeId=FireworkCOObj.custom.businessStoreId;
+                    var storeId=FireworkCOObj.custom.fireworkBusinessStoreId;
                     var callBackJSONObj = {};
                     //-----------get refresh token and create new accesstoken-------------//
                     callBackJSONObj.client_id=oauthRegisterData.client_id;
@@ -396,7 +397,7 @@ exports.callback = function () {
                            var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
                             var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
                              Transaction.begin();
-                              FireworkCOObj.custom.tokenData=getcallBackResponse;
+                              FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
                              Transaction.commit(); 
                             var getChannelPlayListFunObj = require('bm_firework_dashboard/cartridge/scripts/firework/getChannelPlaylist');
                             var getChannelPlayListResponse = getChannelPlayListFunObj.getChannelPlayListFun(channelID);

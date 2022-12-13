@@ -5,8 +5,8 @@
 <link rel="stylesheet" type="text/css" href="${URLUtils.staticURL('/css/widget.css')}">
 <iscomment>WidgetType Carosuel=1,floatingButton=2,Floatingplayer=3,gridLayout=4,Storyblock=5</iscomment>
    <body marginwidth="0" marginheight="0">
-         <span id="ajaxgetplayList" data-action="${URLUtils.url('firework-getplaylist')}"></span>
-          <span id="ajaxgetvideolist" data-action="${URLUtils.url('firework-getvideolist')}"></span>
+         <span id="ajaxgetplayList" data-action="${URLUtils.url('Firework-getplaylist')}"></span>
+          <span id="ajaxgetvideolist" data-action="${URLUtils.url('Firework-getvideolist')}"></span>
           <span id="selectedPlayListId" data-id="${pdict.getSelectedValue.selectedPlayList}"></span>
          <div id="firework-widget-settings">
          <div class="firework-widget-settings-main">

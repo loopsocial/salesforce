@@ -24,7 +24,7 @@ var oauthRegisterService = LocalServiceRegistry.createService("firework.http.das
         return msg;
     }
 });
-var oauthBusinessStoreService = LocalServiceRegistry.createService("fireworksb.http.dashboard.service", {
+var oauthBusinessStoreService = LocalServiceRegistry.createService("firework.http.dashboard.service", {
 	createRequest: function(svc:HTTPService, args){
 		svc.setRequestMethod(args.Method);
 		svc.addHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -68,7 +68,7 @@ var graphQLCredService = LocalServiceRegistry.createService("firework.http.dashb
         return msg;
     }
 });
-var getChannelListService = LocalServiceRegistry.createService("fireworksb.http.dashboard.service", {
+var getChannelListService = LocalServiceRegistry.createService("firework.http.dashboard.service", {
 	createRequest: function(svc:HTTPService, args){
 		svc.setRequestMethod(args.Method);
 		svc.addHeader('Content-Type', 'application/json');
@@ -90,7 +90,7 @@ var getChannelListService = LocalServiceRegistry.createService("fireworksb.http.
         return msg;
     }
 });
-var getChannelVideoService = LocalServiceRegistry.createService("fireworksb.http.dashboard.service", {
+var getChannelVideoService = LocalServiceRegistry.createService("firework.http.dashboard.service", {
 	createRequest: function(svc:HTTPService, args){
 		svc.setRequestMethod(args.Method);
 		svc.addHeader('Content-Type', 'application/json');
@@ -112,7 +112,7 @@ var getChannelVideoService = LocalServiceRegistry.createService("fireworksb.http
         return msg;
     }
 });
-var getChannelPlaylistService = LocalServiceRegistry.createService("fireworksb.http.dashboard.service", {
+var getChannelPlaylistService = LocalServiceRegistry.createService("firework.http.dashboard.service", {
 	createRequest: function(svc:HTTPService, args){
 		svc.setRequestMethod(args.Method);
 		svc.addHeader('Content-Type', 'application/json');

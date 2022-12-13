@@ -27,7 +27,7 @@ function privateClientidRegistrationfun(token,tenantId,fwClientId,fwSecret,redir
 		"sfcc.shopper-baskets-orders.rw", "sfcc.shopper-baskets-orders", "sfcc.shopper-products"];
 	var payLoadDetails=new Bytes(JSON.stringify(tenantRegisterJSONObj));
 	var service:Service =restService.privateClientidRegistrationService;
-	service.URL=service.URL.replace('{short_code}',shortCode);
+	service.URL=service.URL.replace('{fireworkShortCode}',shortCode);
 	service.URL += '/shopper/auth-admin/v1/tenants/'+tenantId+'/clients/'+fwClientId;
     var result:Result = service.call({
 		  'Method':"PUT",

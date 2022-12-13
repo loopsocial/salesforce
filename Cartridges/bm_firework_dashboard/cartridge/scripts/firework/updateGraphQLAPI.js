@@ -12,26 +12,26 @@ importPackage(dw.util);
  */
 function updateGraphFun(graphQLData)
 {
-	var oauthCOObj = CustomObjectMgr.getCustomObject('OauthCO',dw.system.Site.current.ID);
+	var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
 	var refreshToken='';var accessToken='';var code_verifier='';
 	var code_challenge='';var usid='';var code='';var org_id='';
 	var short_code='';var tenant_id='';var site_id='';var clientPwd='';
 	var client_id='';
 	if(oauthCOObj != null)
 		 {
-			var accessTokenObj=JSON.parse(oauthCOObj.custom.accessTokenObject);
+			var accessTokenObj=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
 			accessToken=accessTokenObj.access_token;
 			refreshToken=accessTokenObj.refresh_token;
-			code_verifier=oauthCOObj.custom.code_verifier;
-			code_challenge=oauthCOObj.custom.code_challenge;
-			usid=oauthCOObj.custom.usid;
-			code=oauthCOObj.custom.code;
-			org_id=oauthCOObj.custom.org_id;
-			short_code=oauthCOObj.custom.short_code;
-			tenant_id=oauthCOObj.custom.tenant_id;
+			code_verifier=oauthCOObj.custom.fireworkCodeVerifier;
+			code_challenge=oauthCOObj.custom.fireworkCodeChallenge;
+			usid=oauthCOObj.custom.fireworkUsId;
+			code=oauthCOObj.custom.fireworkCode;
+			org_id=oauthCOObj.custom.fireworkOrgId;
+			short_code=oauthCOObj.custom.fireworkShortCode;
+			tenant_id=oauthCOObj.custom.fireworkTenantId;
 			site_id=dw.system.Site.current.ID;
-			clientPwd=oauthCOObj.custom.client_secret;
-			client_id=oauthCOObj.custom.client_id;
+			clientPwd=oauthCOObj.custom.fireworkClientSecret;
+			client_id=oauthCOObj.custom.fireworkClientId;
 		 }
 		 	var fwAccessToken=graphQLData.accessToken;
 			var businessId=graphQLData.businessId;
