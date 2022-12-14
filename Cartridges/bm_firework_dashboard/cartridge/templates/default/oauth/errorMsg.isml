@@ -1,8 +1,0 @@
-<isdecorate template="application/MenuFrame">
-<isif condition="${pdict.errorMsg}">
-        <isscript>
-		var errorMessageDetail =JSON.stringify(pdict.errorMsg);
-	    </isscript>
-        ${errorMessageDetail}
-</isif>
-</isdecorate>
