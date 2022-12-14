@@ -1,0 +1,22 @@
+{
+  "name": "Grid Layout Widget",
+  "description": "Grid Layout Widget",
+  "group": "Firework",
+  "attribute_definition_groups": [
+    {
+      "id": "gridlayout",
+      "attribute_definitions": [
+        {
+          "id": "gridlayout",
+          "name": "Grid Layout Configuration",
+          "type": "custom",
+          "required": true,
+          "editor_definition": {
+            "type": "firework.gridlayout"
+          }
+        }
+      ]
+    }
+  ],
+  "region_definitions": []
+}

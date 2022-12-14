@@ -1,0 +1,37 @@
+<isdecorate template="application/MenuFrame">
+<link rel="stylesheet" href="${URLUtils.staticURL('/css/oauthfrm.css')}" />
+ <div id="fw-config-form">
+	<h2>${Resource.msg('oauth.form.oauthConfig','oauth',null)}:</h2>
+	<form action="${pdict.successURL}" method="POST" class="oauthfrm" id='oauthfrm' />
+		<div class="form-field">
+			<label for="fw-shortcode">${Resource.msg('oauth.form.shortCode','oauth',null)} <em>*</em></label>
+			<input type="text" id="shortcode" name="shortcode" class="fw-input-field"  value="${pdict.OauthData.shortCode}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-organization-id">${Resource.msg('oauth.form.orgId','oauth',null)} <em>*</em></label>
+			<input type="text" id="fworganizationid" name="fworganizationid" class="fw-input-field" onkeyup="onKeyUpFunction()" value="${pdict.OauthData.fworganizationid}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-client-id">${Resource.msg('oauth.form.clientId','oauth',null)} <em>*</em></label>
+			<input type="password" id="fwclientid" name="fwclientid" class="fw-input-field" value="${pdict.OauthData.clientId}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-client-secret">${Resource.msg('oauth.form.clientSecret','oauth',null)} <em>*</em></label>
+			<input type="password" id="fwclientsecret" name="fwclientsecret" class="fw-input-field" value="${pdict.OauthData.clientSecret}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-client-secret">${Resource.msg('oauth.form.tenantID','oauth',null)} <em>*</em></label>
+			<input type="text" id="tenantId" name="tenantId" class="fw-input-field" value="${pdict.OauthData.tenant_id}" required />
+		</div>
+		<div class="form-field">
+			<label for="fw-client-secret">${Resource.msg('oauth.form.redirectUrl','oauth',null)} : ${pdict.redirectCallbackUrl}</label>
+			${Resource.msg('oauth.form.clientApplicationUrl','oauth',null)}
+		</div>
+		<div class="form-field form-with-inline">
+			<input type="submit" name="fw-form-save" class="btn fw-form-save" value="Save" />
+		</div>
+		
+	</form>
+</div>
+<script src="${URLUtils.staticURL('/js/fireworkfrm.js')}" type="text/javascript"></script> 
+</isdecorate>

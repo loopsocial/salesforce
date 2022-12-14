@@ -1,0 +1,14 @@
+
+{
+  "name": "Floating Button Config",
+  "description": "Floating Button Widget",
+  "resources": {
+    "scripts": [
+      "/experience/editors/firework/iframeResizer.min.js",
+      "/experience/editors/firework/fwwidgetform.js"
+    ],
+    "styles": [
+      "/experience/editors/firework/form.css"
+    ]
+  }
+}

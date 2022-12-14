@@ -1,0 +1,22 @@
+{
+  "name": "Carousel Widget.",
+  "description": "Carousel Widget.",
+  "group": "Firework",
+  "attribute_definition_groups": [
+    {
+      "id": "carosuelwidget",
+      "attribute_definitions": [
+        {
+          "id": "carosuelwidget",
+          "name": "Carousel Widget Configuration",
+          "type": "custom",
+          "required": true,
+          "editor_definition": {
+            "type": "firework.carosuelwidget"
+          }
+        }
+      ]
+    }
+  ],
+  "region_definitions": []
+}

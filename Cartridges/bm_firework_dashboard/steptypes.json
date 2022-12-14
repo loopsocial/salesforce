@@ -1,0 +1,30 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.RefreshToken",
+                "description": "Used this cron from firework Product",
+                "module": "bm_firework_dashboard/cartridge/scripts/jobsteps/refreshToken.js",
+                "function": "Run",
+                "parameters": {
+                    "parameters": [ ]
+                },
+                "status-codes": {
+                    "status": [{
+                            "@code": "ERROR",
+                            "description": "Used when an error occurred."
+                        },
+                        {
+                            "@code": "OK",
+                            "description": "Used when everything went well."
+                        },
+                        {
+                            "@code": "NO_FILE_FOUND",
+                            "description": "In case exit status is OK and no files were found."
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

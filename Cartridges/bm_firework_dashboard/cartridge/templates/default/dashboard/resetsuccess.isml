@@ -1,0 +1,8 @@
+<isdecorate template="application/MenuFrame">
+<isif condition="${pdict.resetflag==false}">
+	<p style="text-align: center; padding-top: 30px; padding-bottom: 30px; font-size:20px;">${Resource.msg('firework.success.alredyreset','dashboard',null)}</p>
+<iselse>
+	<p style="text-align: center; padding-top: 30px; padding-bottom: 30px; font-size:20px;">${Resource.msg('firework.success.resetsuccess','dashboard',null)}</p>
+</isif>
+</isdecorate>
+

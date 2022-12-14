@@ -1,0 +1,50 @@
+#fw-config-form{
+		display: block;
+		margin: 0 auto;
+		max-width: 600px;
+	}
+	#fw-config-form h2{
+		margin-bottom: 10px;
+		text-transform: uppercase;
+		text-align: center;
+	}
+	#fw-config-form .form-field{
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 10px;
+	}
+	#fw-config-form .form-field.form-with-inline{
+		display: flex;
+		flex-direction: row;
+	}	
+	#fw-config-form .form-field label{
+		width: 100%;
+		display: flex;
+		margin-bottom: 2px;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	#fw-config-form .form-field label em{
+		color: red;
+	}
+	#fw-config-form .form-field input.fw-input-field{
+		width: 100%;
+		border: 1px solid #CCCCCC;
+		padding: 8px 10px;
+		border-radius: 5px;
+	}
+	#fw-config-form .form-field.form-with-inline .btn{
+		padding: 5px 10px;
+		margin-right: 15px;
+		color: #FFFFFF;
+		border-radius: 5px;
+	}
+	#fw-config-form .form-field.form-with-inline .btn.fw-form-save{
+		background: green;
+		border: 1px solid green;
+	}
+	#fw-config-form .form-field.form-with-inline .btn.fw-form-cancel{
+		background: blue;
+		border: 1px solid blue;
+	}
