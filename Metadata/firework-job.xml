@@ -4,7 +4,7 @@
         <description/>
         <parameters/>
         <flow>
-            <context site-id="RefArch"/>
+            <context site-id="sj"/>
             <step step-id="firework-oauth-refreshtoken" type="custom.RefreshToken" enforce-restart="false">
                 <description/>
                 <parameters/>
