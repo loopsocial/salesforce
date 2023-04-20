@@ -41,11 +41,14 @@ function createGraphFun(graphQLData)
 			var provider=graphQLData.provider;
 			var siteUrl=graphQLData.siteUrl;
 			var uid=graphQLData.uid;
+			var site_id=dw.system.Site.current.ID;
+			var org_id=oauthCOObj.custom.fireworkOrgId;
+			var short_code=oauthCOObj.custom.fireworkShortCode;
 			var endPointUrl=graphQLData.endPointUrl;
 			var baseUrl =request.getHttpProtocol()+"://"+request.getHttpHost();
 			var shopBaseUrl='/s/'+dw.system.Site.current.ID+'/dw/data/v23_1';
-			var metadata = '{\\\\\\"access_key\\\\\\": \\\\\\"'+  +'\\\\\\",\\\\\\"base_url\\\\\\": \\\\\\"'+ baseUrl +'\\\\\\",\\\\\\"shop_base_url\\\\\\": \\\\\\"'+ shopBaseUrl +'\\\\\\"}';
-			var query='{"query":"mutation {\\n\\t\\t\\t\\t\\tcreateBusinessStore(createBusinessStoreInput: {businessId: \\"'+ businessId +'\\", currency: \\"'+ currency +'\\", name: \\"'+ siteTitle +'\\", provider: '+ provider +', uid: \\"'+ uid +'\\", url: \\"'+ siteUrl +'\\", accessToken: \\"'+ accessToken +'\\", refreshToken: \\"'+ refreshToken +'\\", metadata: \\"'+ metadata +'\\"\\n    }) {\\n\\t\\t\\t\\t\\t... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }\\n\\t\\t\\t\\t\\t\\t... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
+			var metadata = '{\\\\\\"site_id\\\\\\": \\\\\\"'+ site_id +'\\\\\\",\\\\\\"short_code\\\\\\": \\\\\\"'+ short_code +'\\\\\\",\\\\\\"org_id\\\\\\": \\\\\\"'+ org_id +'\\\\\\",\\\\\\"base_url\\\\\\": \\\\\\"'+ baseUrl +'\\\\\\",\\\\\\"shop_base_url\\\\\\": \\\\\\"'+ shopBaseUrl +'\\\\\\"}';
+			var query='{"query":"mutation {\\n\\t\\t\\t\\t\\tcreateBusinessStore(createBusinessStoreInput: {businessId: \\"'+ businessId +'\\", currency: \\"'+ currency +'\\", name: \\"'+ siteTitle +'\\", provider: \\"salesforce\\", uid: \\"'+ uid +'\\", url: \\"'+ siteUrl +'\\", accessToken: \\"'+ accessToken +'\\", refreshToken: \\"'+ refreshToken +'\\", metadata: \\"'+ metadata +'\\"\\n    }) {\\n\\t\\t\\t\\t\\t... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }\\n\\t\\t\\t\\t\\t\\t... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
 			var Site = require('dw/system/Site');
 			var URLUtils = require('dw/web/URLUtils');
 			var restService = require('~/cartridge/scripts/init/FireWorkInit');

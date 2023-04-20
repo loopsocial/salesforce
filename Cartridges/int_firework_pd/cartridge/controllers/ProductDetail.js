@@ -1,16 +1,18 @@
 'use strict';
-const ISML = require('dw/template/ISML');
-const Logger = require('dw/system/Logger');
-var URLUtils = require('dw/web/URLUtils');
-var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
-var ProductMgr = require('dw/catalog/ProductMgr');
 /**
  * This controller implements the business manager extension action for detail.
  *
  * @module controllers/show
  */
- exports.show = function () {
-    /* Local API Includes */
+ var server = require('server');
+const ISML = require('dw/template/ISML');
+const Logger = require('dw/system/Logger');
+var URLUtils = require('dw/web/URLUtils');
+var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
+var ProductMgr = require('dw/catalog/ProductMgr');
+server.get(
+      'Show'
+      ,function (req, res, next){
                         var productID = request.httpParameterMap.productSKU.value;
                         if (empty(productID)) {
                             var params = {
@@ -53,10 +55,8 @@ var ProductMgr = require('dw/catalog/ProductMgr');
                           };
                           response.getWriter().print(JSON.stringify(productJSON, stripNulls));
                           response.setStatus(200);
-};
-
-
-
+                        }
+);
 function stripNulls(key, value) {
     if (value === null || value === "undefined") {
       return undefined;
@@ -108,5 +108,4 @@ function stripNulls(key, value) {
       quantityInStock: inventoryRecord.ATS.value
     }
   }
-/* Web exposed methods */
-exports.Show.public = true;
+module.exports = server.exports();

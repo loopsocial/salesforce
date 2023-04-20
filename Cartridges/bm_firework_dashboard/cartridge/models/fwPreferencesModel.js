@@ -21,7 +21,7 @@ Preferences.prototype.getPreferences = function (preferencesArgs) {
         siteTitle: preference.custom.fireworkSiteTitle,
         getUniqueBMUID: preference.custom.fireworkUniqueBMUID,
         contactsEmail: preference.custom.fireworkContactsEmail,
-        provider: 'SALESFORCE',
+        provider: 'salesforce',
         graphQLEndpoint: 'https://fireworktv.com/graphiql',
         fireworkApiEndPoint: 'https://fireworktv.com',
         fireworkIframeURL: 'https://business.firework.com'
