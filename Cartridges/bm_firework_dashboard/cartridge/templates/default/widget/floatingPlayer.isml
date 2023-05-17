@@ -29,6 +29,15 @@
          <div class="firework-widget-settings-column" id='selectedPlayListdata'></div>
          <div class="firework-widget-settings-videos" id='selectedVideodata'></div>
          <div class="firework-widget-settings-input">
+         <div class="firework-widget-settings-column">
+         <label>${Resource.msg('widget.setting.playerLocation','widget',null)}</label>
+            <div class="fw-widget-position">
+               <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_bottom_right" value="bottom-right"  <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='bottom-right'}"> checked </isif>  /><label for="location_bottom_right">Bottom Right</label></div>
+               <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_bottom_left" value="bottom-left" <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='bottom-left'}"> checked </isif> /><label for="location_bottom_left">Bottom Left</label></div>
+               <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_top_right" value="top-right" <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='top-right'}"> checked </isif> /><label for="location_top_right">Top Right</label></div>
+               <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="minimized_video_player_location" id="location_top_left" value="top-left" <isif condition="${pdict.getSelectedValue.minimizedVideoPlayerLocation=='top-left'}"> checked </isif> /><label for="location_top_left">Top Left</label></div>
+            </div>
+         </div>
          </div>
    </body>
 </html>

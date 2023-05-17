@@ -31,14 +31,17 @@ var run = function run() {
 						 callBackJSONObj.client_secret=oauthRegisterData.client_secret;
 						 callBackJSONObj.redirect_Url=oauthRegisterData.redirect_uris[0];
 						 callBackJSONObj.refresh_token=oauthtokenData.refresh_token;
-						
-						 var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
+
 						 try {
-								 var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
-								 var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
-								 Transaction.begin();
-								 FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
-								 Transaction.commit(); 
+							    if(!empty(oauthtokenData.refresh_token))
+								 {
+									var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
+									var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
+									var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
+									Transaction.begin();
+									FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
+									Transaction.commit();
+								 }
 								//---------------------------end--------------------------------------//
 								var getTokenJSONObj = {};
 								var authTokenObjectData=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);

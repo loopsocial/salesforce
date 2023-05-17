@@ -18,7 +18,19 @@
    </script>
 <figure class="component-figure">
 <script async type='text/javascript' src='//asset.fwcdn3.com/js/storyblock.js'></script>
-<script async type="text/javascript" src="//asset.fwcdn3.com/js/integrations/salesforce.js"></script> 
-<fw-storyblock channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" video="${pdict.viewmodel.selectedVideo}"  mode="pinned" autoplay="true">
-</fw-storyblock>
+<script async type="text/javascript" src="//asset.fwcdn3.com/js/integrations/salesforce.js"></script>
+<isif condition="${pdict.viewmodel.selectedPlayList=='specificVideo'}">
+   <fw-storyblock channel="${pdict.viewmodel.selectedChannel}" video="${pdict.viewmodel.selectedVideo}"  mode="pinned" autoplay="true" player_placement="${pdict.viewmodel.minimizedVideoPlayerLocation}" style="width: 100%;">
+   </fw-storyblock>
+<iselse>
+   <fw-storyblock channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" video="${pdict.viewmodel.selectedVideo}"  mode="pinned" autoplay="true" player_placement="${pdict.viewmodel.minimizedVideoPlayerLocation}" style="width: 100%;">
+   </fw-storyblock>
+ </isif>
+ <isscript>
+ var floatingPlayerParam = request.getHttpParameterMap();
+    var floatingPlayer = floatingPlayerParam.get('mode');
+ </isscript>
+ <isif condition="${floatingPlayer=='EDIT'}">
+ Floating Player widget
+ </isif>
 </figure>

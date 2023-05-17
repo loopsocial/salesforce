@@ -61,8 +61,10 @@ exports.dashboard = function () {
                     callBackJSONObj.client_secret=oauthRegisterData.client_secret;
                     callBackJSONObj.redirect_Url=oauthRegisterData.redirect_uris[0];
                     callBackJSONObj.refresh_token=oauthtokenData.refresh_token;
-                    var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
                     try {
+                          if(!empty(oauthtokenData.refresh_token))
+                          {
+                           var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
                             var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
                             var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
                             Transaction.begin();
@@ -99,14 +101,12 @@ exports.dashboard = function () {
                             var getBusinessStorResponse = getBusinessStoreObj.updateGraphFun(getGraphQLJSONObj);
                             var getBusinessStoreJsonObj = JSON.parse(getBusinessStorResponse);   
                         //---------------------end--------------------------------------------//
-                        ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.fireworkBusinessStoreId,businessId:businessId});
-                        return;
+                            ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.fireworkBusinessStoreId,businessId:businessId});
+                            return;
+                          }
                         }
                         catch (e)
                         {
-                            Transaction.begin();
-                            FireworkCOObj.custom.fireworkTokenData='';
-                            Transaction.commit();
                             response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+oauthRegisterData.redirect_uris[0]+'&client_id='+oauthRegisterData.client_id+'&state=STATE&business_onboard=true');
                         }
                     }
@@ -155,22 +155,22 @@ exports.dashboard = function () {
             callBackJSONObj.client_secret=oauthRegisterData.client_secret;
             callBackJSONObj.redirect_Url=oauthRegisterData.redirect_uris[0];
             callBackJSONObj.refresh_token=oauthtokenData.refresh_token;
-            var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
             try {
+                if(!empty(oauthtokenData.refresh_token))
+                {
+                   var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
                     var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
                     var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
                     Transaction.begin();
                     FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
-                    Transaction.commit(); 
+                    Transaction.commit();
+                }
                 //---------------------end--------------------------------------------//
                 ISML.renderTemplate('dashboard/dashboard',{token:getRefreshTokenResponse.access_token,storeId:FireworkCOObj.custom.fireworkBusinessStoreId,businessId:businessId});
                 return;
                 }
                 catch (e)
                 {
-                    Transaction.begin();
-                    FireworkCOObj.custom.fireworkTokenData='';
-                    Transaction.commit();
                     response.redirect(getFwConfigSetting.fireworkApiEndPoint+'/oauth/authorize?client=business&response_type=code&redirect_uri='+oauthRegisterData.redirect_uris[0]+'&client_id='+oauthRegisterData.client_id+'&state=STATE&business_onboard=true');
                 }
             }
@@ -392,13 +392,16 @@ exports.callback = function () {
                     callBackJSONObj.client_secret=oauthRegisterData.client_secret;
                     callBackJSONObj.redirect_Url=oauthRegisterData.redirect_uris[0];
                     callBackJSONObj.refresh_token=oauthtokenData.refresh_token;
-                    var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
                     try {
-                           var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
-                            var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
-                             Transaction.begin();
-                              FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
-                             Transaction.commit(); 
+                            if(!empty(oauthtokenData.refresh_token))
+                            {
+                                var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
+                                var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
+                                var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
+                                Transaction.begin();
+                                FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
+                                Transaction.commit();
+                            }
                             var getChannelPlayListFunObj = require('bm_firework_dashboard/cartridge/scripts/firework/getChannelPlaylist');
                             var getChannelPlayListResponse = getChannelPlayListFunObj.getChannelPlayListFun(channelID);
                         //---------------------end--------------------------------------------// 
