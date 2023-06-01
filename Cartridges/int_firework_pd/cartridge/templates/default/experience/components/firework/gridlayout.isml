@@ -2,7 +2,7 @@
 <isscript>
     var oauthCOObj = dw.object.CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
     var getClientID =oauthCOObj.custom.fireworkClientId;
-	  var getCartURL=dw.web.URLUtils.https('Cart-Show');
+	var getCartURL=dw.web.URLUtils.https('Cart-Show');
     var getProductURL=dw.web.URLUtils.https('ProductDetail-Show');
     var siteId=dw.system.Site.current.ID;
     var shopVersion='v23_1';
@@ -18,8 +18,9 @@
    </script>
 <figure class="component-figure">
 <!-- This belongs to <head/> -->
-<script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script>
+<script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script> 
 <script async type="text/javascript" src="//asset.fwcdn3.com/js/integrations/salesforce.js"></script> 
+
 <!-- This belongs to <body/> -->
-<fw-embed-feed channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" mode="grid" open_in="default" max_videos="${pdict.viewmodel.videoattime}" placement="middle" player_placement="${pdict.viewmodel.minimizedVideoPlayerLocation}"></fw-embed-feed>
+<fw-embed-feed channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" mode="grid" open_in="default" max_videos=0 paginate_by="${pdict.viewmodel.videoattime}" placement="middle" player_placement="${pdict.viewmodel.minimizedVideoPlayerLocation}"></fw-embed-feed>
 </figure>

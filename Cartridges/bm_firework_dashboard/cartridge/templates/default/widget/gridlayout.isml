@@ -26,14 +26,7 @@
          </select>
          </div>
          <div class="firework-widget-settings-column" id='selectedPlayListdata'></div>
-         <div class="firework-widget-settings-input">
-         <div class="firework-widget-settings-column">
-            <label>${Resource.msg('widget.setting.gridView','widget',null)}</label>
-            <div class="fw-widget-position">
-               <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="videoshowingrid" id="videoshowingrid" value="Infinite" <isif condition="${pdict.getSelectedValue.videoshowingrid=='Infinite'}"> checked </isif>   /><label for="Infinite">Infinite</label></div>
-               <div class="radio-column"><input type="radio" class="input-fw-input-radio" name="videoshowingrid" id="videoshowingrid" value="Load" <isif condition="${pdict.getSelectedValue.videoshowingrid=='Load'}"> checked </isif> /><label for="Load">Load</label></div>
-            </div>
-            </div>
+         <div class="firework-widget-settings-input"> 
             <div class="firework-widget-settings-column">
             <label>${Resource.msg('widget.setting.videoTime','widget',null)}</label>
             <input type="text" class="input-fw-input" id="videoattime" name="videoattime"  <isif condition="${pdict.getSelectedValue.videoattime!=null}"> value="${pdict.getSelectedValue.videoattime}" </isif> />

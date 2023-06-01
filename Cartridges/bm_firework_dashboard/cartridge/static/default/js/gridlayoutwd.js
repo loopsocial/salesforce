@@ -4,26 +4,20 @@ document.addEventListener("click", function () {
       var getChannelId=getChannelSplitArr[0];
       var getChannelUsername=getChannelSplitArr[1];
       var selectedPlayList = document.querySelector("#selectedPlayList").value;
-      var minimizedVideoPlayerLocation;
-      var videoshowingrid;
+      var minimizedVideoPlayerLocation; 
       if(document.querySelector('input[name=minimized_video_player_location]:checked').value && document.querySelector('input[name=minimized_video_player_location]:checked').value!=null )
       {
        minimizedVideoPlayerLocation =document.querySelector('input[name=minimized_video_player_location]:checked').value;
-      }
-      if(document.querySelector('input[name=videoshowingrid]:checked').value && document.querySelector('input[name=videoshowingrid]:checked').value!=null)
-      {
-       videoshowingrid = document.querySelector('input[name=videoshowingrid]:checked').value;
-      }
+      } 
       var videoattime = document.querySelector("#videoattime").value;
       var message={};
       message.selectedChannel=getChannelUsername;
       message.selectedChannelData=selectedChannel;
-      message.selectedPlayList=selectedPlayList;
-      message.videoshowingrid=videoshowingrid;
+      message.selectedPlayList=selectedPlayList; 
       message.videoattime=videoattime;
       message.minimizedVideoPlayerLocation=minimizedVideoPlayerLocation;
 
-      if(selectedChannel && selectedPlayList  && minimizedVideoPlayerLocation && videoshowingrid)
+      if(selectedChannel && selectedPlayList  && minimizedVideoPlayerLocation && videoattime)
       {
          message.action='done';
          window.parent.postMessage(message, "*");
