@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns="http://www.demandware.com/xml/impex/services/2014-09-26">
+    <service-credential service-credential-id="firework.http.dashboard.cred">
+        <url>https://fireworktv.com</url>
+        <user-id/>
+        <password/>
+    </service-credential>
+
+    <service-credential service-credential-id="fwOauthTokenCred">
+        <url>https://account.demandware.com</url>
+        <user-id/>
+        <password/>
+    </service-credential>
+
+    <service-credential service-credential-id="fwsalesforce.ocapi.cred">
+        <url>https://{fireworkShortCode}.api.commercecloud.salesforce.com</url>
+        <user-id/>
+        <password/>
+    </service-credential>
+
+    <service-profile service-profile-id="firework.http.dashboard.prof">
+        <timeout-millis>20000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>20000</rate-limit-calls>
+        <rate-limit-millis>20000</rate-limit-millis>
+        <cb-enabled>false</cb-enabled>
+        <cb-calls>0</cb-calls>
+        <cb-millis>0</cb-millis>
+    </service-profile>
+
+    <service-profile service-profile-id="fwOauthTokenProf">
+        <timeout-millis>20000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>20000</rate-limit-calls>
+        <rate-limit-millis>20000</rate-limit-millis>
+        <cb-enabled>true</cb-enabled>
+        <cb-calls>0</cb-calls>
+        <cb-millis>0</cb-millis>
+    </service-profile>
+
+    <service-profile service-profile-id="fwsalesforce.profile.shop">
+        <timeout-millis>20000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>20000</rate-limit-calls>
+        <rate-limit-millis>20000</rate-limit-millis>
+        <cb-enabled>true</cb-enabled>
+        <cb-calls>0</cb-calls>
+        <cb-millis>0</cb-millis>
+    </service-profile>
+
+    <service service-id="firework.http.dashboard.service">
+        <service-type>HTTP</service-type>
+        <enabled>true</enabled>
+        <log-prefix/>
+        <comm-log-enabled>false</comm-log-enabled>
+        <force-prd-enabled>false</force-prd-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>firework.http.dashboard.prof</profile-id>
+        <credential-id>firework.http.dashboard.cred</credential-id>
+    </service>
+
+    <service service-id="fwOauthTokenService">
+        <service-type>HTTP</service-type>
+        <enabled>true</enabled>
+        <log-prefix/>
+        <comm-log-enabled>false</comm-log-enabled>
+        <force-prd-enabled>true</force-prd-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>fwOauthTokenProf</profile-id>
+        <credential-id>fwOauthTokenCred</credential-id>
+    </service>
+
+    <service service-id="fwsalesforce.service.shop">
+        <service-type>HTTP</service-type>
+        <enabled>true</enabled>
+        <log-prefix/>
+        <comm-log-enabled>false</comm-log-enabled>
+        <force-prd-enabled>true</force-prd-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>fwsalesforce.profile.shop</profile-id>
+        <credential-id>fwsalesforce.ocapi.cred</credential-id>
+    </service>
+</services>

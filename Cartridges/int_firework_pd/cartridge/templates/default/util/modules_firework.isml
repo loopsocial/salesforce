@@ -1,0 +1,2 @@
+<iscomment>Purchase Tracking API Script </iscomment>
+<ismodule template ="firework/purchasetracking.isml" name="purchasetracking" attribute='sadebug'/>

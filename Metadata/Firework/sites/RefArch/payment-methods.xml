@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<payment-settings xmlns="http://www.demandware.com/xml/impex/paymentsettings/2009-09-15">
+    <payment-method method-id="FIREWORK_PAYMENT">
+        <name xml:lang="x-default">FIREWORK PAYMENT</name>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>FIREWORK_PAYMENT</processor-id>
+        <custom-attributes>
+            <custom-attribute attribute-id="eaRequireSignature">false</custom-attribute>
+            <custom-attribute attribute-id="excludeForMTO">false</custom-attribute>
+        </custom-attributes>
+    </payment-method>
+</payment-settings>

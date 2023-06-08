@@ -1,0 +1,93 @@
+<!--- TEMPLATENAME: PurchaseTracking.isml --->
+<isset name="orderid" value="${pdict.order.orderNumber}" scope="page" />
+<isset name="amount" value="${pdict.order.priceTotal}" scope="page" />
+<isset name="email" value="${pdict.order.orderEmail}" scope="page" />
+<isset name="firstName" value="${pdict.order.billing.billingAddress.address.firstName}" scope="page" />
+<isset name="lastName" value="${pdict.order.billing.billingAddress.address.lastName}" scope="page" />
+<isset name="lastName" value="${pdict.order.billing.billingAddress.address.lastName}" scope="page" />
+<isset name="country" value="${pdict.order.billing.billingAddress.address.countryCode.displayValue}" scope="page" />
+<isset name="currency" value="${pdict.order.billing.billingAddress.address.countryCode.value}" scope="page" />
+<isset name="shippingPaymentMethod" value="${pdict.order.billing.payment.selectedPaymentInstruments[0].paymentMethod}" scope="page" />
+<isset name="shippingPaymentLastFour" value="${pdict.order.billing.payment.selectedPaymentInstruments[0].lastFour}" scope="page" />
+<isscript>
+        var getproductDetails=JSON.stringify(pdict.order);
+        importPackage( dw.util );
+        var getCurrentDomain=request.httpProtocol+"://"+request.httpHost;
+		var excludeProductDataObj  =[];
+		var i : Integer =0;
+		var lineitem=JSON.stringify(pdict.order);
+		var getCouponArray=[];
+</isscript>
+<isset name="product_name" value="" scope="page"/>
+<isset name="id" value="" scope="page"/>
+<isset name="qty" value="" scope="page"/>
+<isset name="price" value="" scope="page"/>
+<isset name="product_url" value="" scope="page"/>
+<isset name="product_image_url" value="" scope="page"/>
+<isset name="category_name" value="" scope="page"/>
+<isset name="category_id" value="" scope="page"/>
+<isset name="coupon" value="" scope="page"/>
+<isif condition="${pdict.order.totals.discounts}">
+<isloop items="${pdict.order.totals.discounts}" var="getCouponCode">
+<isif condition="${getCouponCode.type == 'coupon' && getCouponCode.type != ''}">
+<isscript>
+   getCouponArray.push(getCouponCode.couponCode);
+</isscript>
+</isif>
+</isloop>
+<isscript>
+ var getMulticoupon=getCouponArray.join(',');
+</isscript>
+<isset name="coupon" value="${getMulticoupon}" scope="page"/>
+</isif>
+<isloop items="${pdict.order.items.items}" var="lineItem">
+<isif condition="${lineItem.productName != '' && lineItem.productName != 'null'}">
+		<isset name="product_name" value="${lineItem.productName}" scope="page"/>
+</isif>
+<isif condition="${lineItem.id != '' &&  lineItem.id != 'null'}">
+		<isset name="id" value="${lineItem.id}" scope="page"/>
+</isif>
+<isif condition="${lineItem.quantity!= '' &&  lineItem.quantity!= 'null'}">
+		<isset name="qty" value="${lineItem.quantity}" scope="page"/>
+</isif>
+<isif condition="${lineItem.priceTotal.price != '' &&  lineItem.priceTotal.price != 'null'}">
+		<isset name="price" value="${lineItem.priceTotal.price}" scope="page"/>
+</isif>
+<isif condition="${URLUtils.http('Product-Show','pid',lineItem.id) != '' &&  URLUtils.http('Product-Show','pid',lineItem.id) != 'null'}">
+		<isset name="product_url" value="${URLUtils.http('Product-Show','pid',lineItem.id)}" scope="page"/>
+</isif>
+<isif condition="${lineItem.images['small'][0].absURL != '' &&  lineItem.images['small'][0].absURL != 'null'}">
+		<isset name="product_image_url" value="${lineItem.images['small'][0].absURL}" scope="page"/>
+</isif>
+<isscript>
+var productHelper = require('int_firework_pd/cartridge/scripts/helper/product.js');
+var getMasterProductID = productHelper.getMasterProductID(id);
+var getSalePrice=lineItem.priceTotal.price.replace("$","");
+getSalePrice=getSalePrice.replace(",","");
+var getSaleFinalPrice=(getSalePrice/qty);
+excludeProductDataObj.push({ext_product_id:getMasterProductID,quantity:qty,price:getSaleFinalPrice});
+</isscript>
+</isloop>
+<isscript>
+ productJsonObj=JSON.stringify(excludeProductDataObj);
+ </isscript>
+<script>
+  function onFwAnalyticsScriptLoaded() {
+    let payload = {
+      order_id:'${pdict.order.orderNumber}',
+      order_value:'${pdict.order.totals.grandTotal.replace("$","")}',
+      order_number:'${pdict.order.orderNumber}',
+      currency:'${currency}',
+      country: '${country}',
+      subtotal:'${pdict.order.totals.subTotal.replace("$","")}',
+      shipping_price:'${pdict.order.totals.totalShippingCost.replace("$","")}',
+      payment_method: "${shippingPaymentMethod}",
+      cc_last4: '${shippingPaymentLastFour}',
+      product:<isprint value="${productJsonObj}"  encoding="off"/>,
+    }
+    window._fwn.analytics.purchase(payload)
+  }
+</script>
+<script onload="onFwAnalyticsScriptLoaded()" src="//asset.fwcdn3.com/js/analytics.js"></script>
+<iscomment> === PurchaseTracking Addition END === </iscomment>
+
