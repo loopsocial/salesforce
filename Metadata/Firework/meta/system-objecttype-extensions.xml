@@ -105,13 +105,13 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="fireworkEnablePurchaseTrack">
+			<attribute-definition attribute-id="fireworkEnablePurchaseTrack">
                 <display-name xml:lang="x-default">Activate Purchase Track</display-name>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
-            </attribute-definition>
+            </attribute-definition> 
    </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="fireworkDashboardConfig">
@@ -120,7 +120,7 @@
                 <attribute attribute-id="fireworkUniqueBMUID"/>
                 <attribute attribute-id="fireworkContactsEmail"/>
 				<attribute attribute-id="fireworkSiteTitle"/>
-                <attribute attribute-id="fireworkEnablePurchaseTrack"/>
+				<attribute attribute-id="fireworkEnablePurchaseTrack"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
