@@ -1,0 +1,46 @@
+<isdecorate template="application/MenuFrame">
+    <link rel="stylesheet" href="${URLUtils.staticURL('/css/bootstrap.min.css')}" />
+    <link rel="stylesheet" href="${URLUtils.staticURL('/css/firework.css')}" />
+    <div class="container-fluid firework-page px-0">
+
+        <div class="breadcrumps">
+            <a class="breadcrump"
+                href="${URLUtils.url('SiteNavigationBar-ShowSiteOverview')}">${Resource.msg('breadcrumps.siteoverview', 'fireworkorder', null)}</a>
+            &nbsp;>&nbsp;
+            <a class="breadcrump"
+                href="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'fireworkorder')}">${Resource.msg('breadcrumps.current.menu', 'fireworkorder', null)}</a>
+            &nbsp;>&nbsp;
+            <a class="breadcrump"
+                href="${URLUtils.https('FireworkOrder-Show')}">${Resource.msg('breadcrumps.current.page.orders', 'fireworkorder', null)}</a>
+            &nbsp;>&nbsp;
+            <span class="breadcrump">${Resource.msgf('order.detils.label', 'fireworkorder', null, pdict.details.OrderNo)}</span>
+        </div>
+        <h1 class="overview_title">${Resource.msgf('breadcrumps.current.page.order.details', 'fireworkorder', null, pdict.details.OrderNo)}</h1>
+        <div class="orders-list-body order infobox">
+            <table class="infobox table">
+                <isloop items="${Object.keys(pdict.details)}" var="key">
+                    <tr>
+                        <td class="p-1">${key}</td>
+                        <td class="p-1 ${key === "TrackingNumber" ? 'tracking-number' : ''}"
+                        ${key === 'trackingNumber' ? 'data-currenturl="' + pdict.currentURL + '"' : ''}>
+                            <isprint value="${pdict.details[key]}" encoding="off" />
+                        </td>
+                    </tr>
+                </isloop>
+            </table>
+            <div class="d-flex justify-content-end p-3">
+                <isset name="isOrderTracked" value="${pdict.details.TrackingNumber}" scope="page" />
+                <span class="feedback-message p-2 ${isOrderTracked ? 'text-primary' : 'd-none'}">
+                    ${isOrderTracked ? Resource.msg('msg.feedback.warning', 'fireworkorder', null) : ''}
+                </span>
+                <button class="request-delivery-btn btn btn-light border border-primary"
+                    data-url="${URLUtils.https('FireworkOrder-RequestRefund')}" data-orderno="${pdict.details.OrderNo}"
+                    data-success-msg="${Resource.msg('msg.feedback.success', 'fireworkorder', null)}"
+                    data-error-msg="${Resource.msg('msg.feedback.error', 'fireworkorder', null)}"
+                    style="font-size: 13px" ${isOrderTracked? "disabled=disabled":""}>
+                    ${Resource.msg('button.request.refund', 'fireworkorder', null)}</button>
+            </div>
+        </div>
+    </div>
+    <script defer type="text/javascript" src="${URLUtils.staticURL('/js/firework.js')}"></script>
+</isdecorate>

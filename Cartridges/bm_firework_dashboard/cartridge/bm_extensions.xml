@@ -33,4 +33,22 @@
         </sub-pipelines>
         <icon>icons/fw.png</icon>
     </menuaction>
+    <!-- 
+      This feature is on hold for now as FW backend is not ready to support the refund.
+      <menuaction id="custom_module_fireworkorder_submenu" menupath="custom_module_firework" position="3" site="true">
+        <name xml:lang="x-default">Orders</name>
+        <short_description xml:lang="x-default">
+          Manage the orders.
+        </short_description>
+        <description xml:lang="x-default">
+          Manage the orders.
+        </description>
+        <exec pipeline="FireworkOrder" node="Show"/>
+        <sub-pipelines>
+           <pipeline name="FireworkOrder-Show" />
+           <pipeline name="FireworkOrder-Detail" />
+           <pipeline name="FireworkOrder-RequestRefund" />
+        </sub-pipelines>
+        <icon>icons/fw.png</icon>
+      </menuaction> -->
 </extensions>

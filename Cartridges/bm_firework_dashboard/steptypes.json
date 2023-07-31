@@ -24,6 +24,30 @@
                         }
                     ]
                 }
+            },
+            {
+                "@type-id": "custom.productQuantityFeed",
+                "description": "Used this cron to send Product Quantity Feed",
+                "module": "bm_firework_dashboard/cartridge/scripts/jobsteps/productquantityfeed.js",
+                "function": "exportProductQuantity",
+                "parameters": {
+                    "parameters": [ ]
+                },
+                "status-codes": {
+                    "status": [{
+                            "@code": "ERROR",
+                            "description": "Used when an error occurred."
+                        },
+                        {
+                            "@code": "OK",
+                            "description": "Used when everything went well."
+                        },
+                        {
+                            "@code": "NO_FILE_FOUND",
+                            "description": "In case exit status is OK and no files were found."
+                        }
+                    ]
+                }
             }
         ]
     }

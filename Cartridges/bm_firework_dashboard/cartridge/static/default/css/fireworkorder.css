@@ -1,0 +1,37 @@
+.firework-page,
+.request-delivery-btn,
+.infobox {
+    font-size: 13px;
+}
+
+.breadcrump {
+    font-size: 0.8125rem;
+}
+
+#bm_content_column {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.page-item {
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
+.page-item.active {
+    border-radius: 3px;
+    background-color: #00629b;
+    color: #fff;
+}
+
+.page-item .page-link {
+    border-radius: 3px;
+    padding: 3px 5px 4px;
+}
+
+.page-item.active .page-link {
+    border-radius: 3px;
+    background-color: #00629b;
+    border-color: #00629b;
+    color: #fff;
+}

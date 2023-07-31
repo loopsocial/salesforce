@@ -1,0 +1,94 @@
+<isdecorate template="application/MenuFrame">
+    <link rel="stylesheet" href="${URLUtils.staticURL('/css/bootstrap.min.css')}" />
+    <link rel="stylesheet" href="${URLUtils.staticURL('/css/fireworkorder.css')}" />
+    <div class="container-fluid orders-list px-0">
+        <div class="breadcrumps">
+            <a class="breadcrump"
+                href="${URLUtils.url('SiteNavigationBar-ShowSiteOverview')}">${Resource.msg('breadcrumps.siteoverview', 'fireworkorder', null)}</a>
+            &nbsp;>&nbsp;
+            <a class="breadcrump"
+                href="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', 'fireworkorder')}">${Resource.msg('breadcrumps.current.menu', 'fireworkorder', null)}</a>
+            &nbsp;>&nbsp;
+            <isif condition="${pdict.pagingModel.count === 1}">
+                <a class="breadcrump"
+                    href="${URLUtils.https('FireworkOrder-Show')}">${Resource.msg('breadcrumps.current.page.orders', 'fireworkorder', null)}</a>
+            <iselse/>
+                <span class="breadcrump">${Resource.msg('breadcrumps.current.page.orders', 'fireworkorder', null)}</span>
+            </isif>
+        </div>
+        <h1 class="overview_title">${Resource.msg('breadcrumps.current.page.orders', 'fireworkorder', null)}</h1>
+        <div class="collapse alert" id="alertCollapse">
+            <strong class="alert-msg"></strong>
+            <button type="button" class="close" data-toggle="collapse" data-target="#alertCollapse" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="orders-list-body infobox">
+            <table class="w-100">
+                <thead class="mb-2">
+                    <tr>
+                        <td class="pl-2 py-2">
+                            <form action="${URLUtils.https('FireworkOrder-Show')}">
+                                <label for="orderID">${Resource.msg('orders.table.search.label', 'fireworkorder', null)}</label>
+                                <input class="inputfield_en not_disabled" type="text" name="orderNo" id="orderID" />
+                                <button type="submit"
+                                    class="find-order button">${Resource.msg('orders.table.search.button', 'fireworkorder', null)}</button>
+                            </form>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="px-1">
+                        <isloop items="${Object.keys(pdict.orderTableNames)}" var="colName">
+                            <td class='pl-2'>${pdict.orderTableNames[colName]}</td>
+                        </isloop>
+                    </tr>
+                    <isloop items="${pdict.pagingModel.pageElements}" var="order">
+                        <tr class="px-1 order">
+                            <isloop items="${Object.keys(order)}" var="key">
+                                <td class='pl-2 py-3 ${key === 'trackingNumber' ? 'tracking-number' : ''}'
+                                    ${key === 'trackingNumber' ? 'data-currenturl="' + pdict.currentURL + '"' : ''}>
+                                <isif condition="${key === 'orderNo'}">
+                                    <a href="${URLUtils.https('FireworkOrder-Detail', 'orderNo', order[key])}">${order[key]}</a>
+                                <iselse/>
+                                    <isprint value="${order[key]}" encoding="off" />
+                                    </isif>
+                                </td>
+                            </isloop>
+                                <td>
+                                    <button class="request-delivery-btn btn btn-light border border-primary"
+                                        data-url="${URLUtils.https('FireworkOrder-RequestRefund')}" data-orderno="${order.orderNo}"
+                                        data-success-msg="${Resource.msg('msg.feedback.success', 'fireworkorder', null)}"
+                                        data-error-msg="${Resource.msg('msg.feedback.error', 'fireworkorder', null)}">
+                                        ${Resource.msg('button.request.refund', 'fireworkorder', null)}</button>
+                                </td>
+                        </tr>
+                    </isloop>
+                </tbody>
+            </table>
+            <isif condition="${pdict.pagingModel.pageCount > 1}">
+                <div class="page-selector pr-2">
+                    <ul class="pagination justify-content-end">
+                        <isif condition="${pdict.pagingModel.currentPage > 0}">
+                            <li class='page-item'><a class='page-link'
+                                    href="${URLUtils.https('FireworkOrder-Show', 'page', pdict.pagingModel.currentPage)}">${Resource.msg('button.pagination.previous', 'fireworkorder', null)}</a>
+                            </li>
+                        </isif>
+                        <isloop begin="1" end="5" status="stat">
+                            <li class='page-item ${stat.index === pdict.pagingModel.currentPage + 1 ? ' active' : ''}'>
+                                <a class='page-link'
+                                    href="${URLUtils.https('FireworkOrder-Show', 'page', stat.index)}">${stat.index}</a></li>
+                        </isloop>
+                        <isif condition="${pdict.pagingModel.currentPage < 4}">
+                            <li class='page-item'><a class='page-link'
+                                    href="${URLUtils.https('FireworkOrder-Show', 'page', pdict.pagingModel.currentPage + 2)}">${Resource.msg('button.pagination.next', 'firework', null)}</a>
+                            </li>
+                        </isif>
+                    </ul>
+                </div>
+            </isif>
+        </div>
+    </div>
+    <script defer type="text/javascript" src="${URLUtils.staticURL('/js/fireworkOrd.js')}"></script>
+    <script defer type="text/javascript" src="${URLUtils.staticURL('/js/bootstrap.min.js')}"></script>
+</isdecorate>
