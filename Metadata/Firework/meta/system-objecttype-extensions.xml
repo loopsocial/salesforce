@@ -105,6 +105,21 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
+			<attribute-definition attribute-id="fwImageviewtype">
+                <display-name xml:lang="x-default">Image View Type</display-name>
+                <description xml:lang="x-default">Image type should be Comma separated values for e.g "large","medium"</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+			<attribute-definition attribute-id="fwLocaleId">
+                <display-name xml:lang="x-default">Locale Id</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
 			<attribute-definition attribute-id="fireworkEnablePurchaseTrack">
                 <display-name xml:lang="x-default">Activate Purchase Track</display-name>
                 <type>boolean</type>
@@ -120,6 +135,8 @@
                 <attribute attribute-id="fireworkUniqueBMUID"/>
                 <attribute attribute-id="fireworkContactsEmail"/>
 				<attribute attribute-id="fireworkSiteTitle"/>
+				<attribute attribute-id="fwImageviewtype"/>
+				<attribute attribute-id="fwLocaleId"/>
 				<attribute attribute-id="fireworkEnablePurchaseTrack"/>
             </attribute-group>
         </group-definitions>
