@@ -19,6 +19,8 @@ Preferences.prototype.getPreferences = function (preferencesArgs) {
     var preferenceObject = {
         siteCurrency: preference.custom.fireworkSiteCurrency,
         siteTitle: preference.custom.fireworkSiteTitle,
+        fwImageviewtype: preference.custom.fwImageviewtype,
+        fwLocaleId: preference.custom.fwLocaleId,
         getUniqueBMUID: preference.custom.fireworkUniqueBMUID,
         contactsEmail: preference.custom.fireworkContactsEmail,
         provider: 'salesforce',

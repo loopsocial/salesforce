@@ -1,3 +1,4 @@
+/* globals dw, request, session, empty */
 'use strict';
 var Mac = require('dw/crypto/Mac');
 var Encoding = require('dw/crypto/Encoding');
@@ -5,6 +6,7 @@ const ISML = require('dw/template/ISML');
 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 var CustomObjectModel = require('*/cartridge/models/fwCustomObjectModel.js');
 var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
+var Locale = require('dw/util/Locale');
 importPackage(dw.system);
 importPackage(dw.util);
 /**
@@ -12,6 +14,12 @@ importPackage(dw.util);
  */
 function updateGraphFun(graphQLData)
 {
+	/* API Includes */
+	var preferencesModel = new PreferencesModel();
+    var getFwConfigSetting=preferencesModel.getPreferences();
+	var fwImageviewtype=getFwConfigSetting.fwImageviewtype;
+	    fwImageviewtype=fwImageviewtype.replace(/"/g, '\\"');
+	var requestLocale = getFwConfigSetting.fwLocaleId;
 	var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
 	var refreshToken='';var accessToken='';var code_verifier='';
 	var code_challenge='';var usid='';var code='';var org_id='';
@@ -49,8 +57,7 @@ function updateGraphFun(graphQLData)
 			var restService = require('~/cartridge/scripts/init/FireWorkInit');
 			var htmlError = '<div id="saErroroauthRegister">Something went wrong.</div>';
 			var service:Service =restService.graphQLCredService;
-			// var query = '{"query":"mutation {updateBusinessStore(storeId: \\"'+ storeId +'\\", updateBusinessStoreInput: {businessId: \\"'+ businessId +'\\", accessToken: \\"'+ accessToken +'\\", refreshToken: \\"'+ refreshToken +'\\", metadata: \\"{\\\\\\"short_code\\\\\\": \\\\\\"'+ short_code +'\\\\\\",\\\\\\"base_url\\\\\\": \\\\\\"'+ baseUrl +'\\\\\\",\\\\\\"shop_base_url\\\\\\": \\\\\\"'+ shopBaseUrl +'\\\\\\", \\\\\\"client_id\\\\\\": \\\\\\"'+ client_id +'\\\\\\", \\\\\\"site_id\\\\\\": \\\\\\"'+ site_id +'\\\\\\", \\\\\\"org_id\\\\\\": \\\\\\"'+ org_id +'\\\\\\", \\\\\\"clientPwd\\\\\\": \\\\\\"'+ clientPwd +'\\\\\\", \\\\\\"tenant_id\\\\\\": \\\\\\"'+ tenant_id +'\\\\\\", \\\\\\"code_verifier\\\\\\": \\\\\\"'+ code_verifier +'\\\\\\", \\\\\\"code_challenge\\\\\\": \\\\\\"'+ code_challenge +'\\\\\\", \\\\\\"usid\\\\\\": \\\\\\"'+ usid +'\\\\\\", \\\\\\"code\\\\\\": \\\\\\"'+ code +'\\\\\\"}\\", name: \\"'+ siteTitle +'\\"\\n    }) {... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\t\\tuid\\n\\t\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
-			var query = '{"query":"mutation {updateBusinessStore(storeId: \\"'+ storeId +'\\", updateBusinessStoreInput: {businessId: \\"'+ businessId +'\\", accessToken: \\"'+ accessToken +'\\", refreshToken: \\"'+ refreshToken +'\\", name: \\"'+ siteTitle +'\\"\\n    }) {... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\t\\tuid\\n\\t\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
+			var query = '{"query":"mutation {updateBusinessStore(storeId: \\"'+ storeId +'\\", updateBusinessStoreInput: {businessId: \\"'+ businessId +'\\", accessToken: \\"'+ accessToken +'\\", imageViewTypes:[' + fwImageviewtype + '] , siteLocaleId: \\"' + requestLocale + '\\" name: \\"'+ siteTitle +'\\"\\n }) {... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\t\\tuid\\n\\t\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
 			service.URL += '/graphiql';
 			var payLoadDetails=new Bytes(query);
     		var result:Result = service.call({

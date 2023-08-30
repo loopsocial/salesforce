@@ -2,6 +2,8 @@
 var Mac = require('dw/crypto/Mac');
 var Encoding = require('dw/crypto/Encoding');
 const ISML = require('dw/template/ISML');
+var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
+var Locale = require('dw/util/Locale');
 importPackage(dw.system);
 importPackage(dw.util);
 /**
@@ -9,6 +11,11 @@ importPackage(dw.util);
  */
 function updateGraphFun(getAccessToken,graphQLData)
 {
+		var preferencesModel = new PreferencesModel();
+		var getFwConfigSetting=preferencesModel.getPreferences();
+		var fwImageviewtype=getFwConfigSetting.fwImageviewtype;
+		    fwImageviewtype=fwImageviewtype.replace(/"/g, '\\"');
+		var requestLocale = getFwConfigSetting.fwLocaleId;
 		var refreshToken='';var accessToken='';var code_verifier='';
 		var code_challenge='';var usid='';var code='';var org_id='';
 		var short_code='';var tenant_id='';var site_id='';var clientPwd='';
@@ -38,7 +45,7 @@ function updateGraphFun(getAccessToken,graphQLData)
 	var URLUtils = require('dw/web/URLUtils');
 	var restService = require('~/cartridge/scripts/init/oauthInit');
 	var htmlError = '<div id="saErroroauthRegister">Something went wrong.</div>';
-	var query = '{"query":"mutation {updateBusinessStore(storeId: \\"'+ storeId +'\\", updateBusinessStoreInput: {businessId: \\"'+ businessId +'\\", accessToken: \\"'+ accessToken +'\\", refreshToken: \\"'+ refreshToken +'\\", metadata: \\"{\\\\\\"short_code\\\\\\": \\\\\\"'+ short_code +'\\\\\\", \\\\\\"client_id\\\\\\": \\\\\\"'+ client_id +'\\\\\\", \\\\\\"site_id\\\\\\": \\\\\\"'+ site_id +'\\\\\\", \\\\\\"org_id\\\\\\": \\\\\\"'+ org_id +'\\\\\\", \\\\\\"clientPwd\\\\\\": \\\\\\"'+ clientPwd +'\\\\\\", \\\\\\"tenant_id\\\\\\": \\\\\\"'+ tenant_id +'\\\\\\", \\\\\\"code_verifier\\\\\\": \\\\\\"'+ code_verifier +'\\\\\\", \\\\\\"code_challenge\\\\\\": \\\\\\"'+ code_challenge +'\\\\\\", \\\\\\"usid\\\\\\": \\\\\\"'+ usid +'\\\\\\", \\\\\\"code\\\\\\": \\\\\\"'+ code +'\\\\\\"}\\", name: \\"'+ siteTitle +'\\"\\n    }) {... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\t\\tuid\\n\\t\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
+	var query = '{"query":"mutation {updateBusinessStore(storeId: \\"'+ storeId +'\\", updateBusinessStoreInput: {businessId: \\"'+ businessId +'\\", accessToken: \\"'+ accessToken +'\\", imageViewTypes:[' + fwImageviewtype + '] , siteLocaleId: \\"' + requestLocale + '\\", metadata: \\"{\\\\\\"short_code\\\\\\": \\\\\\"'+ short_code +'\\\\\\", \\\\\\"client_id\\\\\\": \\\\\\"'+ client_id +'\\\\\\", \\\\\\"site_id\\\\\\": \\\\\\"'+ site_id +'\\\\\\", \\\\\\"org_id\\\\\\": \\\\\\"'+ org_id +'\\\\\\", \\\\\\"clientPwd\\\\\\": \\\\\\"'+ clientPwd +'\\\\\\", \\\\\\"tenant_id\\\\\\": \\\\\\"'+ tenant_id +'\\\\\\", \\\\\\"code_verifier\\\\\\": \\\\\\"'+ code_verifier +'\\\\\\", \\\\\\"code_challenge\\\\\\": \\\\\\"'+ code_challenge +'\\\\\\", \\\\\\"usid\\\\\\": \\\\\\"'+ usid +'\\\\\\", \\\\\\"code\\\\\\": \\\\\\"'+ code +'\\\\\\"}\\", name: \\"'+ siteTitle +'\\"\\n    }) {... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\t\\tuid\\n\\t\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
 	var service:Service =restService.graphQLCredService;
 	service.URL += '/graphiql';
 	var payLoadDetails=new Bytes(query);

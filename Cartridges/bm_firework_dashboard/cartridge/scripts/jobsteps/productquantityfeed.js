@@ -7,6 +7,7 @@ importPackage(dw.util);
 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 var Mac = require('dw/crypto/Mac');
 var Encoding = require('dw/crypto/Encoding');
+var SystemObjectMgr = require('dw/object/SystemObjectMgr');
 
 
 function dateArithmetic() {
@@ -51,9 +52,25 @@ function exportProductQuantity(options) {
             if (empty(inventoryRecord)) {
                 continue;
             }
+            var priceModel = product.priceModel;
+            var priceInfos = priceModel.priceInfos;
+            var priceBookMap = new HashMap();
+            var pricebooklastModifiedFlag=false;
+            if (priceInfos) {
+                var priceInfosItr = priceInfos.iterator();
+                while (priceInfosItr.hasNext()) {
+                    var priceInfo = priceInfosItr.next();
+                    var priceBookPrice = {};
+                    var getLastModified = priceInfo.priceBook.getLastModified();
+                    if(getLastModified > compareDate)
+                    {
+                        pricebooklastModifiedFlag=true;
+                    }
+                }
+            }
             var lastModifiedinventoryRecord = inventoryRecord.getAllocationResetDate();
             var compareDate = dateArithmetic();
-            if (lastModifiedinventoryRecord > compareDate || product.lastModified > compareDate) {
+            if (lastModifiedinventoryRecord > compareDate || product.lastModified > compareDate || pricebooklastModifiedFlag==true) {
                 if (!empty(inventoryRecord.getStockLevel())) {
                     stockQuantity = inventoryRecord.getStockLevel().getDecimalValue();
                 } else {
@@ -71,8 +88,9 @@ function exportProductQuantity(options) {
             }
         }
 
-
-
+        if(excludeProductDataObj.length > 0)
+        {
+        var productPayloadObj = JSON.stringify(excludeProductDataObj);
         //------------------get business firework and Oauth Object----------//
         var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO', dw.system.Site.current.ID);
         if (FireworkCOObj != null) {
@@ -81,7 +99,7 @@ function exportProductQuantity(options) {
             //----------------------------------------------------------------//
             var client_id = FireworkOauthCO.custom.fireworkClientId;
             var fireworkBusinessStoreId = FireworkCOObj.custom.fireworkBusinessStoreId;
-            var productPayloadObj = JSON.stringify(excludeProductDataObj);
+            
             var mac: Mac = new Mac(Mac.HMAC_SHA_256);
             var sigBytes: Bytes = mac.digest(productPayloadObj, client_id);
             var JwthmacPayload: String = Encoding.toBase64(sigBytes);
@@ -110,6 +128,11 @@ function exportProductQuantity(options) {
             return new Status(Status.ERROR, null, 'Firework Object and Oauth data object empty');
 
         }
+    }
+    else
+    {
+        return new Status(Status.OK, null, 'Product Record not Found for update');
+    }
         //--------------------------end----------------------------------//
     }
     catch (e) {
