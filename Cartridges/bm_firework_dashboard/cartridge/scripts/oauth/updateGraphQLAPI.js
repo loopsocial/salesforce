@@ -2,7 +2,7 @@
 var Mac = require('dw/crypto/Mac');
 var Encoding = require('dw/crypto/Encoding');
 const ISML = require('dw/template/ISML');
-var PreferencesModel = require('*/cartridge/models/fwPreferencesModel.js');
+var PreferencesModel = require('bm_firework_dashboard/cartridge/models/fwPreferencesModel.js');
 var Locale = require('dw/util/Locale');
 importPackage(dw.system);
 importPackage(dw.util);
