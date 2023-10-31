@@ -6,6 +6,8 @@
          <a href="${URLUtils.https('Oauth-show')}" class="btn-common cancel-btn">${Resource.msg('firework.reset.oauthConfig','dashboard',null)}</a>
 	</div>
 </div>
+<div class="fw-version-style">
+	<p>${Resource.msg('firework.cartridge.version','dashboard',null)}</p>
+</div>
 <script src="${URLUtils.staticURL('/js/firework.js')}" type="text/javascript"></script> 
 </isdecorate>
-

@@ -8,6 +8,7 @@ module.exports.render = function (context) {
         viewmodel.selectedChannel = context.content.storyBlock.selectedChannel;
         viewmodel.selectedPlayList = context.content.storyBlock.selectedPlayList;
         viewmodel.selectedVideo = context.content.storyBlock.selectedVideo;
+        viewmodel.minimizedVideoPlayerLocation = context.content.storyBlock.minimizedVideoPlayerLocation;
         model.viewmodel = viewmodel;
     return new Template('experience/components/firework/storyBlock').render(model).text;
 };

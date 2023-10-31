@@ -32,6 +32,10 @@
 	margin-bottom: 5px;
 	font-weight: bold;
 }
+.fw-version-style{ 
+	font-size: 14px;
+	float: right;
+}
 #firework-widget-settings .firework-widget-settings-main{
 	display: flex;
 	justify-content: space-between;

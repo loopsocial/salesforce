@@ -21,11 +21,7 @@ document.addEventListener("click", function () {
     message.minimizedVideoPlayerLocation=minimizedVideoPlayerLocation;
     if(selectedChannel)
     {
-     if(selectedPlayList=='specificVideo' && selectedVideo)
-     {
-       message.action='done';
-     }
-     else if(selectedPlayList!='specificVideo' && selectedPlayList)
+     if(selectedVideo && selectedPlayList && minimizedVideoPlayerLocation)
      {
        message.action='done';
      }
@@ -77,7 +73,6 @@ $(document).ready(function()
                                            <div class="firework-widget-settings-column" id="selectedPlayListdata">
                                            <label>PlayList</label> <select class="selectedPlayList" name="selectedPlayList" onchange="getselectedVideoListFun(this.value)" id="selectedPlayList">
                                               <option value="">---Select PlayList---</option>
-                                              <option value="specificVideo">A Specific Video</option>
                                               `+getlistOption+`
                                            </select>
                                            </div>
@@ -178,18 +173,11 @@ function SelectedVideoAndChannelFun(getChannelId)
                                         for(var i = 0; i < playlists.length; i++)
                                         {
                                            if(selectedPlayListId==playlists[i].id)
-                                           {
-                                           getlistOption+='<option value="specificVideo">A Specific Video</option>';   
+                                           { 
                                            getlistOption+='<option value='+playlists[i].id+' selected >'+playlists[i].display_name+'</option>';
                                            }
-                                           else if(selectedPlayListId=='specificVideo')
-                                           {
-                                           getlistOption+='<option value="specificVideo" selected >A Specific Video</option>';
-                                           getlistOption+='<option value='+playlists[i].id+'>'+playlists[i].display_name+'</option>'; 
-                                           }
                                            else
-                                           {
-                                           getlistOption+='<option value="specificVideo">A Specific Video</option>';    
+                                           {   
                                            getlistOption+='<option value='+playlists[i].id+'>'+playlists[i].display_name+'</option>'; 
                                            }
                                            

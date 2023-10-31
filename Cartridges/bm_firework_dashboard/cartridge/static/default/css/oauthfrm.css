@@ -48,3 +48,7 @@
 		background: blue;
 		border: 1px solid blue;
 	}
+	.fw-version-style{ 
+		font-size: 14px;
+		float: right;
+	}

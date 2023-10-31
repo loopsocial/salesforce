@@ -17,8 +17,20 @@ function createGraphFun(graphQLData) {
 	var preferencesModel = new PreferencesModel();
     var getFwConfigSetting=preferencesModel.getPreferences();
 	var fwImageviewtype=getFwConfigSetting.fwImageviewtype;
-	    fwImageviewtype=fwImageviewtype.replace(/"/g, '\\"');
+	if(empty(fwImageviewtype) || fwImageviewtype == null || fwImageviewtype == 'null')
+	{
+		fwImageviewtype='';
+	} 
+	else
+	{
+		fwImageviewtype=fwImageviewtype.replace(/"/g, '\\"');
+		
+	}
 	var requestLocale = getFwConfigSetting.fwLocaleId;
+	if(empty(requestLocale) || requestLocale == null || requestLocale == 'null')
+	{
+		requestLocale='default';
+	}
 	var refreshToken = ''; var accessToken = ''; var code_verifier = '';
 	var code_challenge = ''; var usid = ''; var code = ''; var org_id = '';
 	var short_code = ''; var tenant_id = ''; var site_id = ''; var clientPwd = '';

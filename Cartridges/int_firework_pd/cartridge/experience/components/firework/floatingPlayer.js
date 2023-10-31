@@ -9,6 +9,7 @@ module.exports.render = function (context) {
         viewmodel.selectedChannel = context.content.floatingPlayer.selectedChannel;
         viewmodel.selectedPlayList = context.content.floatingPlayer.selectedPlayList;
         viewmodel.selectedVideo = context.content.floatingPlayer.selectedVideo;
+        viewmodel.minimizedVideoPlayerLocation = context.content.floatingPlayer.minimizedVideoPlayerLocation;
         model.viewmodel = viewmodel;
     return new Template('experience/components/firework/floatingPlayer').render(model).text;
 };

@@ -531,10 +531,6 @@ exports.callback = function () {
                 {
                 ISML.renderTemplate('widget/carosuelwidget',{getChannelListJsonObj:getChannelListResponse,widgetType:widgetType,getSelectedValue:SelectedValue});
                 }
-                else if(widgetType==2)
-                {
-                    ISML.renderTemplate('widget/floatingButton',{getChannelListJsonObj:getChannelListResponse,widgetType:widgetType,getSelectedValue:SelectedValue});
-                }
                 else if(widgetType==3)
                 {
                     ISML.renderTemplate('widget/floatingPlayer',{getChannelListJsonObj:getChannelListResponse,widgetType:widgetType,getSelectedValue:SelectedValue});
