@@ -1,5 +1,11 @@
 # Latest Updates
 
+## Version 2.1.1 - November 02, 2023
+
+### Custom Object Enhancements 
+
+- Custom object configure is updateed, replication of custom object from staging to prod is disabled.
+
 ## Version 2.1.0 - October 30, 2023
 
 ### Enhanced Widgets and Configuration
