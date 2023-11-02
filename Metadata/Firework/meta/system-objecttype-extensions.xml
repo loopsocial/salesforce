@@ -145,7 +145,7 @@
 	   <custom-type type-id="FireworkCO">
         <display-name xml:lang="x-default">FireworkCO</display-name>
         <description xml:lang="x-default">Used to store data about oauth creditional</description>
-        <staging-mode>source-to-target</staging-mode>
+        <staging-mode>no-staging</staging-mode>
         <storage-scope>site</storage-scope>
         <key-definition attribute-id="ID">
             <type>string</type>
@@ -195,7 +195,7 @@
     <custom-type type-id="FireworkOauthCO">
         <display-name xml:lang="x-default">FireworkOauthCO</display-name>
         <description xml:lang="x-default">Used to store data about oauth creditional</description>
-        <staging-mode>source-to-target</staging-mode>
+        <staging-mode>no-staging</staging-mode>
         <storage-scope>site</storage-scope>
         <key-definition attribute-id="ID">
             <type>string</type>
