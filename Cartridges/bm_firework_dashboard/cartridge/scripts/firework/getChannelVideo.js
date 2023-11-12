@@ -26,24 +26,45 @@ function getChannelVideoFun(ChannelId,playlistID)
 		var service:Service =restService.getChannelVideoService;
 		if(playlistID)
 		{
-		service.URL += '/api/bus/'+businessId+'/channels/'+ChannelId+'/playlists/'+playlistID+'/videos';
+			var nextPageUrl = '/api/bus/'+businessId+'/channels/'+ChannelId+'/playlists/'+playlistID+'/videos';
 		}
 		else
 		{
-		service.URL += '/api/bus/'+businessId+'/videos?channel_id='+ChannelId;
+			var nextPageUrl = '/api/bus/'+businessId+'/videos?channel_id='+ChannelId;
 		}
-    	var result:Result = service.call({
-		  'Method':"GET",
-          'token':getAccessToken
-		});
-	if (result.isOk()) {
-		var htmlSuccess = result.getObject().toString();
-		return htmlSuccess;
-	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
-		return;
-	}
+		var allVideos = []; 
+		var originalURL = service.URL;
+
+    	do {
+			service.URL = originalURL + nextPageUrl;
+			var result:Result = service.call({
+				'Method':"GET",
+				'token':getAccessToken
+			  });
+		  if (result.isOk()) {
+			var response = JSON.parse(result.getObject().toString());
+            if (response.videos && Array.isArray(response.videos)) {
+                allVideos = allVideos.concat(response.videos);
+            }
+
+			// Check if there is a next page
+            if (response.paging && response.paging.next) {
+                nextPageUrl = response.paging.next;
+            } else {
+                nextPageUrl = null;
+            }			
+		  } else {
+			  var resultMessage = JSON.parse(result.errorMessage);
+			  ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
+			  return;
+		  }
+		} while(nextPageUrl);
+
+		var combinedVideos = {
+			videos: allVideos
+			};
+			
+	    return JSON.stringify(combinedVideos); 
 }
 
 module.exports = {

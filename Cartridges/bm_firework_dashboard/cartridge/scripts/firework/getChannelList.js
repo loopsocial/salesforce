@@ -35,19 +35,43 @@ function getChannelListFun()
 		}
 	var htmlError = '<div id="saErroroauthRegister">Something went wrong.</div>';
 	var service:Service =restService.getChannelListService;
-	service.URL += '/api/bus/'+businessId+'/channels/';
-    var result:Result = service.call({
-		  'Method':"GET",
-          'token':getAccessToken
-		});
-	if (result.isOk()) {
-		var htmlSuccess = result.getObject().toString();
-		return htmlSuccess;
-	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
-		return;
-	}
+	var allChannels = [];
+    var nextPageUrl = '/api/bus/'+businessId+'/channels/';
+	var originalURL = service.URL;
+
+	do {
+
+		service.URL = originalURL + nextPageUrl;
+		var result:Result = service.call({
+			'Method':"GET",
+			'token':getAccessToken
+		  });
+
+		  if (result.isOk()) {
+			var response = JSON.parse(result.getObject().toString());
+            if (response.channels && Array.isArray(response.channels)) {
+                allChannels = allChannels.concat(response.channels);
+            }
+
+            // Check if there is a next page
+            if (response.paging && response.paging.next) {
+                nextPageUrl = response.paging.next;
+            } else {
+                nextPageUrl = null;
+            }
+        } else { 
+			var resultMessage = JSON.parse(result.errorMessage);
+			ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
+			return; 
+        }
+
+	}while(nextPageUrl);
+ 
+	var combinedChannels = {
+		channels: allChannels
+		};
+		
+	return JSON.stringify(combinedChannels); 
 }
 
 module.exports = {
