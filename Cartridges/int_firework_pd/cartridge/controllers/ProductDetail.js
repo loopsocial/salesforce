@@ -57,6 +57,9 @@ server.get(
                         };
                     }),
                 product_id: product.ID,
+                page_description: product.pageDescription,
+                short_description: product.shortDescription,
+                page_url: URLUtils.url('Product-Show', 'pid', product.ID).toString(), 
                 tags: [],
                 title: product.name,
                 variants: serializeVariants(product)
@@ -84,6 +87,9 @@ function defaultProduct(product) {
             values: ["Name"]
         }],
         product_id: product.ID,
+        page_description: product.pageDescription,
+        short_description: product.shortDescription,
+        page_url: URLUtils.url('Product-Show', 'pid', product.ID).toString(), 
         tags: [],
         title: product.name,
         variants: defaultVariants(product)
