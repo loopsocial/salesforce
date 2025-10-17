@@ -20,6 +20,7 @@ Preferences.prototype.getPreferences = function (preferencesArgs) {
         siteCurrency: preference.custom.fireworkSiteCurrency,
         siteTitle: preference.custom.fireworkSiteTitle,
         fwImageviewtype: preference.custom.fwImageviewtype,
+        fwgtin: preference.custom.fwgtin,
         fwLocaleId: preference.custom.fwLocaleId,
         getUniqueBMUID: preference.custom.fireworkUniqueBMUID,
         contactsEmail: preference.custom.fireworkContactsEmail,
