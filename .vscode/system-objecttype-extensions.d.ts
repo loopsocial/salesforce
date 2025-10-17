@@ -124,7 +124,7 @@ declare global {
 			/**
 			* GTIN
 
-				Global Trade Item Number (GTIN) Field for Firework integration
+				Global Trade Item Number (GTIN) Field Key for Firework integration
 			* 
 			* @source [attribute](file:///Users/ruturajkalal/Work/salesforce/github/salesforce/Metadata/Firework/meta/system-objecttype-extensions.xml#116) 
 			*/
@@ -190,7 +190,7 @@ declare global {
 			/**
 			* GTIN
 
-				Global Trade Item Number (GTIN) Field for Firework integration
+				Global Trade Item Number (GTIN) Field Key for Firework integration
 			* 
 			* @source [attribute](file:///Users/ruturajkalal/Work/salesforce/github/salesforce/Metadata/Firework/meta/system-objecttype-extensions.xml#116) 
 			*/
