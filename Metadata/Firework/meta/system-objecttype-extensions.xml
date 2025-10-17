@@ -113,6 +113,14 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
+            <attribute-definition attribute-id="fwgtin">
+                <display-name xml:lang="x-default">GTIN</display-name>
+                <description xml:lang="x-default">Global Trade Item Number (GTIN) Field for Firework integration</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
 			<attribute-definition attribute-id="fwLocaleId">
                 <display-name xml:lang="x-default">Locale Id</display-name>
                 <type>string</type>
