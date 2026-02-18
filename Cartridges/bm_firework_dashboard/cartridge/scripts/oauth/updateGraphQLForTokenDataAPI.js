@@ -19,7 +19,8 @@ var PreferencesModel = require('bm_firework_dashboard/cartridge/models/fwPrefere
 		 if(oauthCOObj != null)
 		 {
 					   //-----------------oauth data------------------------//
-						 var authTokenObjectData=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
+						 var tokenData = oauthCOObj.custom.fireworkAccessTokenObject;
+						 var authTokenObjectData = (typeof tokenData === 'string') ? JSON.parse(tokenData) : tokenData;
 						 var refreshToken=authTokenObjectData.refresh_token;
 						 var accessToken=authTokenObjectData.access_token;
 						 var code_verifier=oauthCOObj.custom.fireworkCodeVerifier;
@@ -36,7 +37,8 @@ var PreferencesModel = require('bm_firework_dashboard/cartridge/models/fwPrefere
 						 var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
 						 var businessId=businessOauthData.businessId;
 						 var businessStoreId=FireworkCOObj.custom.fireworkBusinessStoreId;
-						 var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+						 var fwTokenData = FireworkCOObj.custom.fireworkTokenData;
+						 var oauthtokenData = (typeof fwTokenData === 'string') ? JSON.parse(fwTokenData) : fwTokenData;
 						 var getDashobardToken=oauthtokenData.access_token;
 						 //--------------------end---------------------------------//
 						var  getUniqueBMUID=getFwConfigSetting.getUniqueBMUID;
