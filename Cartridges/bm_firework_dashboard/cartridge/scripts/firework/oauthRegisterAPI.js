@@ -16,8 +16,12 @@ function oauthRegister(){
     var getFwConfigSetting=preferencesModel.getPreferences();
 	var store_domain =request.getHttpProtocol()+'://'+request.getHttpHost();
 	var oauthRegisterJSONObj = {};
+	// Build redirect URI and clean up BM app context
+	var redirectUri = store_domain + URLUtils.url('Firework-callback').toString();
+	redirectUri = redirectUri.replace(/%3b/gi, ';').replace(/%3d/gi, '=');
+	redirectUri = redirectUri.replace(/;app=__bm_merchant(;site=[^\/]+)?/g, '');
 		oauthRegisterJSONObj.client_name=dw.system.Site.current.ID+" Oauth App";
-		oauthRegisterJSONObj.redirect_uris=[store_domain+URLUtils.url('Firework-callback').toString()];
+		oauthRegisterJSONObj.redirect_uris=[redirectUri];
 		oauthRegisterJSONObj.contacts=[getFwConfigSetting.contactsEmail];
 		oauthRegisterJSONObj.scope="openid";
 	var restService = require('~/cartridge/scripts/init/FireWorkInit');

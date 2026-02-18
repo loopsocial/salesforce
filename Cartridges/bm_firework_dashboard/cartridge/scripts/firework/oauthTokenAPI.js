@@ -31,9 +31,8 @@ function oauthToken(getCallBackJSONObj)
 		var htmlSuccess = result.getObject().toString();
 		return htmlSuccess;
 	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
-		return;
+		var errorResponse = { error: true, message: result.errorMessage || 'OAuth token request failed' };
+		return JSON.stringify(errorResponse);
 	}
 }
 
