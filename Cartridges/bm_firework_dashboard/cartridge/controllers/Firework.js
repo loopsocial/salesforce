@@ -22,7 +22,10 @@ exports.dashboard = function () {
                 var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
                 if(oauthCOObj == null)
                 {
-                    var redirectCallbackUrl =request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('Oauth-callback'); 
+                    var redirectCallbackUrl = request.getHttpProtocol()+"://"+request.getHttpHost()+dw.web.URLUtils.url('Oauth-callback').toString();
+                    // Remove BM app context from URL (;app=__bm_merchant or ;app=__bm_merchant;site=...)
+                    redirectCallbackUrl = redirectCallbackUrl.replace(/%3b/gi, ';').replace(/%3d/gi, '=');
+                    redirectCallbackUrl = redirectCallbackUrl.replace(/;app=__bm_merchant(;site=[^\/]+)?/g, '');
                     var getTokenJSONObj = {};
                     getTokenJSONObj.clientSecret='';
                     getTokenJSONObj.clientId='';
@@ -51,7 +54,8 @@ exports.dashboard = function () {
                 else
                 {
                     var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
-                    var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+                    var fwTokenData = FireworkCOObj.custom.fireworkTokenData;
+                    var oauthtokenData = (typeof fwTokenData === 'string') ? JSON.parse(fwTokenData) : fwTokenData;
                     var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
                     var businessId=businessOauthData.businessId;
                     var storeId=FireworkCOObj.custom.fireworkBusinessStoreId;
@@ -83,7 +87,8 @@ exports.dashboard = function () {
                             getGraphQLJSONObj.refreshToken=getRefreshTokenResponse.refresh_token;
                             //----------------------refresh token call function--------//
                             var getTokenJSONObj = {};
-                            var authTokenObjectData=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
+                            var tokenData = oauthCOObj.custom.fireworkAccessTokenObject;
+                            var authTokenObjectData = (typeof tokenData === 'string') ? JSON.parse(tokenData) : tokenData;
                             var refreshToken=authTokenObjectData.refresh_token;
                             getTokenJSONObj.clientSecret=oauthCOObj.custom.fireworkClientSecret;
                             getTokenJSONObj.clientId=oauthCOObj.custom.fireworkClientId;
@@ -94,7 +99,7 @@ exports.dashboard = function () {
                             var getrefreshTokenJobResponse = getrefreshTokenJobObj.refreshTokenfun(getTokenJSONObj);
                             var getrefreshTokenJobJsonObj = JSON.parse(getrefreshTokenJobResponse);
                             Transaction.begin();
-                                oauthCOObj.custom.fireworkAccessTokenObject=getrefreshTokenJobJsonObj;
+                                oauthCOObj.custom.fireworkAccessTokenObject=getrefreshTokenJobResponse;
                             Transaction.commit();
                             //-----------------oauth data------------------------//
                             var getBusinessStoreObj =require('~/cartridge/scripts/firework/updateGraphQLAPI');
@@ -145,7 +150,8 @@ exports.dashboard = function () {
         if(FireworkCOObj != null)
         {
             var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
-            var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+            var fwTokenData = FireworkCOObj.custom.fireworkTokenData;
+            var oauthtokenData = (typeof fwTokenData === 'string') ? JSON.parse(fwTokenData) : fwTokenData;
             var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
             var businessId=businessOauthData.businessId;
             var storeId=FireworkCOObj.custom.fireworkBusinessStoreId;
@@ -217,10 +223,16 @@ exports.callback = function () {
                 var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
                 var getcallBackResquest = callBackObj.oauthToken(callBackJSONObj);
                 var getcallBackResponse =getcallBackResquest;
+                if (!getcallBackResponse || getcallBackResponse === 'undefined') {
+                    var errorMsg = { status: 'failed', message: 'Failed to get OAuth token from Firework API' };
+                    ISML.renderTemplate('dashboard/errorMsg', { errorMsg: errorMsg });
+                    return;
+                }
                 Transaction.begin();
                 FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
                 Transaction.commit();
-                var oauthTokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+                var fwTokenData2 = FireworkCOObj.custom.fireworkTokenData;
+                var oauthTokenData = (typeof fwTokenData2 === 'string' && fwTokenData2 !== 'undefined') ? JSON.parse(fwTokenData2) : fwTokenData2;
                 //------------Validate business exist or not--------------//
                 var getBusinessStoreObj =require('~/cartridge/scripts/firework/getBusinessStoreAPI');
                 var getBusinessStorResponse = getBusinessStoreObj.businessStoreFun(oauthTokenData.access_token,businessId);
@@ -382,7 +394,8 @@ exports.callback = function () {
                 if(FireworkCOObj != null)
                 {
                     var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
-                    var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+                    var fwTokenData3 = FireworkCOObj.custom.fireworkTokenData;
+                    var oauthtokenData = (typeof fwTokenData3 === 'string') ? JSON.parse(fwTokenData3) : fwTokenData3;
                     var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
                     var businessId=businessOauthData.businessId;
                     var storeId=FireworkCOObj.custom.fireworkBusinessStoreId;
