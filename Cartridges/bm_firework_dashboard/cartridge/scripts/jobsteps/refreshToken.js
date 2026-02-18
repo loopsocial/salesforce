@@ -24,7 +24,8 @@ var run = function run() {
 			 		try {
 						 //------------update refresh token for update graphQL data-------------//
 						 var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
-						 var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+						 var fwTokenData = FireworkCOObj.custom.fireworkTokenData;
+						 var oauthtokenData = (typeof fwTokenData === 'string') ? JSON.parse(fwTokenData) : fwTokenData;
 						 var callBackJSONObj = {};
 						 //-----------get refresh token and create new accesstoken-------------//
 						 callBackJSONObj.client_id=oauthRegisterData.client_id;
@@ -38,14 +39,41 @@ var run = function run() {
 									var callBackObj =require('~/cartridge/scripts/firework/oauthTokenAPI');
 									var getcallBackResponse = callBackObj.oauthToken(callBackJSONObj);
 									var getRefreshTokenResponse=JSON.parse(getcallBackResponse);
+									
+									// Check if Firework token refresh failed
+									if (getRefreshTokenResponse.error || !getRefreshTokenResponse.access_token) {
+										return new Status(Status.ERROR, 'ERROR', 'Firework token refresh failed: ' + JSON.stringify(getRefreshTokenResponse));
+									}
+									
 									Transaction.begin();
 									FireworkCOObj.custom.fireworkTokenData=getcallBackResponse;
 									Transaction.commit();
 								 }
 								//---------------------------end--------------------------------------//
 								var getTokenJSONObj = {};
-								var authTokenObjectData=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
+								var tokenData = oauthCOObj.custom.fireworkAccessTokenObject;
+								
+								// Debug logging - remove after fixing
+								Logger.info('Token data type: ' + typeof tokenData);
+								Logger.info('Token data raw: ' + String(tokenData).substring(0, 200));
+								
+								var authTokenObjectData = (typeof tokenData === 'string') ? JSON.parse(tokenData) : tokenData;
+								
+								// Check if we need to parse again (double-stringified data)
+								if (typeof authTokenObjectData === 'string') {
+									Logger.info('Token was double-stringified, parsing again');
+									authTokenObjectData = JSON.parse(authTokenObjectData);
+								}
+								
 								var refreshToken=authTokenObjectData.refresh_token;
+								
+								// Debug logging
+								Logger.info('Refresh token exists: ' + (refreshToken ? 'yes' : 'no'));
+								
+								if (!refreshToken) {
+									return new Status(Status.ERROR, 'ERROR', 'No refresh_token found in stored data. Stored data keys: ' + Object.keys(authTokenObjectData || {}).join(', '));
+								}
+								
 								getTokenJSONObj.clientSecret=oauthCOObj.custom.fireworkClientSecret;
 								getTokenJSONObj.clientId=oauthCOObj.custom.fireworkClientId;
 								getTokenJSONObj.shortCode=oauthCOObj.custom.fireworkShortCode;
@@ -56,8 +84,14 @@ var run = function run() {
 							var getrefreshTokenJobResponse = getrefreshTokenJobObj.refreshTokenfun(getTokenJSONObj);
 							//return new Status(Status.ERROR, 'ERROR', JSON.stringify(getrefreshTokenJobResponse));
 							var getrefreshTokenJobJsonObj = JSON.parse(getrefreshTokenJobResponse);
+							
+							// Check if SCAPI token refresh failed
+							if (getrefreshTokenJobJsonObj.error || !getrefreshTokenJobJsonObj.access_token) {
+								return new Status(Status.ERROR, 'ERROR', 'SCAPI token refresh failed: ' + JSON.stringify(getrefreshTokenJobJsonObj));
+							}
+							
 								Transaction.begin();
-									oauthCOObj.custom.fireworkAccessTokenObject=getrefreshTokenJobJsonObj;
+									oauthCOObj.custom.fireworkAccessTokenObject=getrefreshTokenJobResponse;
 								Transaction.commit();
 								//-----------------oauth data------------------------//
 								var updateGraphQLForTokenDataObj =require('~/cartridge/scripts/oauth/updateGraphQLForTokenDataAPI');

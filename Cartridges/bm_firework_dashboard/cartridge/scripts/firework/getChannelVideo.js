@@ -17,7 +17,8 @@ function getChannelVideoFun(ChannelId,playlistID)
 	var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO',dw.system.Site.current.ID);
         if(FireworkCOObj != null)
         {
-            var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+            var fwTokenData = FireworkCOObj.custom.fireworkTokenData;
+            var oauthtokenData = (typeof fwTokenData === 'string') ? JSON.parse(fwTokenData) : fwTokenData;
             var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
             var businessId=businessOauthData.businessId;
             var getAccessToken=oauthtokenData.access_token;

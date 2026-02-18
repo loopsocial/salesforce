@@ -41,12 +41,11 @@ function accessTokenFun(getAccessTokenObj)
 		  'requestJSON':accessTokenJSONObj
 		});
 	if (result.isOk()) {
-		var htmlSuccess = JSON.stringify(result.getObject().toString());
+		var htmlSuccess = result.getObject().toString();
 		return htmlSuccess;
 	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('oauth/errorMsg',{errorMsg:resultMessage});
-        return;
+		var errorResponse = { error: true, message: result.errorMessage || 'Get access token request failed' };
+		return JSON.stringify(errorResponse);
 	}
 }
 module.exports = {

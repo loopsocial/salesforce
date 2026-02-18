@@ -17,8 +17,8 @@ function show() {
     try {
         var redirectCallbackUrl = URLUtils.https('Oauth-callback').toString();
         redirectCallbackUrl = redirectCallbackUrl.replace(/%3b/gi, ';').replace(/%3d/gi, '=');
-        // Remove BM specific parameters to get clean callback URL
-        redirectCallbackUrl = redirectCallbackUrl.replace(/;app=__bm_merchant;site=[^\/]+/g, '');
+        // Remove BM specific parameters to get clean callback URL (;app=__bm_merchant or ;app=__bm_merchant;site=...)
+        redirectCallbackUrl = redirectCallbackUrl.replace(/;app=__bm_merchant(;site=[^\/]+)?/g, '');
         var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO', dw.system.Site.current.ID);
         if (oauthCOObj != null) {
             var getTokenJSONObj = {};
@@ -70,8 +70,8 @@ function success() {
         var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO', dw.system.Site.current.ID);
         var callbackUrl = URLUtils.https('Oauth-callback').toString();
         callbackUrl = callbackUrl.replace(/%3b/gi, ';').replace(/%3d/gi, '=');
-        // Remove BM specific parameters to get clean callback URL
-        callbackUrl = callbackUrl.replace(/;app=__bm_merchant;site=[^\/]+/g, '');
+        // Remove BM specific parameters to get clean callback URL (;app=__bm_merchant or ;app=__bm_merchant;site=...)
+        callbackUrl = callbackUrl.replace(/;app=__bm_merchant(;site=[^\/]+)?/g, '');
         oauthConfig.shortCode = shortCode;
         oauthConfig.fworganizationid = fworganizationid;
         oauthConfig.fwclientid = fwclientid;
@@ -125,13 +125,16 @@ function success() {
  */
 function callback() {
     /* Local API Includes */
+    var Logger = require('dw/system/Logger').getLogger('firework', 'OAuth');
     try {
         var usid = request.httpParameterMap.usid.value;
         var code = request.httpParameterMap.code.value;
         var redirectURL = URLUtils.https('Oauth-callback').toString();
+        Logger.info('Original redirectURL: ' + redirectURL);
         redirectURL = redirectURL.replace(/%3b/gi, ';').replace(/%3d/gi, '=');
-        // Remove BM specific parameters to get clean callback URL
-        redirectURL = redirectURL.replace(/;app=__bm_merchant;site=[^\/]+/g, '');
+        // Remove BM specific parameters to get clean callback URL (;app=__bm_merchant or ;app=__bm_merchant;site=...)
+        redirectURL = redirectURL.replace(/;app=__bm_merchant(;site=[^\/]+)?/g, '');
+        Logger.info('Cleaned redirectURL being sent to SCAPI: ' + redirectURL);
         var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO', dw.system.Site.current.ID);
         if (oauthCOObj != null) {
             var getTokenJSONObj = {};
@@ -149,11 +152,13 @@ function callback() {
             var accessTokenResponseObj = JSON.parse(accessTokenResponse);
             var accessToken = accessTokenResponseObj.access_token;
             var refreshToken = accessTokenResponseObj.refresh_token;
-            if (accessTokenResponseObj) {
+            
+            // Only save if we got valid tokens, not an error response
+            if (accessTokenResponseObj && accessToken && refreshToken) {
                 Transaction.begin();
                 oauthCOObj.custom.fireworkUsId = usid;
                 oauthCOObj.custom.fireworkCode = code;
-                oauthCOObj.custom.fireworkAccessTokenObject = accessTokenResponseObj;
+                oauthCOObj.custom.fireworkAccessTokenObject = accessTokenResponse;
                 Transaction.commit();
                 var FireworkCOObj = CustomObjectMgr.getCustomObject('FireworkCO', dw.system.Site.current.ID);
                 if (FireworkCOObj != null) {
@@ -167,6 +172,14 @@ function callback() {
                     ISML.renderTemplate('oauth/configDashboard');
                     return;
                 }
+            } else {
+                // Token retrieval failed
+                var errorMsg = {
+                    status: 'failed',
+                    message: 'Failed to get SCAPI access token: ' + accessTokenResponse
+                };
+                ISML.renderTemplate('oauth/errorMsg', { errorMsg: errorMsg });
+                return;
             }
 
         }

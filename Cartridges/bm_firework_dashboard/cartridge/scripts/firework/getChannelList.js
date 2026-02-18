@@ -19,7 +19,8 @@ function getChannelListFun()
         if(FireworkCOObj != null)
         {
             var oauthRegisterData=JSON.parse(FireworkCOObj.custom.fireworkOauthData);
-            var oauthtokenData=JSON.parse(FireworkCOObj.custom.fireworkTokenData);
+            var fwTokenData = FireworkCOObj.custom.fireworkTokenData;
+            var oauthtokenData = (typeof fwTokenData === 'string') ? JSON.parse(fwTokenData) : fwTokenData;
             var businessOauthData=JSON.parse(FireworkCOObj.custom.fireworkBusinessOauthData);
             var businessId=businessOauthData.businessId;
             var callBackJSONObj = {};

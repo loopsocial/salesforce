@@ -25,9 +25,8 @@ function getToken(oauthConfig)
 		var htmlSuccess = result.getObject().toString();
 		return htmlSuccess;
 	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('oauth/errorMsg',{errorMsg:resultMessage});
-        return;
+		var errorResponse = { error: true, message: result.errorMessage || 'Token request failed' };
+		return JSON.stringify(errorResponse);
 	}
 }
 module.exports = {
