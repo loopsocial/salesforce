@@ -57,9 +57,10 @@ server.get(
                         };
                     }),
                 product_id: product.ID,
+                currency_code: product.priceModel.price.available ? product.priceModel.price.getCurrencyCode() : null,
                 page_description: product.pageDescription,
                 short_description: product.shortDescription,
-                page_url: URLUtils.url('Product-Show', 'pid', product.ID).toString(), 
+                page_url: URLUtils.url('Product-Show', 'pid', product.ID).toString(),
                 tags: [],
                 title: product.name,
                 variants: serializeVariants(product)
@@ -87,9 +88,10 @@ function defaultProduct(product) {
             values: ["Name"]
         }],
         product_id: product.ID,
+        currency_code: product.priceModel.price.available ? product.priceModel.price.getCurrencyCode() : null,
         page_description: product.pageDescription,
         short_description: product.shortDescription,
-        page_url: URLUtils.url('Product-Show', 'pid', product.ID).toString(), 
+        page_url: URLUtils.url('Product-Show', 'pid', product.ID).toString(),
         tags: [],
         title: product.name,
         variants: defaultVariants(product)
@@ -111,15 +113,16 @@ function defaultVariants(product) {
             product_id: product.ID,
             variant_id: product.ID,
             product_amount: product.priceModel.price.toNumberString(),
+            currency_code: product.priceModel.price.available ? product.priceModel.price.getCurrencyCode() : null,
             quantity_in_stock: 100,
-            original_product_amount: "9999",
+            original_product_amount: product.priceModel.price.toNumberString(),
             inventory_managed_by_platform: true,
             sku: product.ID,
             title: product.name,
             image_urls: (!empty(image) && [image]) || []
         }];
     } else {
-        serializeVariants(product)
+        return serializeVariants(product);
     }
 }
 
@@ -161,6 +164,7 @@ function serializeVariants(product) {
             product_id: product.ID,
             variant_id: variant.ID,
             product_amount: variant.priceModel.price.toNumberString(),
+            currency_code: variant.priceModel.price.available ? variant.priceModel.price.getCurrencyCode() : null,
             quantity_in_stock: inventoryData.quantityInStock,
             inventory_managed_by_platform: true,
             sku: variant.UPC,
