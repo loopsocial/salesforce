@@ -1,26 +1,29 @@
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
 <isscript>
-    var oauthCOObj = dw.object.CustomObjectMgr.getCustomObject('FireworkOauthCO',dw.system.Site.current.ID);
-    var getClientID =oauthCOObj.custom.fireworkClientId;
-	var getCartURL=dw.web.URLUtils.https('Cart-Show');
-    var getProductURL=dw.web.URLUtils.https('ProductDetail-Show');
-    var siteId=dw.system.Site.current.ID;
-    var shopVersion='v23_1';
-   </isscript>
-   <script type="text/javascript">
-   if (window.localStorage) {
-          window.localStorage.setItem('fw_shop_version',"${shopVersion}");
-          window.localStorage.setItem('fw_site_id',"${siteId}");
-			    window.localStorage.setItem('fw_cart_url',"${getCartURL}");
-          window.localStorage.setItem('fw_sfcc_id',"${getClientID}");
-          window.localStorage.setItem('fw_pd_url',"${getProductURL}");
-		}
-   </script>
-<figure class="component-figure">
-<!-- This belongs to <head/> -->
-<script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script> 
-<script async type="text/javascript" src="//asset.fwcdn3.com/js/integrations/salesforce.js"></script> 
+    var CustomObjectMgr = require('dw/object/CustomObjectMgr');
+    var Site = require('dw/system/Site');
+    var URLUtils = require('dw/web/URLUtils');
 
-<!-- This belongs to <body/> -->
+    var siteId = Site.current.ID;
+    var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO', siteId);
+    var clientId = oauthCOObj ? oauthCOObj.custom.fireworkClientId : '';
+    var currentLocale = request.locale !== 'default' ? request.locale : request.getLocale();
+    var localeRegex = /\/[a-z]{2}_[A-Z]{2}\/|\/default\//;
+    var getProductURL = URLUtils.https('ProductDetail-Show').toString().replace(localeRegex, '/' + currentLocale + '/');
+    var getCartURL = URLUtils.https('Cart-Show').toString().replace(localeRegex, '/' + currentLocale + '/');
+    var shopVersion = 'v23_1';
+</isscript>
+<script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script>
+<script async type="text/javascript" src="//asset.fwcdn3.com/js/integrations/salesforce.js"></script>
+<script type="text/javascript">
+    if (window.localStorage) {
+        window.localStorage.setItem("fw_shop_version","${shopVersion}");
+        window.localStorage.setItem("fw_site_id","${siteId}");
+        window.localStorage.setItem("fw_cart_url","${getCartURL}");
+        window.localStorage.setItem("fw_sfcc_id","${clientId}");
+        window.localStorage.setItem("fw_pd_url","${getProductURL}");
+    }
+</script>
+<figure class="component-figure">
 <fw-embed-feed channel="${pdict.viewmodel.selectedChannel}" playlist="${pdict.viewmodel.selectedPlayList}" mode="grid" open_in="default" max_videos=0 paginate_by="${pdict.viewmodel.videoattime}" placement="middle" player_placement="${pdict.viewmodel.minimizedVideoPlayerLocation}"></fw-embed-feed>
 </figure>
