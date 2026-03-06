@@ -40,7 +40,8 @@ function updateGraphFun(graphQLData)
 	var client_id='';
 	if(oauthCOObj != null)
 		 {
-			var accessTokenObj=JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
+			var tokenData = oauthCOObj.custom.fireworkAccessTokenObject;
+			var accessTokenObj = (typeof tokenData === 'string') ? JSON.parse(tokenData) : tokenData;
 			accessToken=accessTokenObj.access_token;
 			refreshToken=accessTokenObj.refresh_token;
 			code_verifier=oauthCOObj.custom.fireworkCodeVerifier;
@@ -82,9 +83,8 @@ function updateGraphFun(graphQLData)
 		var htmlSuccess = result.getObject().toString();
 		return htmlSuccess;
 	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
-		return;
+		var errorResponse = { error: true, message: result.errorMessage || 'Update GraphQL request failed' };
+		return JSON.stringify(errorResponse);
 	}
 }
 

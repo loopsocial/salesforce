@@ -37,7 +37,8 @@ function createGraphFun(graphQLData) {
 	var client_id = '';
 	var oauthCOObj = CustomObjectMgr.getCustomObject('FireworkOauthCO', dw.system.Site.current.ID);
 	if (oauthCOObj != null) {
-		var accessTokenObj = JSON.parse(oauthCOObj.custom.fireworkAccessTokenObject);
+		var tokenData = oauthCOObj.custom.fireworkAccessTokenObject;
+		var accessTokenObj = (typeof tokenData === 'string') ? JSON.parse(tokenData) : tokenData;
 		accessToken = accessTokenObj.access_token;
 		refreshToken = accessTokenObj.refresh_token;
 		code_verifier = oauthCOObj.custom.fireworkCodeVerifier;
@@ -83,9 +84,8 @@ function createGraphFun(graphQLData) {
 		var htmlSuccess = result.getObject().toString();
 		return htmlSuccess;
 	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('dashboard/errorMsg', { errorMsg: resultMessage });
-		return;
+		var errorResponse = { error: true, message: result.errorMessage || 'Create GraphQL request failed' };
+		return JSON.stringify(errorResponse);
 	}
 }
 module.exports = {

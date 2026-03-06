@@ -25,9 +25,8 @@ function businessStoreFun(getAccessToken,businessId)
 		var htmlSuccess = result.getObject().toString();
 		return htmlSuccess;
 	} else {
-		var resultMessage = JSON.parse(result.errorMessage);
-		ISML.renderTemplate('dashboard/errorMsg',{errorMsg:resultMessage});
-		return;
+		var errorResponse = { error: true, message: result.errorMessage || 'Get business store request failed' };
+		return JSON.stringify(errorResponse);
 	}
 }
 
