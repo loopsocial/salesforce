@@ -17,6 +17,15 @@ function updateGraphFun(graphQLData)
 	/* API Includes */
 	var preferencesModel = new PreferencesModel();
     var getFwConfigSetting=preferencesModel.getPreferences();
+
+	// Process sfcc_gtin field
+	var sfcc_gtin = getFwConfigSetting.fwgtin;
+	if (empty(sfcc_gtin) || sfcc_gtin == null || sfcc_gtin == 'null') {
+		sfcc_gtin = '';
+	} else {
+		sfcc_gtin = sfcc_gtin.replace(/"/g, '\\"');
+	}
+
 	var fwImageviewtype=getFwConfigSetting.fwImageviewtype;
 	if(empty(fwImageviewtype) || fwImageviewtype == null || fwImageviewtype == 'null')
 	{
@@ -71,7 +80,7 @@ function updateGraphFun(graphQLData)
 			var restService = require('~/cartridge/scripts/init/FireWorkInit');
 			var htmlError = '<div id="saErroroauthRegister">Something went wrong.</div>';
 			var service:Service =restService.graphQLCredService;
-			var query = '{"query":"mutation {updateBusinessStore(storeId: \\"'+ storeId +'\\", updateBusinessStoreInput: {businessId: \\"'+ businessId +'\\", accessToken: \\"'+ accessToken +'\\", imageViewTypes:[' + fwImageviewtype + '] , siteLocaleId: \\"' + requestLocale + '\\", name: \\"'+ siteTitle +'\\"\\n }) {... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\t\\tuid\\n\\t\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
+			var query = '{"query":"mutation {updateBusinessStore(storeId: \\"'+ storeId +'\\", updateBusinessStoreInput: {businessId: \\"'+ businessId +'\\", accessToken: \\"'+ accessToken +'\\", imageViewTypes:[' + fwImageviewtype + '], sfcc_gtin: \\"' + sfcc_gtin + '\\", siteLocaleId: \\"' + requestLocale + '\\", name: \\"'+ siteTitle +'\\"\\n }) {... on BusinessStore {\\n\\t\\t\\t\\t\\t\\t\\t\\tid\\n\\t\\t\\t\\t\\t\\t\\t\\tname\\n\\t\\t\\t\\t\\t\\t\\t\\tprovider\\n\\t\\t\\t\\t\\t\\t\\t\\tcurrency\\n\\t\\t\\t\\t\\t\\t\\t\\turl\\n\\t\\t\\t\\t\\t\\t\\t\\taccessToken\\n\\t\\t\\t\\t\\t\\t\\t\\tuid\\n\\t\\t\\t\\t\\t\\t\\t\\trefreshToken\\n        }... on AnyError {\\n\\t\\t\\t\\t\\t\\t\\t\\tmessage\\n        }\\n    }\\n}","variables":{}}';
 			service.URL += '/graphiql';
 			var payLoadDetails=new Bytes(query);
     		var result:Result = service.call({
