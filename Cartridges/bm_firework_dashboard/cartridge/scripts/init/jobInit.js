@@ -13,7 +13,7 @@ var postProductInventoryFeedService = LocalServiceRegistry.createService("firewo
 		svc.addHeader('Content-Type', 'application/json');
 		svc.addHeader('x-fw-content-signature',args.token);
 		svc.addHeader('x-fw-timestamp',args.timeStamp);
-		svc.addHeader('x-fw-webhook-event','update');
+		svc.addHeader('x-fw-webhook-event', args.webhookEvent || 'update');
 		if(args) {
 		    let request = '';
 		    if (args.requestJSON) {

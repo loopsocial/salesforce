@@ -26,7 +26,8 @@ function exportProductQuantity(options) {
     var product = null;
 
     try {
-        var excludeProductDataObj = [];
+        var createProductDataObj = [];
+        var updateProductDataObj = [];
         var compareDate = dateArithmetic();
         var Logger = require('dw/system/Logger').getLogger('firework', 'productquantityfeed');
 
@@ -74,8 +75,13 @@ function exportProductQuantity(options) {
             }
 
             var lastModifiedinventoryRecord = inventoryRecord.getAllocationResetDate();
-            if (lastModifiedinventoryRecord > compareDate || product.lastModified > compareDate || pricebooklastModifiedFlag == true) {
-                excludeProductDataObj.push({
+            if (product.getCreationDate() > compareDate) {
+                createProductDataObj.push({
+                    product_id: product.getID()
+                });
+                i++;
+            } else if (lastModifiedinventoryRecord > compareDate || product.lastModified > compareDate || pricebooklastModifiedFlag == true) {
+                updateProductDataObj.push({
                     product_id: product.getID()
                 });
                 i++;
@@ -83,9 +89,9 @@ function exportProductQuantity(options) {
         }
 
         products.close();
-        Logger.info('Product collection complete. Total processed: ' + totalProcessed + ', Modified products found: ' + excludeProductDataObj.length);
+        Logger.info('Product collection complete. Total processed: ' + totalProcessed + ', Created products: ' + createProductDataObj.length + ', Updated products: ' + updateProductDataObj.length);
 
-        if (excludeProductDataObj.length > 0) {
+        if (createProductDataObj.length > 0 || updateProductDataObj.length > 0) {
             //------------------get business firework and Oauth Object----------//
             var Logger = require('dw/system/Logger').getLogger('firework', 'productquantityfeed');
 
@@ -131,71 +137,80 @@ function exportProductQuantity(options) {
                 var client_id = FireworkOauthCO.custom.fireworkClientId;
                 var fireworkBusinessStoreId = FireworkCOObj.custom.fireworkBusinessStoreId;
 
-                // Process in batches of 1000
                 var BATCH_SIZE = 1000;
-                var totalBatches = Math.ceil(excludeProductDataObj.length / BATCH_SIZE);
                 var successfulBatches = 0;
                 var failedBatches = 0;
+                var totalBatchCount = 0;
 
-                Logger.info('Processing ' + excludeProductDataObj.length + ' products in ' + totalBatches + ' batches of ' + BATCH_SIZE);
+                function sendBatches(productDataObj, webhookEvent) {
+                    var batchCount = Math.ceil(productDataObj.length / BATCH_SIZE);
+                    Logger.info('Processing ' + productDataObj.length + ' ' + webhookEvent + ' products in ' + batchCount + ' batches of ' + BATCH_SIZE);
 
-                for (var batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
-                    var startIndex = batchIndex * BATCH_SIZE;
-                    var endIndex = Math.min(startIndex + BATCH_SIZE, excludeProductDataObj.length);
-                    var batch = excludeProductDataObj.slice(startIndex, endIndex);
+                    for (var batchIndex = 0; batchIndex < batchCount; batchIndex++) {
+                        var startIndex = batchIndex * BATCH_SIZE;
+                        var endIndex = Math.min(startIndex + BATCH_SIZE, productDataObj.length);
+                        var batch = productDataObj.slice(startIndex, endIndex);
 
-                    var productPayloadObj = JSON.stringify(batch);
-                    var mac = new Mac(Mac.HMAC_SHA_256);
-                    var sigBytes = mac.digest(productPayloadObj, client_id);
-                    var JwthmacPayload = Encoding.toBase64(sigBytes);
+                        var productPayloadObj = JSON.stringify(batch);
+                        var mac = new Mac(Mac.HMAC_SHA_256);
+                        var sigBytes = mac.digest(productPayloadObj, client_id);
+                        var JwthmacPayload = Encoding.toBase64(sigBytes);
 
-                    var now = new Date(Date.now()).toUTCString();
-                    // Convert the UTC string to a Unix timestamp in seconds
-                    var getTimeStamp = Math.floor(new Date(now).getTime()) + 3600;
-                    var restService = require('~/cartridge/scripts/init/jobInit');
-                    var service = restService.postProductInventoryFeedService;
+                        var now = new Date(Date.now()).toUTCString();
+                        var getTimeStamp = Math.floor(new Date(now).getTime()) + 3600;
+                        var restService = require('~/cartridge/scripts/init/jobInit');
+                        var service = restService.postProductInventoryFeedService;
 
-                    // Set the complete URL for each batch (avoid appending)
-                    var baseUrl = service.getURL();
-                    if (baseUrl.indexOf('/webhooks/salesforce/') === -1) {
-                        service.setURL(baseUrl + '/webhooks/salesforce/' + fireworkBusinessStoreId);
-                    }
+                        var baseUrl = service.getURL();
+                        if (baseUrl.indexOf('/webhooks/salesforce/') === -1) {
+                            service.setURL(baseUrl + '/webhooks/salesforce/' + fireworkBusinessStoreId);
+                        }
 
-                    Logger.info('Sending batch ' + (batchIndex + 1) + '/' + totalBatches + ' (' + batch.length + ' products) to: ' + service.getURL());
+                        Logger.info('Sending ' + webhookEvent + ' batch ' + (batchIndex + 1) + '/' + batchCount + ' (' + batch.length + ' products) to: ' + service.getURL());
 
-                    var result = service.call({
-                        'Method': "POST",
-                        'token': JwthmacPayload,
-                        'requestJSON': productPayloadObj,
-                        'timeStamp': getTimeStamp
-                    });
+                        var result = service.call({
+                            'Method': "POST",
+                            'token': JwthmacPayload,
+                            'requestJSON': productPayloadObj,
+                            'timeStamp': getTimeStamp,
+                            'webhookEvent': webhookEvent
+                        });
 
-                    if (result.isOk()) {
-                        successfulBatches++;
-                        var htmlSuccess = result.getObject().toString();
-                        Logger.info('Batch ' + (batchIndex + 1) + ' successful: ' + htmlSuccess);
-                    } else {
-                        failedBatches++;
-                        var resultMessage = result.errorMessage;
-                        Logger.error('Batch ' + (batchIndex + 1) + ' failed: ' + resultMessage);
-                    }
+                        if (result.isOk()) {
+                            successfulBatches++;
+                            var htmlSuccess = result.getObject().toString();
+                            Logger.info(webhookEvent + ' batch ' + (batchIndex + 1) + ' successful: ' + htmlSuccess);
+                        } else {
+                            failedBatches++;
+                            var resultMessage = result.errorMessage;
+                            Logger.error(webhookEvent + ' batch ' + (batchIndex + 1) + ' failed: ' + resultMessage);
+                        }
 
-                    // Wait 2 seconds between batches to avoid rate limiting
-                    if (batchIndex < totalBatches - 1) {
-                        var startTime = new Date().getTime();
-                        while (new Date().getTime() - startTime < 2000) {
-                            // Simple delay
+                        if (batchIndex < batchCount - 1) {
+                            var startTime = new Date().getTime();
+                            while (new Date().getTime() - startTime < 2000) {
+                                // Simple delay
+                            }
                         }
                     }
+                    totalBatchCount += batchCount;
+                }
+
+                if (createProductDataObj.length > 0) {
+                    sendBatches(createProductDataObj, 'create');
+                }
+                if (updateProductDataObj.length > 0) {
+                    sendBatches(updateProductDataObj, 'update');
                 }
 
                 // Return status based on results
+                var totalProducts = createProductDataObj.length + updateProductDataObj.length;
                 if (failedBatches === 0) {
-                    return new Status(Status.OK, null, 'Successfully processed all ' + totalBatches + ' batches (' + excludeProductDataObj.length + ' products)');
+                    return new Status(Status.OK, null, 'Successfully processed all ' + totalBatchCount + ' batches (' + totalProducts + ' products: ' + createProductDataObj.length + ' created, ' + updateProductDataObj.length + ' updated)');
                 } else if (successfulBatches > 0) {
                     return new Status(Status.ERROR, null, 'Partial success: ' + successfulBatches + ' batches succeeded, ' + failedBatches + ' failed');
                 } else {
-                    return new Status(Status.ERROR, null, 'All ' + totalBatches + ' batches failed');
+                    return new Status(Status.ERROR, null, 'All ' + totalBatchCount + ' batches failed');
                 }
             }
             else {
@@ -203,7 +218,7 @@ function exportProductQuantity(options) {
             }
         }
         else {
-            return new Status(Status.OK, null, 'No products found for update in the last 2 hours');
+            return new Status(Status.OK, null, 'No products found for create or update in the last 2 hours');
         }
         //--------------------------end----------------------------------//
     }
